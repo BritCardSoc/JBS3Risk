@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/halo"
+		  xmlns:ns="library://ns.adobe.com/flex/mx"
+		  currentState="basic"
+		  >
+	<s:states>
+		<s:State name="basic"/>
+		<s:State name="advanced"/>
+	</s:states>
+
+	<fx:Declarations>
+		
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:Group id="basicThumbnails">
+			
+			<s:VGroup id="profile" gap="0" horizontalAlign="center" >
+				<s:Label id="profileLabel" text="@Resource(bundle='JBS',key='sideBar1.profile')" fontSize="36"/>
+				<ns:Button id="profileButton" icon="@Embed('/assets/profileThumbnail.png')" 
+						   cornerRadius="20"
+						   width="300" height="180" />
+			</s:VGroup>
+			
+			<s:VGroup id="heartAge" gap="0" horizontalAlign="center" >
+				<s:Label id="heartAgeLabel" text="@Resource(bundle='JBS',key='sideBar1.heartAge')"  fontSize="36" />
+				<ns:Button id="heartAgeButton" icon="@Embed('/assets/heartAgeThumbnail3.png')" 
+						   cornerRadius="20"
+						   width="300" height="180" />
+			</s:VGroup>
+			
+			<s:VGroup id="deanfield" gap="0" horizontalAlign="center" >
+				<s:Label id="deanfieldLabel" text="@Resource(bundle='JBS',key='sideBar1.deanfield')"  fontSize="36" />
+				<ns:Button id="deanfieldButton"
+						   icon="@Embed('/assets/deanfieldThumbnail.png')" 
+						   cornerRadius="20"
+						   width="300" height="180" />
+			</s:VGroup>
+		</s:Group>
+		
+		<s:Group id="advancedThumbnails">
+			
+			<s:VGroup id="outlook" gap="0" horizontalAlign="center" visible.basic="false">
+				<s:Label id="outlookLabel" text="@Resource(bundle='JBS',key='sideBar1.outlook')"  fontSize="36" />
+				<ns:Button id="outlookButton"
+						   icon="@Embed('/assets/outlookThumbnail2.png')" 
+						   cornerRadius="20"
+						   width="300" height="180" />
+			</s:VGroup>
+			
+			<s:VGroup id="outcomes" gap="0" horizontalAlign="center" visible.basic="false">
+				<s:Label id="outcomesLabel" text="@Resource(bundle='JBS',key='sideBar1.outcomes')"  fontSize="36" />
+				<ns:Button id="outcomesButton"
+						   icon="@Embed('/assets/outcomesThumbnail.png')" 
+						   cornerRadius="20"
+						   width="300" height="180" />
+			</s:VGroup>
+			
+			<s:VGroup id="balance" gap="0" horizontalAlign="center" visible.basic="false">
+				<s:Label id="balanceLabel" text="@Resource(bundle='JBS',key='sideBar1.balance')"  fontSize="36" />
+				<ns:Button id="balanceButton"
+						   icon="@Embed('/assets/balanceThumbnail2.png')" 
+						   cornerRadius="20"
+						   width="300" height="180" />
+			</s:VGroup>
+			
+			<s:VGroup id="compare" gap="0" horizontalAlign="center" visible.basic="false">
+				<s:Label id="compareLabel" text="@Resource(bundle='JBS',key='sideBar1.compare')"  fontSize="36" />
+				<ns:Button id="compareButton"
+						   icon="@Embed('/assets/compareThumbnail.png')"
+						   cornerRadius="20"
+						   width="300" height="180" />
+			</s:VGroup>
+		</s:Group>
+	</fx:Declarations>
+	
+	<s:HGroup gap="10" paddingLeft="20" paddingRight="20" scaleX="0.7" scaleY="0.7" verticalAlign="middle">
+		<s:HGroup gap="10" id="basicContainer" paddingRight="5" />
+		<s:Group>
+			<s:Button y="35" label.basic="more" label.advanced="less" id="modeButton" 
+					  cornerRadius="15"
+					  fontSize="30"
+					  width="100"
+					  height="80" />
+		</s:Group>
+
+		<s:HGroup gap="10" id="advancedContainer" paddingLeft="5" />
+
+	</s:HGroup>
+		
+</s:Group>

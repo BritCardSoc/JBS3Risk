@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 >
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:states>
+		<s:State name="includeTargetAge"/>	
+		<s:State name="excludeTargetAge"/>	
+	</s:states>
+	
+	<s:HGroup width="100%" verticalAlign="middle">
+		<s:Label text="Intervention start age" color="0x000000" />
+		<s:NumericStepper id="interventionAgeStepper" width="60" />
+	</s:HGroup>
+	
+	<s:HGroup width="100%" verticalAlign="middle" visible.excludeTargetAge = "false">
+		<s:Label text="Target interval" color="0x000000" />
+		<s:NumericStepper id="targetInterval" value="10" minimum="0" width="60" stepSize="5" />
+	</s:HGroup>
+
+</s:HGroup>

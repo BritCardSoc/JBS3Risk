@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx" 
+		  xmlns:view="org.understandinguncertainty.JBS.view.*"
+		  verticalAlign="middle"
+		  gap = "1" xmlns:components="org.understandinguncertainty.JBS.components.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<view:People id="leftPeople" width="34%" scaleX="-1"/>
+	<components:SimpleArrow id="leftArrow" width="1%" />
+	<s:Label id="leftNumber" width="3%" textAlign="left" fontSize="12" color="0x888888"/>
+	<s:Label id="label" width="20%" textAlign="center"/>
+	<s:Label id="rightNumber" width="3%" textAlign="right" fontSize="12" color="0x888888"/>
+	<components:SimpleArrow id="rightArrow"  width="1%" rotation="180"/>
+	<view:People id="rightPeople" width="34%" />
+
+	
+</s:HGroup>

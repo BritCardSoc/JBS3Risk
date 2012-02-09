@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/halo"
+				xmlns:ns="library://ns.adobe.com/flex/mx"
+				dataChange="changed()"
+				>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+		
+	<fx:Script>
+		<![CDATA[
+			import org.understandinguncertainty.JBS.components.icons.BadOutcome;
+			import org.understandinguncertainty.JBS.components.icons.BetterOutcome;
+			import org.understandinguncertainty.JBS.components.icons.DeceasedOutcome;
+			import org.understandinguncertainty.JBS.components.icons.GoodOutcome;
+			import org.understandinguncertainty.JBS.components.icons.WorseOutcome;
+			
+			import spark.components.Group;
+			
+			public static const DEAD:int = 0;
+			public static const WORSE:int = 1;
+			public static const BAD:int = 2;
+			public static const GOOD:int = 3;
+			public static const BETTER:int = 4;
+			
+			public const iconSize:int = 30;
+			
+			private var iconCache:Array = [];
+			
+			private function getIconByOutcome(data:Object):Group
+			{
+				var icon:Group;
+			
+				var index:int = data.index;
+				var type:int = data.iconType;
+				var indexCache:Array = iconCache[index];
+				if(indexCache == null) {
+					indexCache = [];
+					iconCache[index] = indexCache;
+				}
+				else if(indexCache[type]) {
+					return indexCache[type] as Group;
+				}
+				
+				switch(type) {
+					case DEAD: 
+						icon = new DeceasedOutcome();
+						break;
+					case WORSE: 
+						icon = new WorseOutcome();
+						break;
+					case BAD: 
+						icon = new BadOutcome();
+						break;
+					case GOOD: 
+						icon = new GoodOutcome();
+						break;
+					case BETTER: 
+						icon = new BetterOutcome();
+						break;
+				}
+				icon.width = icon.height = iconSize;
+				
+				indexCache[type] = icon;
+				
+				return icon;
+			}
+					
+			private function changed():void
+			{
+				removeAllElements();
+				
+				if(data)
+					addElement(this.getIconByOutcome(data));
+			}
+			
+		]]>
+	</fx:Script>
+	
+</s:ItemRenderer>

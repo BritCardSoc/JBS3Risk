@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:HGroup width="100%" verticalCenter="middle" paddingTop="10" >
+		<s:Label text="@Resource(bundle='JBS',key='title')" color="0x888888" fontSize="18" verticalAlign="middle"  height="100%"/>
+	</s:HGroup>
+	
+</s:Group>

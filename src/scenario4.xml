@@ -1,0 +1,17 @@
+<personalData>
+  <systolicBloodPressure>160</systolicBloodPressure>
+  <hdlCholesterol_mmol_L>3</hdlCholesterol_mmol_L>
+  <moderateAlcohol>true</moderateAlcohol>
+  <SBPTreated>false</SBPTreated>
+  <height_m>1.74</height_m>
+  <gender>female</gender>
+  <diabetic>false</diabetic>
+  <active>false</active>
+  <totalCholesterol_mmol_L>7.3</totalCholesterol_mmol_L>
+  <fiveaday>true</fiveaday>
+  <dateOfBirth>24/4/1957</dateOfBirth>
+  <nonSmoker>false</nonSmoker>
+  <age>53</age>
+  <weight_kg>70</weight_kg>
+  <yearOfBirth>1957</yearOfBirth>
+</personalData>

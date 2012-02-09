@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo" 
+		 xmlns:view="org.understandinguncertainty.JBS.view.*" 
+		 xmlns:components="org.understandinguncertainty.JBS.view.components.*"
+		 xmlns:ns="library://ns.adobe.com/flex/mx" xmlns:components1="org.understandinguncertainty.JBS.components.*">
+	<fx:Script>
+		<![CDATA[
+			import org.understandinguncertainty.JBS.service.Web;
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:SolidColor id="fill" color="0xffffff" alpha="1"/>
+	</fx:Declarations>
+	
+	<s:HGroup width="100%" paddingLeft="5" paddingTop="5" paddingRight="5" paddingBottom="5" >
+		<ns:Image id="uuicon" verticalAlign="middle" source="@Embed('assets/bcsLogo.png')" />
+		<components1:Header/>
+		<s:Group width="100%"/>
+		<s:Button id="credits" label="Credits" />
+		<components1:FullScreenButton id="fullScreen" buttonEnabled="false"/>
+	</s:HGroup>
+	
+	<s:VGroup width="100%" height="100%" gap="0">
+
+		<components1:ScaledGroup id="thumbnails" width="100%" height="15%" >
+			<view:ScreenSelector id="screenSelector" 
+								 resizeMode="scale"
+								 width="100%" height="100%" />
+		</components1:ScaledGroup>
+		
+		<s:Group height="2%"/>
+		
+		<components1:ScaledGroup id="content" width="100%" height="83%" >
+			<s:VGroup width="100%" height="100%" 
+					  resizeMode="scale"
+					  verticalAlign="top"
+					  paddingLeft="10"
+					  gap="0" >
+
+				<view:MainPanel id="mainPanel"  />
+	
+			</s:VGroup>
+			
+		</components1:ScaledGroup>
+
+	</s:VGroup>
+	
+
+	
+</s:VGroup>

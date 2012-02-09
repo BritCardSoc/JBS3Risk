@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo"
+		 addedToStage="setup()"
+		 removedFromStage="tearDown()"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import org.understandinguncertainty.JBS.signals.ReleaseScreenSignal;
+
+			public static const FULLSCREEN:String = "Full Screen";
+			public static const RELEASESCREEN:String = "Release Screen";
+			
+			[Bindable]
+			public var buttonEnabled:Boolean;
+			
+			private function setup():void
+			{
+				stage.addEventListener(flash.events.FullScreenEvent.FULL_SCREEN, handleFullScreen);
+				fullScreenButton.addEventListener(MouseEvent.CLICK, switchFullScreen);
+			}
+						
+			private function tearDown():void
+			{
+				stage.removeEventListener(flash.events.FullScreenEvent.FULL_SCREEN, handleFullScreen);
+				fullScreenButton.removeEventListener(MouseEvent.CLICK, switchFullScreen);
+			}
+			
+			private function switchFullScreen(event:MouseEvent = null):void {
+				stage.addEventListener(flash.events.FullScreenEvent.FULL_SCREEN, handleFullScreen);
+				if(stage.displayState==StageDisplayState.NORMAL) {
+					stage.displayState=StageDisplayState.FULL_SCREEN;
+				}
+				else {
+					stage.displayState=StageDisplayState.NORMAL;
+				}
+			}
+
+			private function handleFullScreen(event:flash.events.FullScreenEvent):void {
+				if(stage.displayState == StageDisplayState.NORMAL) {
+					fullScreenLabel = FULLSCREEN;
+				}
+				else {
+					fullScreenLabel = RELEASESCREEN;
+				}
+			}
+			
+			public function releaseScreen():void
+			{
+				if(stage.displayState==StageDisplayState.FULL_SCREEN)
+					switchFullScreen();
+			}
+			
+			[Bindable]
+			private var fullScreenLabel:String = FULLSCREEN;
+			
+		]]>
+	</fx:Script>
+	
+	<s:Button id="fullScreenButton" enabled = "{buttonEnabled}" label="{fullScreenLabel}"/>
+
+</s:Group>

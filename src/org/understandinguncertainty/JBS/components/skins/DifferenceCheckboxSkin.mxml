@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009">
+	<fx:Metadata>[HostComponent("spark.components.CheckBox")]</fx:Metadata>
+	<s:states>
+		<s:State name="up"/>
+		<s:State name="over"/>
+		<s:State name="down"/>
+		<s:State name="disabled"/>
+		<s:State name="upAndSelected"/>
+		<s:State name="overAndSelected"/>
+		<s:State name="downAndSelected"/>
+		<s:State name="disabledAndSelected"/>
+	</s:states>
+	<s:Rect height="60" id="rect1" radiusX="20" rotation.down="180" rotation.downAndSelected="180" width="164" x.disabled="0.5" x.disabledAndSelected="0.5" x.down="164.5" x.downAndSelected="164.5" x.over="0.5" x.overAndSelected="0.5" x.up="0.5" x.upAndSelected="0.5" y.disabled="0.5" y.disabledAndSelected="0.5" y.down="60.5" y.downAndSelected="60.5" y.over="0.5" y.overAndSelected="0.5" y.up="0.5" y.upAndSelected="0.5">
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry alpha="1.0" color.disabled="#EDEFEB" color.disabledAndSelected="#EDEFEB" color.down="#07BA76" color.downAndSelected="#07BA76" color.over="#B3DD68" color.overAndSelected="#B3DD68" color.up="#B6EF92" color.upAndSelected="#B6EF92" ratio="0"/>
+				<s:GradientEntry alpha="1.0" color.disabled="#B5BAB8" color.disabledAndSelected="#B5BAB8" color.down="#B6EF92" color.downAndSelected="#B6EF92" color.over="#07BA49" color.overAndSelected="#07BA49" color.up="#07BA76" color.upAndSelected="#07BA76" ratio="1"/>
+			</s:LinearGradient>
+		</s:fill>
+		<s:stroke>
+			<s:LinearGradientStroke caps="none" joints="miter" miterLimit="4" rotation="90" weight="1">
+				<s:GradientEntry alpha="1" color="#FFFFFF" ratio="0"/>
+				<s:GradientEntry alpha="1.0" color.disabled="#656868" color.disabledAndSelected="#656868" color.down="#2F6D69" color.downAndSelected="#2F6D69" color.over="#2F6D69" color.overAndSelected="#2F6D69" color.up="#2F6D69" color.upAndSelected="#2F6D69" ratio="1"/>
+			</s:LinearGradientStroke>
+		</s:stroke>
+	</s:Rect>
+	<s:RichText color="#FFFFFF" fontFamily="Arial Bold" fontSize="20" id="richtext1" tabStops="S0 S50 S100" whiteSpaceCollapse="preserve" x="56" y="8">
+		<s:content><s:p><s:span>Showing</s:span></s:p><s:p><s:span>difference</s:span></s:p></s:content>
+		<s:content.disabled><s:p><s:span>Show</s:span></s:p><s:p><s:span>difference</s:span></s:p></s:content.disabled>
+		<s:content.down><s:p><s:span>Show</s:span></s:p><s:p><s:span>difference</s:span></s:p></s:content.down>
+		<s:content.over><s:p><s:span>Show</s:span></s:p><s:p><s:span>difference</s:span></s:p></s:content.over>
+		<s:content.up><s:p><s:span>Show</s:span></s:p><s:p><s:span>difference</s:span></s:p></s:content.up>
+	</s:RichText>
+	<s:Rect height="35" id="rect2" radiusX="10" rotation="180" width="35" includeIn="disabled,down,over,up" alpha="0.32" x="46" y="48">
+		<s:stroke>
+			<s:LinearGradientStroke caps="none" joints="miter" miterLimit="4" rotation="90" weight="2">
+				<s:GradientEntry alpha="1" color="#FFFFFF" ratio="0"/>
+				<s:GradientEntry alpha="1.0" color="#2F6D69" ratio="1"/>
+			</s:LinearGradientStroke>
+		</s:stroke>
+		<s:fill>
+			<s:SolidColor color="#FFFFFF"/>
+		</s:fill>
+	</s:Rect>
+	<s:BitmapImage alpha.disabledAndSelected="0.3" alpha.down="0.6" alpha.downAndSelected="0.3" alpha.over="0.1" alpha.overAndSelected="0.6" id="bitmapimage1" includeIn="disabledAndSelected,down,downAndSelected,over,overAndSelected,upAndSelected" smooth="true" source="@Embed('/assets/images/tick.png')" x="14" y="14"/>
+	<s:transitions>
+		<s:Transition fromState="over" toState="up" autoReverse="true">
+			<s:Parallel>
+				<s:Parallel target="{bitmapimage1}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+	</s:transitions>
+</s:Skin>

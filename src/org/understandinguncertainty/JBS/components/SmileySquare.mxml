@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:DataGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo"
+		 dataProvider="{dataSource}"
+		 itemRenderer="org.understandinguncertainty.JBS.renderers.IconRenderer"
+		 creationComplete="init()"
+		 width="300" height="300"
+		 >
+	<s:layout>
+		<s:TileLayout horizontalGap="0" verticalGap="0" requestedColumnCount="{N}"/>
+	</s:layout>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:ArrayCollection id="dataSource" source="{[]}" />
+	</fx:Declarations>
+	
+
+	<fx:Script>
+		<![CDATA[
+			import org.understandinguncertainty.JBS.renderers.IconRenderer;
+						
+			private function init():void 
+			{
+				var N2:int = _N * _N;
+				invalidateProperties();
+			}
+			
+			private var _N:int = 10;
+			private var _N2:int = 100;
+			
+			[Bindable]
+			public function get N():int
+			{
+				return _N;
+			}
+			public function set N(n:int):void		// making it an N x N square
+			{
+				_N = n;
+				_N2 = n * n;
+				invalidateProperties();
+			}
+		
+			[Bindable]
+			public function get f():Number
+			{
+				return _f;
+			}
+			public function set f(n:Number):void		
+			{
+				_f = n;
+				invalidateProperties();
+			}
+
+			[Bindable]
+			public function get f_int():Number
+			{
+				return _f_int;
+			}
+			public function set f_int(n:Number):void		
+			{
+				_f_int = n;
+				invalidateProperties();
+			}
+			[Bindable]
+			public function get m():Number
+			{
+				return _m;
+			}
+			public function set m(n:Number):void		
+			{
+				_m = n;
+				invalidateProperties();
+			}
+
+			[Bindable]
+			public function get m_int():Number
+			{
+				return _m_int;
+			}
+			public function set m_int(n:Number):void		
+			{
+				_m_int = n;
+				invalidateProperties();
+			}
+					
+			private var _f:Number = 30;
+			private var _f_int:Number = 25;
+			private var _m:Number = 10;
+			private var _m_int:Number = 11;
+			
+			[Bindable]
+			public var yellow:int = 0;
+			
+			[Bindable]
+			public var red:int = 0;
+			
+			[Bindable]
+			public var blue:int = 0;
+			
+			[Bindable]
+			public var moreBlue:int = 0;
+			
+			[Bindable]
+			public var green:int = 0;
+			
+			[Bindable]
+			public var greenCrossed:int = 0;
+			
+			[Bindable]
+			public var bluePlural:String = "s";
+			
+			[Bindable]
+			public var redPlural:String = "s";
+			
+			[Bindable]
+			public var yellowPlural:String = "s";
+			
+			[Bindable]
+			public var greenPlural:String = "s";
+			
+			[Bindable]
+			public var greenCrossedPlural:String = "s";
+			
+			override protected function commitProperties():void
+			{
+				//if(f == 0 && m == 0) return;
+				
+				var iconList:Array = [];
+				var len:int = 0;
+				var count:int = 0;
+
+				//trace("f = " + f + " f_int = " + f_int + " m = " + m + " m_int = " + m_int);
+				yellow = Math.round(f - f_int);
+				red = 0;				
+				blue = 0;
+				moreBlue = 0;
+				green = 0;
+				greenCrossed = 0;
+				
+				if(m_int >= m) {
+					// more deaths from other causes
+					moreBlue = Math.round(m_int - m);
+					blue = Math.round(m_int) - moreBlue; // i.e. m, but rounded to preserve m_int correctly
+
+					// those extra blues should come out of the yellows
+					if(yellow >= 0 || yellow - moreBlue < 0) {
+						yellow -= moreBlue;
+						red = Math.round(f_int);
+						green = _N2 - (blue + moreBlue + yellow + red);
+						greenCrossed = 0;						
+					}
+					else {
+						// this can now happen since we now allow people to take up smoking as an intervention
+						greenCrossed = Math.round(f_int - f);
+						yellow = 0;
+						red = Math.round(f_int) - greenCrossed;
+						while(red < Math.round(f) && greenCrossed > 0) {
+							// rounding forced us flag too many as greenCrossed
+							++red;
+							--greenCrossed;
+						}
+						green = _N2 - (blue + moreBlue + red + greenCrossed);
+					}
+				}
+				else {
+					// fewer deaths from other causes
+					blue = Math.round(m_int); // just plot m_int; the fewer deaths will be absorbed by the greens
+
+					if(f_int > f) {
+						// more CV events
+						yellow = Math.round(m - m_int + f -  f_int);
+						if(yellow < 0) {
+							greenCrossed = -yellow;
+							yellow = 0;
+							red = Math.round(f);
+							green = _N2 - (blue + greenCrossed + red);
+						}
+						else {
+							red = Math.round(f);
+							green = _N2 - (blue + yellow + red);
+						}
+					}
+					else {
+						// fewer CV events. Note that modelling effect of smoking on non-CV deaths this
+						// combination becomes possible - even likely.
+						yellow = Math.round(m - m_int + f - f_int);
+						red = Math.round(f_int);
+						green = _N2 - (blue + yellow + red);
+					}
+				}
+			
+				bluePlural = blue + moreBlue > 1 ? "s" : "";
+				redPlural = red > 1 ? "s" : "";
+				yellowPlural = yellow > 1 ? "s" : "";
+				greenPlural = green > 1 ? "s" : "";
+				greenCrossedPlural = greenCrossed > 1 ? "s" : "";
+
+				for(var i:int = 0; i < blue; i++) {
+					iconList[len]={index:len, iconType:IconRenderer.DEAD};
+					len++;
+				}
+				
+				for(i = 0; i < moreBlue; i++) {
+					iconList[len]= {index:len, iconType:IconRenderer.DEAD};
+					len++;
+				}
+				
+				for(i = 0; i < red; i++) {
+					iconList[len]={index:len, iconType:IconRenderer.BAD};
+					len++;
+				}
+				
+				for(i = 0; i < greenCrossed; i++) {
+					iconList[len]={index:len, iconType:IconRenderer.WORSE};
+					len++;
+				}
+
+				for(i = 0; i < yellow; i++) {
+					iconList[len]={index:len, iconType:IconRenderer.BETTER};
+					len++;
+				}
+				
+				for(i = 0; i < green; i++) {
+					iconList[len]={index:len, iconType:IconRenderer.GOOD};
+					len++;
+				}
+				
+				dataSource.source = iconList;
+				
+				super.commitProperties();
+			}
+			
+		]]>
+	</fx:Script>				
+	
+</s:DataGroup>

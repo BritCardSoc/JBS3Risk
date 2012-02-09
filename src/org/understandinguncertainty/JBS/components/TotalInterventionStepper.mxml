@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<components:InterventionStepper xmlns:fx="http://ns.adobe.com/mxml/2009" 
+							 xmlns:s="library://ns.adobe.com/flex/spark" 
+							 xmlns:mx="library://ns.adobe.com/flex/mx" 
+							 xmlns:components="org.understandinguncertainty.JBS.components.*"
+							 fixed="1"
+							 stepSize="0.1">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			[Bindable]
+			public var hdlChol:Number = 1;
+			
+			public function get cholRatio():Number {
+				return (value/hdlChol);
+			};
+		]]>
+	</fx:Script>
+	
+</components:InterventionStepper>

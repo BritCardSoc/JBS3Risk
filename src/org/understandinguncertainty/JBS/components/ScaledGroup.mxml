@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo"
+		 addedToStage="setup()"
+		 removedFromStage="tearDown()"
+		 resize="resize()"
+		 >
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.core.IVisualElement;
+			import mx.core.UIComponent;
+			import mx.events.PropertyChangeEvent;
+			
+			import spark.events.ElementExistenceEvent;
+			
+			/**
+			 *  Values as low as 1 work, but shrinking only then works if you wiggle the window size as you shrink it.
+			 *  I think the issue is that you don't get enough resize events
+			 */
+			public var shrinkRate:int = 10;
+						
+			private function setup():void
+			{
+				resize();
+			}
+			
+			private function tearDown():void
+			{
+			}
+
+			private function childResized(event:PropertyChangeEvent):void
+			{
+				//trace("child resized");
+				invalidateProperties();
+			}
+			
+			override public function set mxmlContent(value:Array):void
+			{
+				// remove wrapper if present
+				removeAllElements();
+				
+				// remove any existing elements under wrapper > child
+				while(child.numElements > 0) {
+					var content:Group = child.getElementAt(0) as Group; 
+					content.removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE, childResized);
+					child.removeElementAt(0);
+				}
+
+				//child.removeAllElements();
+				
+				// append content under wrapper > child
+				if(value) for(var i:int = 0; i < value.length; i++) {
+					content = value[i] as Group;
+					content.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, childResized);
+					child.addElement(content);
+				}
+				addElement(wrapper);
+			}			
+						
+			override protected function commitProperties():void
+			{
+				resize();
+				invalidateDisplayList();
+			}
+			
+			private function resize():void
+			{
+				child.validateNow();
+				var actualWidth:int = child.contentWidth;
+				var actualHeight:int = child.contentHeight;
+				
+				if(actualWidth * actualHeight == 0) return;
+				
+				var w_over_h:Number = actualWidth / actualHeight;
+				var w1:int = height * w_over_h;
+				var h1:int = width / w_over_h;
+				var niceWidth:int;
+				var niceHeight:int;
+				
+				if(width < w1) {
+					niceWidth = width - shrinkRate;
+					niceHeight = niceWidth/w_over_h;
+				}
+				else {
+					niceHeight = height - shrinkRate;
+					niceWidth = niceHeight * w_over_h;
+				}
+				
+				//trace("ScaledGroup resize " + w_over_h + "=" + actualWidth + "/" + actualHeight + " " + niceWidth + ":" + niceHeight);
+				wrapper.width = niceWidth;
+				wrapper.height = niceHeight;
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:Group id="wrapper"  resizeMode="scale">
+			<s:Group id="child" />
+<!--		<s:Group id="annotations"/> -->
+		</s:Group>
+
+	</fx:Declarations>
+
+</s:Group>

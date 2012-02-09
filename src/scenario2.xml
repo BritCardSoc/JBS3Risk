@@ -1,0 +1,17 @@
+<personalData>
+  <systolicBloodPressure>140</systolicBloodPressure>
+  <hdlCholesterol_mmol_L>3</hdlCholesterol_mmol_L>
+  <moderateAlcohol>true</moderateAlcohol>
+  <SBPTreated>true</SBPTreated>
+  <height_m>1.7</height_m>
+  <gender>male</gender>
+  <diabetic>true</diabetic>
+  <active>false</active>
+  <totalCholesterol_mmol_L>7.8</totalCholesterol_mmol_L>
+  <fiveaday>true</fiveaday>
+  <dateOfBirth>24/4/1950</dateOfBirth>
+  <nonSmoker>true</nonSmoker>
+  <age>60</age>
+  <weight_kg>101</weight_kg>
+  <yearOfBirth>1950</yearOfBirth>
+</personalData>

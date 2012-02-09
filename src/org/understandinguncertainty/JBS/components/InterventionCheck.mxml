@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo" 
+		 xmlns:ns="library://ns.adobe.com/flex/mx" horizontalAlign="left" verticalAlign="top">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:SolidColorStroke id="stroke" color="0" weight="1" alpha="1"/>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import org.understandinguncertainty.JBS.signals.InterventionEditedSignal;
+			
+			[Bindable]
+			public var label:String;
+			
+
+			[Bindable]
+			public function get original():Boolean
+			{
+				return checkBox.selected;
+			}	
+			public function set original(b:Boolean):void
+			{
+
+				// This works so long as all our checkboxes 
+				// are ticked for more benefit
+				checkBox.enabled = true;
+				checkBox.validateNow();
+				checkBox.selected = b;
+				checkBox.enabled = !b;
+			}
+
+
+			public function get selected():Boolean
+			{
+				return checkBox.selected;
+			}
+			public function set selected(b:Boolean):void
+			{
+				checkBox.selected = b;
+			}
+			
+			public var editSignal:InterventionEditedSignal;
+			
+			private function reset():void
+			{
+				checkBox.selected = original;
+				changed();
+			}
+			
+			
+			private function changed():void
+			{
+				editSignal.dispatch(id);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:HGroup width="100%" verticalAlign="middle">
+		<!--
+		<s:Button 
+			label="Reset" 
+			width="60"
+			enabled="{checkBox.selected != original}"
+			click="reset()" />
+		-->
+		<s:Group width="100%"/>
+		<s:Label text="{label}" visible="{checkBox.enabled}"/>
+		<s:CheckBox id="checkBox"
+					selected="{original}"
+					visible="{checkBox.enabled}"
+					change="changed()" label="foo" skinClass="spark.skins.spark.CheckBoxSkin"/>
+	</s:HGroup>
+
+</s:VGroup>

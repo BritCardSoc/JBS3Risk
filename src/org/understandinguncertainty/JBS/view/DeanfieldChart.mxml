@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			  xmlns:s="library://ns.adobe.com/flex/spark" 
+			  xmlns:mx="library://ns.adobe.com/flex/halo"
+			  horizontalAlign="center"
+			  xmlns:ns="library://ns.adobe.com/flex/mx" 
+			  xmlns:view="org.understandinguncertainty.JBS.view.*">
+
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+<!--		<s:SolidColor id="goodFill" color="0x44dd44" alpha="1.0"/>
+-->
+		<s:SolidColor id="goodFill" color="0x00BB66" alpha="1.0"/>
+		<s:SolidColor id="deadFill" color="0x3FBDFF" alpha="1.0"/>
+		<s:SolidColor id="badFill" color="0xff6688" alpha="1.0"/>
+		<s:SolidColor id="betterFill" color="0xffCC00" alpha="1.0"/>
+		<s:SolidColor id="gainFill" color="0xffCC00" alpha="0.3"/>
+		<s:SolidColor id="white" color="0xffffff" alpha="1"/>
+		<s:SolidColor id="green" color="0x008800" alpha="0.1"/>
+		<s:SolidColor id="black" color="0x000000" alpha="1"/>
+		<s:SolidColorStroke id="stroke" color="0" alpha="0.4" weight="2"/>
+		<s:SolidColorStroke id="noStroke" color="0" alpha="0"/>
+		<s:SolidColorStroke id="gainStroke" color="0xffffff" alpha="0.5"/>
+		
+		<fx:String id="ttAge">@Resource(bundle='JBS',key='chart.tooltip.Age')</fx:String>
+		<fx:String id="ttCVRisk">@Resource(bundle='JBS',key='chart.tooltip.cvRisk')</fx:String>
+		<fx:String id="ttCVBetter">@Resource(bundle='JBS',key='chart.tooltip.cvBetter')</fx:String>
+		<fx:String id="ttAll">@Resource(bundle='JBS',key='chart.tooltip.all')</fx:String>
+
+		<s:Group id="gainLabel">
+			<s:Rect width="100%" height="100%" radiusX="7" fill="{gainFill}" stroke="{gainStroke}"/>
+			<s:VGroup horizontalCenter="0" horizontalAlign="center"
+					  paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
+				<s:Label text="Average gain"/>
+				<s:Label id="yearGain" text="0" fontSize="16"/>
+				<s:Label text="heart attack or stroke" />
+				<s:Label text="free years"/>
+			</s:VGroup>
+		</s:Group> 
+		
+		<s:VGroup id="meanAgeLabel" horizontalAlign="center" alpha="0.6">
+			<s:VGroup horizontalAlign="center">
+				<s:Label text="Average survival free of"/>
+				<s:Label text="heart attack or stroke"/>
+				<s:Label id="meanAgeText" fontSize="18"/>
+			</s:VGroup>
+			<s:Group>			
+				<s:Path data="M 35.09 0.03 L 17.55 30.40 0.01 0.03 Z " height="14.102" width="16.692" x="0" y="0">
+					<s:fill>
+						<s:SolidColor color="#000000"/>
+					</s:fill>
+				</s:Path>
+			</s:Group>
+		</s:VGroup>
+	
+	</fx:Declarations>
+	
+	
+	<s:VGroup horizontalAlign="center" paddingTop="10">
+		<s:Label fontSize="18" text="@Resource(bundle='JBS',key='chart.title')"/> 
+		<s:Group id="chartGroup" width="520" height="330">
+			<s:VGroup width="100%" height="100%" gap="1">
+				<!--	
+				<s:HGroup width="100%" top="5" right="5" horizontalAlign="right">
+					<ns:Legend dataProvider="{areaChart}" direction="vertical" styleName="deanfield" />
+				</s:HGroup>
+				-->
+				<ns:AreaChart id="areaChart" height="100%" width="100%"
+							  paddingLeft="10" paddingRight="5" 
+							  showDataTips="true"
+							  dataTipCalloutStroke="{null}"
+							  dataTipMode="single"
+							  type="overlaid"
+							  fontSize="14">
+					
+					<ns:backgroundElements>
+						<ns:GridLines gridDirection="both" verticalShowOrigin="true" horizontalShowOrigin="true" verticalOriginStroke="{stroke}" horizontalOriginStroke="{stroke}"/>
+					</ns:backgroundElements>
+					
+					<ns:annotationElements>
+						<ns:CartesianDataCanvas id="dataCanvas">
+						</ns:CartesianDataCanvas>
+					</ns:annotationElements>
+					
+					<ns:horizontalAxis>
+						<ns:LinearAxis id="ageAxis" 
+									   displayName="@Resource(bundle='JBS',key='chart.xaxis')" 
+									   maximum="95"/>
+					</ns:horizontalAxis>
+					
+					<ns:verticalAxis>
+						<ns:LinearAxis id="chanceAxis"
+									   displayName="@Resource(bundle='JBS',key='chart.yaxis')" 
+									   title="@Resource(bundle='JBS',key='chart.yaxis')"
+									   minimum = "0"
+									   maximumLabelPrecision="0">
+						</ns:LinearAxis>
+					</ns:verticalAxis>
+					
+					<ns:series>
+						<ns:AreaSeries yField="yellow" xField="age" form="curve" displayName="@Resource(bundle='JBS',key='chart.better')" areaStroke="{stroke}" areaFill="{betterFill}"/>
+						<ns:AreaSeries yField="green" xField="age" form="curve" displayName="@Resource(bundle='JBS',key='chart.good')" areaStroke="{stroke}" areaFill="{goodFill}"/>
+					</ns:series>
+				</ns:AreaChart>
+				
+				<s:HGroup width="100%" horizontalAlign="center">
+					<s:Label text="@Resource(bundle='JBS',key='chart.xaxis')" />
+				</s:HGroup>
+			</s:VGroup>
+				
+<!--		<s:VGroup width="100%" verticalAlign="top" left="0" top="60">
+			<s:VSlider id="maxChance" height="50" value="100"  showDataTip="false" toolTip="Adjust Scale"
+						   minimum="50" maximum="100" stepSize="10" />
+			</s:VGroup>
+
+			<s:HGroup width="100%" horizontalAlign="right" right="10" bottom="7" >
+				<s:HSlider id="maxAgeSlider" width="50" value="95" showDataTip="false" toolTip="Adjust Scale"
+						   maximum="95" />
+			</s:HGroup>
+-->
+		</s:Group>
+		
+		<view:AgeSettings currentState="excludeTargetAge" width="80%"/>
+		
+			
+	</s:VGroup>
+	
+</s:VGroup>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo" 
+		 xmlns:ai="http://ns.adobe.com/ai/2009" 
+		 xmlns:flm="http://ns.adobe.com/flame/2008" 
+		 resizeMode="scale"
+		 width="184" height="184"
+		 cacheAsBitmap="true"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:Ellipse height="183"  ai:objID="62a3f0d0" width="183" x="1" y="1">
+		<s:fill>
+			<s:RadialGradient scaleX="276.262" scaleY="276.262" x="63" y="44">
+				<s:GradientEntry color="0xF7FFBF" ratio="0"/>
+				<s:GradientEntry color="0xD5FF5F" flm:midpoint="0.626015968322754" ratio="0.236264"/>
+				<s:GradientEntry color="0x49BF00" flm:midpoint="0.87" ratio="1"/>
+			</s:RadialGradient>
+		</s:fill>
+	</s:Ellipse>
+	<s:Group ai:objID="62a3e830" x="44" y="65">
+		<s:Group ai:objID="62a3eb70" x="0" y="0">
+			<s:Ellipse height="28" ai:objID="62a3eeb0" width="28" x="0" y="0">
+				<s:fill>
+					<s:SolidColor/>
+				</s:fill>
+			</s:Ellipse>
+			<s:Ellipse height="28" ai:objID="62a3ec90" width="28" x="69" y="0">
+				<s:fill>
+					<s:SolidColor/>
+				</s:fill>
+			</s:Ellipse>
+		</s:Group>
+		<s:Ellipse height="48" ai:objID="62a3e950" width="48" x="25" y="52">
+			<s:fill>
+				<s:SolidColor/>
+			</s:fill>
+		</s:Ellipse>
+	</s:Group>
+	<s:Group ai:objID="62a3e2b0" x="5" y="5">
+		<s:Line alpha="0.66" ai:objID="62a3e680" x="10" xTo="157" y="10" yTo="157">
+			<s:stroke>
+				<s:SolidColorStroke color="0xFF3366" joints="miter" miterLimit="4" scaleMode="normal" weight="20"/>
+			</s:stroke>
+		</s:Line>
+		<s:Line alpha="0.66" ai:objID="62a3e3a0" x="10" xFrom="157" y="10" yTo="157">
+			<s:stroke>
+				<s:SolidColorStroke color="0xFF3366" joints="miter" miterLimit="4" scaleMode="normal" weight="20"/>
+			</s:stroke>
+		</s:Line>
+	</s:Group>
+
+</s:Group>

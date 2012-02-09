@@ -1,0 +1,23 @@
+# git-ls-files --others --exclude-from=.git/info/exclude
+# Lines that start with '#' are comments.
+data
+bin-debug/*
+build-debug/*
+build-site/*
+build-standalone/*
+bin-release/*
+JBS3Plus*
+docs
+*.orig
+rsl
+*~
+~*
+defunct
+bin/*
+scripts
+CVS
+.DS_Store
+jbs.txt
+
+
+

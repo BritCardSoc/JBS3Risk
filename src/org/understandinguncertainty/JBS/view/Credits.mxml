@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+	It is ©2012 University of Cambridge.
+	It is released under version 3 of the GNU General Public License
+	Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300"
+			   creationComplete="applyStyle()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			private function applyStyle():void
+			{
+				//p1.setStyle("color", 0xff0000);
+			}
+		]]>
+	</fx:Script>
+	<s:Scroller width="100%" height="100%">
+		<s:RichEditableText paddingLeft="20" paddingRight="20" paddingTop="20" paddingBottom="20" width="90%" height="90%" editable="false" selectable="false">
+			<s:textFlow>
+				<s:TextFlow>
+					<s:p id="p1">
+						COPYRIGHT and LICENSING<s:br/>
+						The JBS3 Cardiovascular Risk Assessment was created by the <s:a id="uuLink" href="http://understandinguncertainty.org">Understanding Uncertainty team</s:a> of the University of Cambridge, 
+						working with the <s:a id="BCSLink" href="http://www.bcs.com">British Cardiovascular Society</s:a>. 
+						The current version was released in 2012 and is copyright the University of Cambridge. 
+						It is released under <s:a href="http://www.gnu.org/licenses/gpl.html">version 3 of the GNU General Public License</s:a>. The source code, containing a copy of this license is 
+						<s:a href="https://github.com/BritCardSoc/JBS3Risk">published on GitHub</s:a>.
+					</s:p>
+					<s:br/>
+					<s:p>
+						RISK MODEL<s:br/>
+						The tool contains a risk model derived from the open source code distribution of the <s:a href="http://qrisk.org/lifetime/index.php">
+						QRISK® cardiovascular lifetime risk calculator</s:a>, and uses a verbatim copy of the associated data tables 
+						<s:a href="Q65_derivation_cvd_time_40_0.csv">[0]</s:a> and 
+						<s:a href="Q65_derivation_cvd_time_40_0.csv">[1]</s:a>.
+						Further details of the implementation used in this calculator, 
+						including details of the interventions model are <s:a href="https://github.com/BritCardSoc/JBS3Risk">in the pubs directory on GitHub</s:a>.
+					</s:p>
+					<s:br/>
+					<s:p>
+						DEPENDENCIES<s:br />
+						We'd like to thank the creators of the following third party libraries:<s:br />
+						<s:a href="http://qrisk.org/lifetime/QRISK-lifetime-2011-opensource.v1.0.tgz">QRISK®-lifetime-2011 released by ClinRisk Ltd.</s:a>. <s:br />
+						<s:a href="http://github.com/robertpenner/as3-signals">AS3-Signals by Robert Penner</s:a>. <s:br />
+						<s:a href="http://github.com/robotlegs/robotlegs-framework">The Robotlegs framework</s:a>. <s:br />
+						<s:a href="http://github.com/joelhooks/signals-extensions-CommandSignal">Signals-extensions-CommandSignal by Joel Hooks</s:a><s:br/>
+						<s:a href="http://github.com/tschneidereit/SwiftSuspenders">SwiftSuspenders by Till Schneidereit</s:a><s:br />
+					</s:p>
+					<s:br/>
+					<s:p>
+						LANGUAGE<s:br />
+						This is a Flash Builder 4 web project written in actionscript 3 and mxml. 
+						To compile, download the distribution and create a new Flex Web Project using the distribution folder as
+						the project folder. The sources may also be compiled using the free Adobe FLEX SDK from
+						http://www.adobe.com/cfusion/entitlement/index.cfm?e=flex4sdk<s:br />
+					</s:p>
+					<s:br/>
+					<s:p>
+						SAMPLE FILES<s:br />
+						The src folder contains a number of sample xml files which may be loaded into the Profile screen.<s:br/>
+					</s:p>
+					<s:br/>
+					<s:p>
+						USAGE<s:br />
+						Launch the animation in a web browser. On the Profile screen, fill in your personal data. 
+						You may save your personal data to your local disk for later use. Once valid data is available
+						on the Profile screen, the output screens will be enabled.					
+					</s:p>
+				</s:TextFlow>
+			</s:textFlow>
+		</s:RichEditableText>
+	</s:Scroller>
+
+</s:TitleWindow>

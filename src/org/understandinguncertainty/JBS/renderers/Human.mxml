@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:d="http://ns.adobe.com/fxg/2008/dt"
+				autoDrawBackground="true"
+				scaleX="0.25"
+				scaleY="0.25"
+				>
+	
+	<s:states>
+		<s:State name="woman"/>
+		<s:State name="man"/>
+	</s:states>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.graphics.SolidColorStroke;
+			
+			import org.understandinguncertainty.JBS.model.vo.ShapeData;
+			
+			private function get sdata():ShapeData
+			{
+				return super.data as ShapeData;
+			}
+			
+			override public function get data():Object
+			{
+				return super.data;
+			}
+			override public function set data(d:Object):void
+			{
+				super.data = d;
+				if(sdata == null) {
+					removeAllElements();
+					return;
+				}
+				
+				currentState = sdata.shape;
+				if(currentState == "man") {
+					man.visible = true;
+					manPath.visible = true;
+					woman.visible = false;
+					womanPath.visible = false;
+				}
+				else {
+					man.visible = false;
+					manPath.visible = false;
+					woman.visible = true;
+					womanPath.visible = true;
+				}
+				
+				if(sdata.fill) {
+					manPath.fill = sdata.fill;
+					womanPath.fill = sdata.fill;
+				}
+				
+				if(sdata.stroke) {
+					manPath.stroke = sdata.stroke;
+					womanPath.stroke = sdata.stroke;
+				}
+				
+				if(sdata.tenths < 10) {
+					var path:Path = new Path();
+					path.stroke = new SolidColorStroke(0xCCCCCC, 2, 1, false, "normal", "none", "miter", 10);
+
+					if(currentState == "man") {
+						man.clipAndEnableScrolling = true;
+						path.data = manPath.data;
+						path.x = 0.939;
+						if(sdata.verticalCut) {
+							man.width = 3 + sdata.tenths*3.1;
+						}
+						else {
+							man.height = sdata.tenths*9;
+						}
+						
+					}
+					else {
+						woman.clipAndEnableScrolling = true;
+						path.data = womanPath.data;
+						path.x = 3;
+						path.y = 0.177;
+						if(sdata.verticalCut) {
+							woman.width = 1 + sdata.tenths*2.8;
+						}
+						else {
+							woman.height = sdata.tenths*9;
+						}
+					}
+					outline.removeAllElements();
+					outline.addElement(path);
+					outline.visible = true;
+				}
+				else {
+					woman.width = Number.NaN;
+					woman.height = Number.NaN;
+					man.width = Number.NaN;
+					man.height = Number.NaN;
+					outline.visible = false;
+				}
+
+				if(sdata.dtenths < 10) {
+					if(currentState == "man") {						
+						outline.clipAndEnableScrolling = true;
+						if(sdata.verticalCut) {
+							outline.width = 3 + sdata.dtenths*3.1;
+						}
+						else {
+							outline.height = sdata.dtenths*9;
+						}
+					}
+					else {
+						outline.clipAndEnableScrolling = true;
+						if(sdata.verticalCut) {
+							outline.width = 1 + sdata.dtenths*2.8;
+						}
+						else {
+							outline.height = sdata.dtenths*9;
+						}						
+					}
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Group id="outline" visible="false" />
+	<s:Group d:userLabel="Man" visible.woman="false" visible.man="true" id="man" x="0" y="0" >
+		<s:Path d:userLabel="ManStroke" winding="nonZero" x="0.939" y="0" id="manPath"
+			data="M 17.025 65 L 14.119 89 L 1.947 89 L 4.057 86.055 L 6.838 51.625 C 3.478 49.984 1.791 48.07 1.705 45.009 C 1.619 41.946 1.705 21.438 1.705 19.254 C 1.705 17.063 3.01 17 4.275 17 C 5.557 17 12.666 17 12.666 17 C 12.666 17 11.807 9.836 11.572 7.871 C 11.338 5.906 11.228 1 17.025 1 L 17.15 1 C 22.947 1 22.838 5.906 22.596 7.871 C 22.369 9.836 21.51 17 21.51 17 C 21.51 17 28.619 17 29.9 17 C 31.166 17 32.463 16.981 32.463 19.169 C 32.463 21.356 32.557 42.301 32.463 45.359 C 32.385 48.422 30.697 49.918 27.338 51.559 L 30.119 86.184 L 32.228 89 L 20.057 89 L 17.15 65 L 17.025 65 Z" >
+		</s:Path>
+	</s:Group>
+	<s:Group d:userLabel="Woman" visible.man="false" visible.woman="true" id="woman" x="3" y="0" >
+		<s:Path d:userLabel="WomanStroke" winding="nonZero" x="0" y="0.177" id="womanPath" 
+				data="M 4.998 88.823 C 4.998 88.823 4.882 87.577 7.188 87.081 C 10.717 86.319 10.652 85.399 9.015 78.023 C 8.161 74.187 8.04 68.823 8.04 68.823 L 3.782 68.823 C 3.782 68.823 3.993 58.548 5.211 51.892 C 5.781 48.776 5.126 48.702 3.791 47.46 C 1.66 45.485 1 42.295 1 40.15 C 1 35.3 1 26.047 1 20.745 C 1 15.555 4.503 15.555 9.007 15.555 C 14.24 15.555 9.322 12.444 9.322 7.141 C 9.322 3.756 11.563 1 14.761 1 C 17.962 1 20.338 3.756 20.338 7.141 C 20.338 12.444 15.725 15.579 20.96 15.579 C 25.458 15.579 29 15.555 29 20.745 C 29 26.047 29 35.3 29 40.15 C 29 42.295 28.377 45.51 26.248 47.483 C 24.906 48.726 24.483 48.776 25.054 51.892 C 26.273 58.548 26.293 68.823 26.293 68.823 L 22.033 68.823 C 22.033 68.823 21.914 74.12 21.061 77.954 C 19.424 85.331 19.359 86.296 22.887 87.056 C 25.193 87.554 25.076 88.823 25.076 88.823 L 4.998 88.823 Z" >
+		</s:Path>
+	</s:Group>
+</s:ItemRenderer>
+

@@ -1,0 +1,23 @@
+<personalData>
+  <gender>female</gender>
+  <yearOfBirth>1949</yearOfBirth>
+  <weight_kg>76.8</weight_kg>
+  <active>true</active>
+  <moderateAlcohol>true</moderateAlcohol>
+  <age>61</age>
+  <chronicKidneyDisease>false</chronicKidneyDisease>
+  <hdlCholesterol_mmol_L>1.214</hdlCholesterol_mmol_L>
+  <atrialFibrulation>false</atrialFibrulation>
+  <height_m>1.6</height_m>
+  <fiveaday>true</fiveaday>
+  <systolicBloodPressure>124</systolicBloodPressure>
+  <dateOfBirth>1/1/1949</dateOfBirth>
+  <relativeHadCVD>false</relativeHadCVD>
+  <diabetic>false</diabetic>
+  <nonSmoker>false</nonSmoker>
+  <ethnicGroup>white</ethnicGroup>
+  <SBPTreated>false</SBPTreated>
+  <totalCholesterol_mmol_L>4.651</totalCholesterol_mmol_L>
+  <postCode/>
+  <rheumatoidArthritis>false</rheumatoidArthritis>
+</personalData>

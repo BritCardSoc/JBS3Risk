@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo" 
+		 xmlns:ns="library://ns.adobe.com/flex/mx"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:SolidColorStroke id="stroke" color="0" weight="1" alpha="1"/>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			public function get label():String
+			{
+				return text.text;
+			}
+
+			public function set label(value:String):void
+			{
+				text.text = value;
+			}
+						
+			private var _original:Number = 0;
+
+			public function get original():Number
+			{
+				return _original;
+			}	
+			public function set original(n:Number):void
+			{
+				_original = n;
+				value = n;
+				invalidateProperties();
+			}
+			
+			[Bindable]
+			public function get value():Number
+			{
+				return stepper.value;
+			}
+			public function set value(n:Number):void
+			{
+				stepper.value = n;
+				invalidateProperties();
+			}
+			
+			private var _minimum:Number = 1;
+
+			public function get minimum():Number
+			{
+				return stepper.minimum;
+			}
+
+			public function set minimum(value:Number):void
+			{
+				stepper.minimum = value;
+				invalidateProperties();
+			}
+			
+			
+			private var _maximum:Number = 1;
+
+			public function get maximum():Number
+			{
+				return stepper.maximum;
+			}
+
+			public function set maximum(value:Number):void
+			{
+				stepper.maximum = value;
+				invalidateProperties();
+			}
+
+			private function reset():void
+			{
+				stepper.value = original;
+				before.enabled = false;
+				invalidateProperties();
+			}
+			
+			private var _fixed:int = 0;
+			public function get fixed():int 
+			{
+				return _fixed;
+			}
+			public function set fixed(f:int):void
+			{
+				_fixed = f;
+				invalidateProperties();
+			}
+			
+			private var _stepSize:Number = 1;
+			public function get stepSize():Number 
+			{
+				return _stepSize;
+			}
+			public function set stepSize(f:Number):void
+			{
+				_stepSize = f;
+				invalidateProperties();
+			}
+			
+						
+			override protected function commitProperties():void
+			{
+				super.commitProperties();
+				before.enabled = Math.abs(stepper.value - original) > 1e-8;
+				before.label = original.toFixed(_fixed);
+				stepper.stepSize=_stepSize;
+				stepper.valueFormatFunction = function(val:Number):String 
+				{
+					return val.toFixed(_fixed);
+				}
+			}
+				
+			private var _stepperListener:Function = null;
+			
+			override public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
+			{
+				if(type == Event.CHANGE) {
+					super.addEventListener(type, listener, useCapture, priority, useWeakReference);
+					stepper.addEventListener(type, _stepperListener = function(event:Event):void {
+						before.enabled = Math.abs(stepper.value - original) > 1e-4;
+						dispatchEvent(new Event(Event.CHANGE));
+					}, useCapture, priority, useWeakReference);
+				}
+				else if(type == MouseEvent.CLICK)
+					before.addEventListener(type, listener, useCapture, priority, useWeakReference);
+			}
+			
+			override public function removeEventListener(type:String, listener:Function, useCapture:Boolean=false):void
+			{
+				if(type == Event.CHANGE) {
+					if(_stepperListener != null) {
+						stepper.removeEventListener(type, _stepperListener);
+						_stepperListener = null;
+					}
+					super.removeEventListener(type, listener);
+			}
+			else if(type == MouseEvent.CLICK)
+				before.removeEventListener(type, listener);
+			}
+		]]>
+	</fx:Script>
+	
+
+	<s:VGroup width="100%" gap="2">
+		<s:Label id="text" />
+		<s:HGroup width="100%" verticalAlign="middle">
+
+			<s:Button id="before" width="60" />
+			
+			<s:Label text="→" fontSize="14"/>
+			
+			
+			<!-- Note that the Spark NumericStepper is buggy in FB4. Setting the stepSize can cause the value to change. -->
+			<s:NumericStepper id="stepper" width="70" />
+			
+		</s:HGroup>
+	</s:VGroup>
+
+</s:VGroup>

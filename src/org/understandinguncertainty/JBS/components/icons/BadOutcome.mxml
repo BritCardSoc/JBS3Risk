@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo" 
+		 xmlns:ai="http://ns.adobe.com/ai/2009" 
+		 xmlns:flm="http://ns.adobe.com/flame/2008"
+		 resizeMode="scale"
+		 width="184" height="184"
+		 cacheAsBitmap="true"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+		<s:Ellipse alpha="0.76" height="183" ai:objID="62a3ce20" width="183" x="1" y="1">
+			<s:fill>
+<!--				<s:RadialGradient scaleX="276.262" scaleY="276.262" x="63" y="44">
+					<s:GradientEntry color="0xFFAD3F" ratio="0"/>
+					<s:GradientEntry color="0xFF543F" flm:midpoint="0.87" ratio="0.406593"/>
+					<s:GradientEntry color="0xFF0077" flm:midpoint="0.626015968322754" ratio="1"/>
+				</s:RadialGradient>
+-->
+				<s:RadialGradient scaleX="276.262" scaleY="276.262" x="63" y="44">
+					<s:GradientEntry color="0xCC993F" ratio="0"/>
+					<s:GradientEntry color="0xCC543F" flm:midpoint="0.87" ratio="0.406593"/>
+					<s:GradientEntry color="0xCC0077" flm:midpoint="0.626015968322754" ratio="1"/>
+				</s:RadialGradient>
+			</s:fill>
+		</s:Ellipse>
+		<s:Group ai:objID="62a3bed0" x="44" y="65">
+			<s:Group ai:objID="62a3c190" x="0" y="0">
+				<s:Ellipse height="28" ai:objID="62a3c4d0" width="28" x="0" y="0">
+					<s:fill>
+						<s:SolidColor/>
+					</s:fill>
+				</s:Ellipse>
+				<s:Ellipse height="28" ai:objID="62a3c2b0" width="28" x="69" y="0">
+					<s:fill>
+						<s:SolidColor/>
+					</s:fill>
+				</s:Ellipse>
+			</s:Group>
+			<s:Path data="M 45.855 0 C 30.069 -0.009 14.215 6.053 2.165 18.109 L 2.165 18.109 C -0.722 20.994 -0.722 25.672 2.165 28.559 L 2.165 28.559 C 5.049 31.446 9.728 31.446 12.613 28.559 L 12.613 28.559 C 21.823 19.354 33.807 14.784 45.855 14.776 L 45.855 14.776 C 57.903 14.784 69.887 19.354 79.099 28.559 L 79.099 28.559 C 81.984 31.446 86.662 31.443 89.547 28.559 L 89.547 28.559 C 92.433 25.672 92.432 20.994 89.547 18.109 L 89.547 18.109 C 77.503 6.061 61.665 0 45.889 0 L 45.889 0 C 45.878 0 45.866 0 45.855 0 L 45.855 0 Z" ai:objID="62a3bff0" winding="nonZero" x="2.556" y="47.35">
+				<s:fill>
+					<s:SolidColor/>
+				</s:fill>
+			</s:Path>
+		</s:Group>
+		<s:Path data="M 43.305 32.055 C 43.305 32.055 43.172 31.898 42.878 31.56 L 42.878 31.56 C 42.583 31.224 42.143 30.73 41.586 30.123 L 41.586 30.123 C 40.474 28.904 38.888 27.23 37.054 25.455 L 37.054 25.455 C 33.432 21.904 28.588 17.951 25.27 16.53 L 25.27 16.53 C 19.358 13.875 10.546 11.98 6.682 11.288 L 6.682 11.288 C 5.384 11.048 4.671 10.939 4.668 10.939 L 4.668 10.939 L 4.668 10.941 C 1.666 10.478 -0.394 7.669 0.067 4.668 L 0.067 4.668 C 0.53 1.665 3.338 -0.395 6.341 0.067 L 6.341 0.067 C 6.571 0.131 19.661 2.046 29.737 6.477 L 29.737 6.477 C 35.42 9.054 40.575 13.602 44.704 17.551 L 44.704 17.551 C 48.782 21.498 51.625 24.862 51.704 24.951 L 51.704 24.951 C 53.665 27.269 53.376 30.74 51.058 32.703 L 51.058 32.703 C 50.025 33.576 48.763 34.003 47.508 34.003 L 47.508 34.003 C 45.945 34.003 44.393 33.341 43.305 32.055 L 43.305 32.055 Z" ai:objID="62a3bd30" winding="nonZero" x="105.495" y="49.497">
+			<s:fill>
+				<s:SolidColor/>
+			</s:fill>
+		</s:Path>
+		<s:Path data="M 1.947 32.7 C -0.371 30.738 -0.661 27.269 1.302 24.949 L 1.302 24.949 C 1.379 24.859 4.223 21.498 8.299 17.55 L 8.299 17.55 C 12.428 13.602 17.584 9.054 23.265 6.475 L 23.265 6.475 C 33.342 2.046 46.434 0.131 46.664 0.067 L 46.664 0.067 C 49.667 -0.396 52.473 1.665 52.936 4.665 L 52.936 4.665 C 53.398 7.668 51.338 10.477 48.337 10.938 L 48.337 10.938 C 48.335 10.941 47.62 11.047 46.323 11.285 L 46.323 11.285 C 45.026 11.524 43.194 11.885 41.101 12.363 L 41.101 12.363 C 36.924 13.311 31.659 14.774 27.733 16.527 L 27.733 16.527 C 24.847 17.773 20.736 20.953 17.368 24.108 L 17.368 24.108 C 13.964 27.267 11.157 30.382 10.128 31.561 L 10.128 31.561 C 9.831 31.898 9.7 32.053 9.7 32.055 L 9.7 32.055 C 8.611 33.34 7.06 34.002 5.498 34.002 L 5.498 34.002 C 4.242 34.002 2.981 33.574 1.947 32.7 L 1.947 32.7 Z" ai:objID="62a3bb70" winding="nonZero" x="26.499" y="49.498">
+			<s:fill>
+				<s:SolidColor/>
+			</s:fill>
+		</s:Path>
+
+</s:Group>

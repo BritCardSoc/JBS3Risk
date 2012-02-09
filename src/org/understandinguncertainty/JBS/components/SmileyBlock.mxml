@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo" width="400" height="300">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			var sz:Number = Math.min(width, height), Math.min()
+		]]>
+	</fx:Script>
+	
+	
+	<view:SmileySquare id="smileySquare" N="10" f="30" f_int="25" m="10" m_int="11"
+					   top="0" left="0" 
+					   width="{Math.min(Math.min(smileyBlock.width, smileyBlock.height), height)}" height="{Math.min(Math.min(smileyBlock.width, smileyBlock.height), height)}"/>
+		
+</s:Group>

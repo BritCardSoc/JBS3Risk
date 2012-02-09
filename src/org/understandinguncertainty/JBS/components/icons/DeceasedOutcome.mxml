@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo" 
+		 xmlns:ai="http://ns.adobe.com/ai/2009" 
+		 xmlns:flm="http://ns.adobe.com/flame/2008" 
+		 resizeMode="scale"
+		 width="184" height="184"
+		 cacheAsBitmap="true"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:SolidColor id="fill" color="0xffffff" />
+		<s:SolidColorStroke id="stroke" color="0x888888" weight="1"/> 
+	</fx:Declarations>
+	
+	<s:Group flm:knockout="false" ai:objID="59d0c720" x="1" y="1">
+		<s:Group alpha="0.77" flm:knockout="false" ai:objID="59d0f3f0" x="0" y="0">
+			<s:Ellipse height="183" ai:objID="59d190d0" width="183" x="0" y="0" fill="{fill}" stroke="{stroke}">
+<!--				<s:fill>
+					<s:RadialGradient scaleX="276.262" scaleY="276.262" x="63" y="44">
+						<s:GradientEntry color="0xBFFFE2" ratio="0"/>
+						<s:GradientEntry color="0x3FBDFF" ratio="0.510989"/>
+						<s:GradientEntry color="0x00919F" flm:midpoint="0.87" ratio="1"/>
+					</s:RadialGradient>
+				</s:fill>-->
+			</s:Ellipse>
+		</s:Group>
+	</s:Group>
+</s:Group>

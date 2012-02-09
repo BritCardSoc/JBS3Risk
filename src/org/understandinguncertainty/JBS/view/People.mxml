@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			 xmlns:s="library://ns.adobe.com/flex/spark" 
+			 xmlns:mx="library://ns.adobe.com/flex/mx"
+			 paddingTop="0" gap="0"
+			 >
+	
+	<fx:Declarations>
+		<s:TileLayout id="myLayout" requestedColumnCount="20" orientation="columns" horizontalGap="0" verticalGap="5"/>
+	</fx:Declarations>
+
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.IList;
+			
+			import spark.layouts.TileLayout;
+			
+			override public function set requestedRowCount(rows:int):void
+			{
+				(myLayout as TileLayout).requestedRowCount = rows;
+			}
+			
+			public function set requestedColumnCount(cols:int):void
+			{
+				(myLayout as TileLayout).requestedColumnCount = cols;
+			}
+			
+			override public function get rowCount():int {
+				return (myLayout as TileLayout).rowCount;
+			}
+			
+			public function get columnCount():int {
+				return (myLayout as TileLayout).columnCount;
+			}
+			
+			public function get dataProvider():IList 
+			{
+				return dataGroup.dataProvider;
+			}
+			public function set dataProvider(dp:IList):void
+			{
+				dataGroup.dataProvider = dp;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:DataGroup id="dataGroup" layout="{myLayout}" itemRenderer="org.understandinguncertainty.JBS.renderers.Human" mouseChildren="false"/>
+</s:VGroup>

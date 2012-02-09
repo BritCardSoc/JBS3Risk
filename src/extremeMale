@@ -1,0 +1,27 @@
+<personalData>
+  <townsendGroup>4</townsendGroup>
+  <dateOfBirth>22/11/1971</dateOfBirth>
+  <yearOfBirth>1971</yearOfBirth>
+  <SBPTreated>true</SBPTreated>
+  <height_m>1.7</height_m>
+  <weight_kg>114.2</weight_kg>
+  <moderateAlcohol>true</moderateAlcohol>
+  <chronicRenalDisease>true</chronicRenalDisease>
+  <systolicBloodPressure>210</systolicBloodPressure>
+  <gender>male</gender>
+  <age>40</age>
+  <relativeHadCVD>true</relativeHadCVD>
+  <atrialFibrillation>true</atrialFibrillation>
+  <postCode/>
+  <rheumatoidArthritis>true</rheumatoidArthritis>
+  <smokerGroup>4</smokerGroup>
+  <townsend>0</townsend>
+  <hdlCholesterol_mmol_L>0.500001</hdlCholesterol_mmol_L>
+  <active>true</active>
+  <totalCholesterol_mmol_L>6.000001</totalCholesterol_mmol_L>
+  <diabetic>true</diabetic>
+  <ethnicGroup>0</ethnicGroup>
+  <fiveaday>true</fiveaday>
+  <nonSmoker>true</nonSmoker>
+  <quitSmoker>false</quitSmoker>
+</personalData>

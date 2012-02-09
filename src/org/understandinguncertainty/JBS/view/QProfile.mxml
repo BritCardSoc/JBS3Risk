@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo"
+		 xmlns:validators="org.understandinguncertainty.JBS.validators.*" 
+		 xmlns:ns="library://ns.adobe.com/flex/mx"
+		 xmlns:components="org.understandinguncertainty.JBS.components.*"
+>
+	
+
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.ToolTip;
+			import mx.core.IUIComponent;
+			import mx.managers.ToolTipManager;
+			import mx.resources.IResourceManager;
+			
+			import org.understandinguncertainty.JBS.components.skins.ErrorSkin;	
+			
+			[Inject]
+			public var resources:IResourceManager;
+			
+			public function get systolicBloodPressure():Number
+			{
+				return Number(systolicBloodPressureInputStep.value);
+			}
+			public function set systolicBloodPressure(value:Number):void
+			{
+				systolicBloodPressureInputStep.value = value;
+			}
+
+			private var consultTip:ToolTip;
+			
+			private function creatConsultTip(event:Event):void 
+			{
+				// add consult your doctor warnings
+				var s:String = consultMessage;
+				//+event.currentTarget.width - 250
+				var p:Point = new Point(0, event.currentTarget.y);
+				var q:Point = event.currentTarget.parent.localToGlobal(p);
+				consultTip = ToolTipManager.createToolTip(consultMessage,
+					q.x, q.y-120,
+					"errorTipAbove",
+					IUIComponent(event.currentTarget)) as ToolTip;
+				consultTip.setStyle("chromeColor", 0x0044BB);
+				consultTip.height=120;
+				consultTip.width=250;
+			}
+			
+			private function destroyConsultTip(event:Event):void 
+			{
+				// add consult your doctor warnings
+				return ToolTipManager.destroyToolTip(consultTip);
+			}
+			
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="normal"/>
+	</s:states>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="gender" />
+		
+		<!-- These declarations can be moved into the form if they are needed -->
+		<s:CheckBox id="moderateAlcohol"  visible="false" label="@Resource(bundle='JBS', key='profile.check.alcohol')"/>
+		
+		<fx:String id="tipPlaceHolder"/>
+		<fx:String id="bmiTooBig">Body Mass Index is too large</fx:String>
+		<fx:String id="bmiTooSmall">Body Mass Index is too small</fx:String>
+		
+		<fx:String id="cholRatioTooBig">Cholesterol ratio is too large</fx:String>
+		<fx:String id="cholRatioTooSmall">Cholesterol ratio is too small</fx:String>
+		<fx:String id="consultMessage">If you have this condition you should consult with your doctor about the importance of life time risk calculation for your management</fx:String>
+				
+		<s:SolidColor id="fill" color="0xffffff" alpha="1"/>
+		<s:SolidColor id="legalFill" color="0xeeeeee" alpha="1"/>
+		<s:SolidColorStroke id="legalStroke" weight="1" color="0" alpha="0.4"/>
+		
+		<s:SolidColorStroke id="stroke" weight="2" color="0" alpha="0.4"/>
+		<validators:DateOfBirthValidator id="dateValidator"
+						  yearSource="{yyyyStep}" yearProperty="value"
+						  monthSource="{mmStep}" monthProperty="value" 
+						  daySource="{ddStep}" dayProperty="value" required="true" />
+		<ns:NumberValidator id="heightValidator" 
+							minValue="20" maxValue="40"
+							exceedsMaxError = "{bmiTooBig}"
+							lowerThanMinError = "{bmiTooSmall}"
+							required="true" 
+							source="{height_mStep}" 
+							property="bmi" />
+		<ns:NumberValidator id="weightValidator" 
+							minValue="20" maxValue="40" 
+							exceedsMaxError = "{bmiTooBig}"
+							lowerThanMinError = "{bmiTooSmall}"
+							required="true" 
+							source="{weight_kgStep}" 
+							property="bmi" />
+		<validators:CholRatioValidator id="totalCholValidator" source="{totalCholesterolStep}" property="cholRatio"
+							required="true" 
+							/>
+		<validators:CholRatioValidator id="hdlCholValidator" source="{hdlCholesterolStep}" property="cholRatio"
+							required="true" 
+							/>
+		<ns:NumberValidator id="sbpValidator" domain="real" minValue="70" maxValue="210" required="true" source="{systolicBloodPressureInputStep}" property="value"/>	
+							
+		<ns:NumberValidator id="hadCVDValidator" 
+							minValue="1" maxValue="1" 
+							lowerThanMinError = "If you already have heart disease this calculator is not appropriate, but what matters is sticking to your treatment."
+							required="true" 
+							source="{cvdAlready}"
+							property="hadCVD" />
+
+		<ns:NumberValidator id="termsValidator" 
+							minValue="1" maxValue="1" 
+							lowerThanMinError="Please confirm you have read our terms and conditions"
+							required="true" 
+							source="{termsCheckbox}" 
+							property="hadCVD" />
+
+	</fx:Declarations>
+		
+<!--	<s:Group width="440" height="450" >
+-->
+	<s:Group>
+		<s:filters>
+			<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
+		</s:filters>
+		<s:Rect radiusX="5" fill="{fill}" stroke="{stroke}" alpha="1" width="100%" height="100%"/>
+
+		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20">
+			
+			<s:Label text="@Resource(bundle='JBS', key='sideBar1.profile')" fontSize="18"/>
+			
+			<s:HGroup gap="20" >
+				
+				<s:VGroup horizontalAlign="left" height="100%">
+					
+<!--				<s:HGroup width="100%" verticalAlign="bottom">
+						<s:Group width="100%"/>
+						<s:Label text="Have you ever suffered from Cardiovascular Disease?" fontWeight="normal"/>
+						<components:HadCVDCheck id="cvdAlready"  errorSkin="{ErrorSkin}"/>
+					</s:HGroup>
+					
+-->					<s:HGroup width="100%" verticalAlign="bottom" horizontalAlign="right"  toolTip="{tipPlaceHolder}">
+						<s:Label text="@Resource(bundle='JBS', key='profile.entry.dob')" fontWeight="normal" />
+						<!--<s:TextInput id="dd" editable="true" text="" width="20"  />-->
+						<s:VGroup horizontalAlign="center" gap="2">
+							<s:Label text="Day" fontSize="10" color="#AAAAAA"/>
+							<s:NumericStepper id="ddStep" width="40" minimum="1" maximum="31" value="1"/>
+						</s:VGroup>
+						<!--<s:TextInput id="mm" editable="true" text="" width="20" />-->
+						<s:VGroup horizontalAlign="center" gap="2">
+							<s:Label text="Month" fontSize="10" color="#AAAAAA"/>
+							<s:NumericStepper id="mmStep" width="40" minimum="1" maximum="12" value="1"/>
+						</s:VGroup>
+						<!--<s:TextInput id="yyyy" editable="true" text="" width="60"  />-->
+						<s:VGroup horizontalAlign="center" gap="2">
+							<s:Label text="Year" fontSize="10" color="#AAAAAA"/>
+							<s:NumericStepper id="yyyyStep" width="53" minimum="1926" maximum="2050" value="1"/>
+						</s:VGroup>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="bottom"  toolTip="{tipPlaceHolder}">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.entry.gender')" fontWeight="normal" />
+						<s:RadioButton label="@Resource(bundle='JBS', key='male')" groupName="gender" value="male" selected="true" />
+						<s:RadioButton label="@Resource(bundle='JBS', key='female')" groupName="gender" value="female" />
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.qrsk.ethnicity')" fontWeight="normal" />
+						<ns:ComboBox id="ethnicGroup" width="150" selectedIndex="0" rowCount="10"/>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+						<s:Group width="50%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.entry.height')" fontWeight="normal" />
+						<!--<s:TextInput id="height_m" editable="true" text="1.7" width="40" />-->
+						<components:HeightStepper id="height_mStep" 
+												  value="1.7" width="50" minimum="1.5" maximum="2.5" stepSize="0.01"
+												  weight="{weight_kgStep.value}"
+										  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"/>
+						<s:Group width="50%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.entry.weight')" fontWeight="normal" />
+						<!--<s:TextInput id="weight_kg" editable="true" text="65" width="40" />-->
+						<components:WeightStepper id="weight_kgStep" value="60" width="60" minimum="30" maximum="150" stepSize="0.1"
+												  height_m="{height_mStep.value}"
+										  valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"/>
+						<s:Label id="bmiField" text=""/>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.qrsk.townsend')" fontWeight="normal" />
+						<ns:ComboBox id="townsendGroup" width="120" selectedIndex="2" rowCount="5"/>
+					</s:HGroup>
+					<s:HGroup width="100%" horizontalAlign="center" paddingTop="12" paddingBottom="12">
+						<ns:Image id="townsendBand" source="assets/townsend/band3.jpg" height="75" width="100"/>
+					</s:HGroup>
+					<!--<s:Group height="95"/>-->
+					
+					<s:Group>
+						<s:Rect width="100%" height="100%" 
+								fill="{legalFill}" 
+								stroke="{legalStroke}"
+								radiusX="5" radiusY="5"/>
+						<s:VGroup 
+							paddingBottom="10"
+							paddingTop="10"
+							paddingLeft="10"
+							paddingRight="10"
+							>
+							
+							<s:HGroup width="100%" verticalAlign="bottom">
+								<s:Group width="100%"/>
+								<s:Label text="I have never suffered from Cardiovascular Disease" fontWeight="normal"/>
+								<components:HadCVDCheck id="cvdAlready" errorSkin="{ErrorSkin}"/>
+							</s:HGroup>
+							
+							<s:HGroup width="100%" verticalAlign="bottom">
+								<s:Group width="100%"/>
+								<s:Label text="I have read the" fontWeight="normal"/>
+								<s:Button id="termsButton" label="terms and conditions"/>
+								<components:HadCVDCheck id="termsCheckbox" errorSkin="{ErrorSkin}"/>
+							</s:HGroup>
+										
+						</s:VGroup>
+					</s:Group>
+				</s:VGroup>
+				
+				<s:VGroup>
+											
+					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.qrsk.smoker')" fontWeight="normal" />
+						<ns:ComboBox id="smokerGroup" width="160" selectedIndex="0" rowCount="5"/>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="middle">
+						
+						<s:VGroup width = "100%" >
+							<s:HGroup width="100%" verticalAlign="bottom"  toolTip="{tipPlaceHolder}">
+								<s:Group width="100%"/>   
+								<s:Label text="@Resource(bundle='JBS', key='profile.entry.totalChol')" fontWeight="normal"/>
+								<!--<s:TextInput id="totalCholesterolInput" editable="true" text="" width="40" />-->
+								<components:TotalCholStepper id="totalCholesterolStep" width="70"
+													hdlChol="{hdlCholesterolStep.value}"
+													value="4" minimum="0.000001" maximum="20" stepSize="0.1"
+													valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"
+													/>
+							</s:HGroup>
+							
+							<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+								<s:Group width="100%"/>
+								<s:Label text="@Resource(bundle='JBS', key='profile.entry.HDLChol')" fontWeight="normal"/>
+								<!--<s:TextInput id="hdlCholesterolInput" editable="true" text="" width="40"  />-->
+								<components:HDLCholStepper id = "hdlCholesterolStep" width="70"
+												  totalChol="{totalCholesterolStep.value}"
+												  value="1" minimum="0.000001" maximum="12" stepSize="0.1"
+												  valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"
+												  />
+							</s:HGroup>
+						</s:VGroup>
+						<ns:ComboBox id="cholUnits" width="70" selectedIndex="0" labelField="unit" />
+					</s:HGroup>
+					
+					<s:Label id="nonHDLField" paddingLeft="30"/>
+					
+					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.entry.SBP')" fontWeight="normal"/>
+						<s:NumericStepper id="systolicBloodPressureInputStep" 
+										  minimum="70" maximum="210" 
+										  width="50" 
+										  stepSize="1"
+										  valueFormatFunction="{function(val:Number):String {return val.toFixed(0);}}"
+										  />
+						<s:Label text="@Resource(bundle='JBS', key='units.mm_Hg')"/>
+
+					</s:HGroup>
+					
+					<s:HGroup id="tt" width="100%" verticalAlign="bottom">
+						<s:Label text="@Resource(bundle='JBS', key='profile.check.SBPTreatment')" 
+								 rollOver="creatConsultTip(event)"
+								 rollOut="destroyConsultTip(event)"
+								 fontWeight="normal"/>
+						<s:Group width="100%"/>
+						<s:CheckBox id="SBPTreated"
+									rollOver="creatConsultTip(event)"
+									rollOut="destroyConsultTip(event)"
+									/>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="bottom">
+						<s:Label text="@Resource(bundle='JBS', key='profile.check.diabetes')" 
+								 rollOver="creatConsultTip(event)"
+								 rollOut="destroyConsultTip(event)"
+								 fontWeight="normal"/>
+						<s:Group width="100%"/>
+						<s:CheckBox id="diabetic"
+									rollOver="creatConsultTip(event)"
+									rollOut="destroyConsultTip(event)"
+									/>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="bottom">
+						<s:Label text="@Resource(bundle='JBS', key='profile.qrsk.familyhistory')" fontWeight="normal"/>
+						<s:Group width="100%"/>
+						<s:CheckBox id="fh"/>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="bottom">
+						<s:Label text="@Resource(bundle='JBS', key='profile.qrsk.chronicRenalDisease')" 
+								 rollOver="creatConsultTip(event)"
+								 rollOut="destroyConsultTip(event)"
+								 fontWeight="normal"/>
+						<s:Group width="100%"/>
+						<s:CheckBox id="crd"
+									rollOver="creatConsultTip(event)"
+									rollOut="destroyConsultTip(event)"
+/>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="bottom">
+						<s:Label 
+							rollOver="creatConsultTip(event)"
+							rollOut="destroyConsultTip(event)"
+							text="@Resource(bundle='JBS', key='profile.qrsk.atrialFibrillation')" fontWeight="normal"/>
+						<s:Group width="100%"/>
+						<s:CheckBox id="af"
+									rollOver="creatConsultTip(event)"
+									rollOut="destroyConsultTip(event)"
+/>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="bottom">
+						<s:Label 
+							rollOver="creatConsultTip(event)"
+							rollOut="destroyConsultTip(event)"
+							text="@Resource(bundle='JBS', key='profile.qrsk.rheumatoidArthritis')" fontWeight="normal"/>
+						<s:Group width="100%"/>
+						<s:CheckBox 
+							rollOver="creatConsultTip(event)"
+							rollOut="destroyConsultTip(event)"
+							id="ra"/>
+					</s:HGroup>
+					
+					<s:Group height="8"/>
+					
+					<s:HGroup id="controlBar" width="100%">
+						<s:Button id="saveButton" label="@Resource(bundle='JBS', key='Save')" />
+						<s:Button id="loadButton" label="@Resource(bundle='JBS', key='Load')" />			
+						<s:Group width="100%" />
+						<s:Button label="@Resource(bundle='JBS', key='Next')" id="nextButton" />
+					</s:HGroup>
+					
+				</s:VGroup>
+			</s:HGroup>
+		</s:VGroup>
+	</s:Group>
+	
+</s:Group>

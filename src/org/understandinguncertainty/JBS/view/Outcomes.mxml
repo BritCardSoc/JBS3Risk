@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/halo" 
+		  xmlns:icons="org.understandinguncertainty.JBS.components.icons.*"
+		  gap="0"
+		  horizontalAlign="center"
+		  xmlns:view="org.understandinguncertainty.JBS.view.*"
+		  xmlns:ns="library://ns.adobe.com/flex/mx" xmlns:components="org.understandinguncertainty.JBS.components.*">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->		
+	</fx:Declarations>		
+<!--	<s:VGroup horizontalAlign="center">
+		<s:Label fontSize="18" text="@Resource(bundle='JBS',key='chart.title')"/> 
+		<s:Group id="chartGroup" width="500" height="350">
+-->	
+	<s:HGroup id="smileyPanel" gap="0" width="520" height="360" verticalAlign="middle">
+		
+		<s:VGroup  gap="20" width="100%" horizontalAlign="center">
+			<s:HGroup gap="5">
+				<s:Label id="targetIntervalLabel"  fontSize="18"/>
+				<s:Label text="@Resource(bundle='JBS',key='icons.title')" fontSize="18"/>
+				<s:Label id="ageLabel" fontSize="18"/>
+			</s:HGroup>
+			<s:HGroup gap="20" >
+				
+				<components:SmileySquare id="smileySquare" N="10" top="0" left="0" />
+				
+				<s:VGroup horizontalAlign="left" width="220" height="100%">
+					<s:HGroup verticalAlign="top"  width="100%" visible="{smileySquare.blue + smileySquare.moreBlue > 0}">
+						<icons:DeceasedOutcome width="20" height="20"/>
+						<s:VGroup>
+							<s:Label text="{smileySquare.blue + smileySquare.moreBlue} Death{smileySquare.bluePlural} from other causes" fontSize="14"/>
+							<s:Label text="before heart attack or stroke" fontSize="14"/>
+						</s:VGroup>
+						<s:Group width="100%"/>
+					</s:HGroup>
+					<ns:Spacer height="40%"/>
+					<s:HGroup verticalAlign="middle" width="100%" visible="{smileySquare.red > 0}" >
+						<icons:BadOutcome  width="20" height="20" />
+						<s:Label text="{smileySquare.red} heart attack{smileySquare.redPlural} or stroke{smileySquare.redPlural}" fontSize="14"/>
+						<s:Group width="100%"/>
+					</s:HGroup>
+					<ns:Spacer height="40%"/>
+					<s:HGroup verticalAlign="middle"  width="100%" visible="{smileySquare.greenCrossed > 0}">
+						<icons:WorseOutcome width="20" height="20"/>
+						<s:VGroup>
+							<s:Label text="{smileySquare.greenCrossed} Heart attack{smileySquare.greenCrossedPlural} or stroke{smileySquare.greenCrossedPlural}" fontSize="14"/>
+							<s:Label text="caused by intervention" fontSize="14"/>
+						</s:VGroup>
+						<s:Group width="100%"/>
+					</s:HGroup>						
+					<ns:Spacer height="40%"/>
+					<s:HGroup verticalAlign="top" width="100%" visible="{smileySquare.yellow > 0}" >
+						<icons:BetterOutcome width="20" height="20"/>
+						<s:VGroup>
+							<s:Label text="{smileySquare.yellow} Heart attack{smileySquare.yellowPlural} or stroke{smileySquare.yellowPlural}" fontSize="14"/>
+							<s:Label text="prevented by intervention" fontSize="14"/>
+						</s:VGroup>
+						<s:Group width="100%"/>
+					</s:HGroup>
+					<ns:Spacer height="40%"/>
+					<s:HGroup verticalAlign="middle"  width="100%" visible="{smileySquare.green > 0}">
+						<icons:GoodOutcome width="20" height="20"/>
+						<s:Label text="{smileySquare.green} No heart attack{smileySquare.greenPlural} or stroke{smileySquare.greenPlural}" fontSize="14"/>
+						<s:Group width="100%"/>
+					</s:HGroup>
+				</s:VGroup>
+				
+			</s:HGroup>
+		</s:VGroup>
+		
+	</s:HGroup>
+	
+	<view:AgeSettings width="80%"/>
+	
+</s:VGroup>

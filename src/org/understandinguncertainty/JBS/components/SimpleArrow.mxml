@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:Group 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	scaleX="0.3" scaleY="0.3">
+	<s:Path data="M 0.00 15.60 L 27.00 0.01 27.00 31.19 Z " id="path1" rotation="0" x="0" y="0">
+<!--	<s:Path data="M 0.00 15.60 L 27.00 0.01 27.00 31.19 Z " height="31.15" id="path1" rotation="0" width="27" x="0" y="0">-->
+		<s:fill>
+			<s:SolidColor color="#CCCCCC"/>
+		</s:fill>
+	</s:Path>
+</s:Group>

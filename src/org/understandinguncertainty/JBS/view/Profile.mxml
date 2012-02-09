@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
+It is ©2012 University of Cambridge.
+It is released under version 3 of the GNU General Public License
+Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo"
+		 xmlns:validators="org.understandinguncertainty.JBS.validators.*" 
+		 xmlns:ns="library://ns.adobe.com/flex/mx">
+	
+
+	<fx:Script>
+		<![CDATA[
+			import mx.resources.IResourceManager;	
+			
+			[Inject]
+			public var resources:IResourceManager;
+
+
+			public function get systolicBloodPressure():Number
+			{
+				return Number(systolicBloodPressureInput.text);
+			}
+			public function set systolicBloodPressure(value:Number):void
+			{
+				systolicBloodPressureInput.text = value.toPrecision(3);
+			}
+						
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="normal"/>
+	</s:states>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="gender" />
+		
+		<!-- These declarations can be moved into the form if they are needed -->
+		<s:CheckBox id="moderateAlcohol"  visible="false" label="@Resource(bundle='JBS', key='profile.check.alcohol')"/>
+		
+		<fx:String id="tipPlaceHolder"/>
+		
+		<s:SolidColor id="fill" color="0xffffff" alpha="1"/>
+		<s:SolidColorStroke id="stroke" weight="2" color="0" alpha="0.4"/>
+		<validators:DateOfBirthValidator id="dateValidator"
+						  yearSource="{yyyy}" yearProperty="text"
+						  monthSource="{mm}" monthProperty="text"
+						  daySource="{dd}" dayProperty="text" required="true" />
+		<ns:NumberValidator id="totalCholValidator"  required="true" source="{totalCholesterolInput}" property="text"/>
+		<ns:NumberValidator id="hdlCholValidator" required="true" source="{hdlCholesterolInput}" property="text"/>
+		<ns:NumberValidator id="sbpValidator" minValue="70" maxValue="210" required="true" source="{systolicBloodPressureInput}" property="text"/>
+	</fx:Declarations>
+		
+<!--	<s:Group width="440" height="450" >
+-->
+	<s:Group>
+		<s:filters>
+			<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
+		</s:filters>
+		<s:Rect radiusX="5" fill="{fill}" stroke="{stroke}" alpha="1" width="100%" height="100%"/>
+
+		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20">
+			
+			<s:Label text="@Resource(bundle='JBS', key='sideBar1.profile')" fontSize="18"/>
+			
+			<s:HGroup gap="20" >
+				
+				<s:VGroup horizontalAlign="left" height="100%">
+					
+					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+						<s:Label text="@Resource(bundle='JBS', key='profile.entry.dob')" fontWeight="normal" />
+						<s:TextInput id="dd" editable="true" text="" width="20"  />
+						<s:TextInput id="mm" editable="true" text="" width="20" />
+						<s:TextInput id="yyyy" editable="true" text="" width="60"  />
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="bottom"  toolTip="{tipPlaceHolder}">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.entry.gender')" fontWeight="normal" />
+						<s:RadioButton label="@Resource(bundle='JBS', key='male')" groupName="gender" value="male" selected="true" />
+						<s:RadioButton label="@Resource(bundle='JBS', key='female')" groupName="gender" value="female" />
+					</s:HGroup>
+					
+					<s:Group height="8"/>
+					
+				</s:VGroup>
+				
+				<s:VGroup >
+											
+					<s:HGroup width="100%" verticalAlign="bottom"  toolTip="{tipPlaceHolder}">
+						<s:Group width="100%"/>   
+						<s:Label text="@Resource(bundle='JBS', key='profile.entry.totalChol')" fontWeight="normal"/>
+						<s:TextInput id="totalCholesterolInput" editable="true" text="" width="40" />
+						<ns:ComboBox id="totalCholUnits" width="70" selectedIndex="0" labelField="unit" />
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.entry.HDLChol')" fontWeight="normal"/>
+						<s:TextInput id="hdlCholesterolInput" editable="true" text="" width="40"  />
+						<ns:ComboBox id="hdlCholUnits" width="70" selectedIndex="0" labelField="unit" />
+					</s:HGroup>
+					
+					<s:Group height="8"/>
+					
+					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.entry.SBP')" fontWeight="normal"/>
+						<s:TextInput id="systolicBloodPressureInput" editable="true" text="" width="40" />
+						<s:Label text="@Resource(bundle='JBS', key='units.mm_Hg')"/>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="bottom">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.check.SBPTreatment')" fontWeight="normal"/>
+						<s:CheckBox id="SBPTreated"/>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="bottom">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.check.diabetes')" fontWeight="normal"/>
+						<s:CheckBox id="diabetic"/>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="bottom">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.check.smoker')" fontWeight="normal"/>
+						<s:CheckBox id="smoker" change="if(smoker.selected) quitSmoker.selected=false"/>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="bottom">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.check.quitSmoker')" fontWeight="normal" alpha="{smoker.selected ? 0.5 : 1}"/>
+						<s:CheckBox id="quitSmoker" enabled="{!smoker.selected}"/>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="bottom">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='JBS', key='profile.check.active')" fontWeight="normal"/>
+						<s:CheckBox id="active"/>
+					</s:HGroup>
+					
+					<s:Group height="8"/>
+					
+					<s:HGroup id="controlBar" width="100%">
+						<s:Button id="saveButton" label="@Resource(bundle='JBS', key='Save')" />
+						<s:Button id="loadButton" label="@Resource(bundle='JBS', key='Load')" />			
+						<s:Group width="100%" />
+						<s:Button label="@Resource(bundle='JBS', key='Next')" id="nextButton" />
+					</s:HGroup>
+					
+				</s:VGroup>
+			</s:HGroup>
+		</s:VGroup>
+	</s:Group>
+</s:Group>
