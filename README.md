@@ -9,19 +9,22 @@ The source code, containing a copy of this license is [published on GitHub](http
 RISK MODEL
 ----------
 The tool contains a risk model derived from the open source code distribution of the [QRISK® cardiovascular lifetime risk calculator](http://qrisk.org/lifetime/index.php), and uses a verbatim copy of the associated data tables
-	*[Q65_derivation_cvd_time_40_0.csv](https://github.com/BritCardSoc/JBS3Risk/src/Q65_derivation_cvd_time_40_0.csv)
-	*[Q65_derivation_cvd_time_40_1.csv](https://github.com/BritCardSoc/JBS3Risk/src/Q65_derivation_cvd_time_40_1.csv)
+
+*	[Q65_derivation_cvd_time_40_0.csv](https://github.com/BritCardSoc/JBS3Risk/src/Q65_derivation_cvd_time_40_0.csv)
+*	[Q65_derivation_cvd_time_40_1.csv](https://github.com/BritCardSoc/JBS3Risk/src/Q65_derivation_cvd_time_40_1.csv)
+	
 Further details of the implementation used in this calculator, 
 including details of the interventions model are in the [pubs directory on GitHub](https://github.com/BritCardSoc/JBS3Risk).
 
 CREDITS
 -------
 We'd like to thank the creators of the following third party libraries:
-	* [QRISK®-lifetime-2011](http://qrisk.org/lifetime/QRISK-lifetime-2011-opensource.v1.0.tgz) released by ClinRisk Ltd.
-	* [AS3-Signals by Robert Penner](http://github.com/robertpenner/as3-signals)
-	* [The Robotlegs framework v1](http://github.com/robotlegs/robotlegs-framework)
-	* [Signals-extensions-CommandSignal](http://github.com/joelhooks/signals-extensions-CommandSignal) by Joel Hooks
-	* [SwiftSuspenders](http://github.com/tschneidereit/SwiftSuspenders) by Till Schneidereit
+
+* 	[QRISK®-lifetime-2011](http://qrisk.org/lifetime/QRISK-lifetime-2011-opensource.v1.0.tgz) released by ClinRisk Ltd.
+* 	[AS3-Signals by Robert Penner](http://github.com/robertpenner/as3-signals)
+* 	[The Robotlegs framework v1](http://github.com/robotlegs/robotlegs-framework)
+* 	[Signals-extensions-CommandSignal](http://github.com/joelhooks/signals-extensions-CommandSignal) by Joel Hooks
+* 	[SwiftSuspenders](http://github.com/tschneidereit/SwiftSuspenders) by Till Schneidereit
 
 LANGUAGE
 --------
