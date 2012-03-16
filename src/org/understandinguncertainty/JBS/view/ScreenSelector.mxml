@@ -57,32 +57,32 @@ Source code, including a copy of the license is available at https://github.com/
 				<s:Label id="outlookLabel" text="@Resource(bundle='JBS',key='sideBar1.outlook')"  fontSize="36" />
 				<ns:Button id="outlookButton"
 						   icon="@Embed('/assets/outlookThumbnail2.png')" 
-						   cornerRadius="20"
-						   width="300" height="180" />
+						   cornerRadius="18"
+						   width="260" height="155" />
 			</s:VGroup>
 			
 			<s:VGroup id="outcomes" gap="0" horizontalAlign="center" visible.basic="false">
 				<s:Label id="outcomesLabel" text="@Resource(bundle='JBS',key='sideBar1.outcomes')"  fontSize="36" />
 				<ns:Button id="outcomesButton"
 						   icon="@Embed('/assets/outcomesThumbnail.png')" 
-						   cornerRadius="20"
-						   width="300" height="180" />
+						   cornerRadius="18"
+						   width="260" height="155" />
 			</s:VGroup>
 			
 			<s:VGroup id="balance" gap="0" horizontalAlign="center" visible.basic="false">
 				<s:Label id="balanceLabel" text="@Resource(bundle='JBS',key='sideBar1.balance')"  fontSize="36" />
 				<ns:Button id="balanceButton"
 						   icon="@Embed('/assets/balanceThumbnail2.png')" 
-						   cornerRadius="20"
-						   width="300" height="180" />
+						   cornerRadius="18"
+						   width="260" height="155" />
 			</s:VGroup>
 			
 			<s:VGroup id="compare" gap="0" horizontalAlign="center" visible.basic="false">
 				<s:Label id="compareLabel" text="@Resource(bundle='JBS',key='sideBar1.compare')"  fontSize="36" />
 				<ns:Button id="compareButton"
 						   icon="@Embed('/assets/compareThumbnail.png')"
-						   cornerRadius="20"
-						   width="300" height="180" />
+						   cornerRadius="18"
+						   width="260" height="155" />
 			</s:VGroup>
 		</s:Group>
 	</fx:Declarations>

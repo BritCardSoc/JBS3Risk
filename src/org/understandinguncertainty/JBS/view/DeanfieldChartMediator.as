@@ -72,20 +72,21 @@ package org.understandinguncertainty.JBS.view
 			}
 			
 			outlookChart.areaChart.dataProvider = runModel.getResultSet();
-			//outlookChart.ageAxis.minimum = runModel.minimumAge;
-			//outlookChart.ageAxis.maximum = outlookChart.maxAgeSlider.value;
 			outlookChart.ageAxis.minimum = appState.minimumAge;
-//			outlookChart.maxAgeSlider.minimum = appState.minimumAge + appState.targetInterval;
 
 			annotate();
 			
-			if(runModel.yearGain > 0) {
+			outlookChart.gainLabel.visible = false;
+			outlookChart.lossLabel.visible = false;
+			if(runModel.yearGain > 0.1) {
 				outlookChart.yearGain.text = runModel.yearGain.toPrecision(2);
 				gainedLost = "gained"
+				outlookChart.gainLabel.visible = true;
 			}
-			else {
-				outlookChart.yearGain.text = (-runModel.yearGain).toPrecision(2);
+			else if(runModel.yearGain < -0.1) {
+				outlookChart.yearLoss.text = (-runModel.yearGain).toPrecision(2);
 				gainedLost = "lost"					
+				outlookChart.lossLabel.visible = true;
 			}
 			
 			outlookChart.areaChart.dataTipFunction = dataTipFunction;
@@ -121,16 +122,24 @@ package org.understandinguncertainty.JBS.view
 				0,
 				runModel.meanAge);
 			
-			if(runModel.yearGain > 0) {
+			if(runModel.yearGain > 0.1) {
 				var labelAge:int = Math.round((appState.interventionAge+95)/2);
 				var dp:ArrayCollection = outlookChart.areaChart.dataProvider as ArrayCollection;
 				var labelIndex:int = labelAge - appState.minimumAge;
 				if(labelIndex > 0 && labelIndex < dp.length) {
 					var item:Object = dp.getItemAt(labelIndex);
-					//var labelChance:Number = (item.green + item.yellow)/2;
 					outlookChart.dataCanvas.addDataChild(outlookChart.gainLabel,null,95, null,null,labelAge, null);
 				}
-			}	
+			}
+			else if(runModel.yearGain < 0.1) {
+				labelAge = Math.round((appState.interventionAge+95)/2);
+				dp = outlookChart.areaChart.dataProvider as ArrayCollection;
+				labelIndex = labelAge - appState.minimumAge;
+				if(labelIndex > 0 && labelIndex < dp.length) {
+					item = dp.getItemAt(labelIndex);
+					outlookChart.dataCanvas.addDataChild(outlookChart.lossLabel,null,95, null,null,labelAge, null);
+				}				
+			}
 		}
 
 		private function dataTipFunction(hitData:HitData):String

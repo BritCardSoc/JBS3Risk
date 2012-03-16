@@ -21,13 +21,15 @@ Source code, including a copy of the license is available at https://github.com/
 		<s:SolidColor id="deadFill" color="0x3FBDFF" alpha="1.0"/>
 		<s:SolidColor id="badFill" color="0xff6688" alpha="1.0"/>
 		<s:SolidColor id="betterFill" color="0xffCC00" alpha="1.0"/>
-		<s:SolidColor id="gainFill" color="0xffCC00" alpha="0.3"/>
+		<s:SolidColor id="gainFill" color="0xffffAA" alpha="0.7"/>
+		<s:SolidColor id="lossFill" color="0xff88AA" alpha="0.7"/>
 		<s:SolidColor id="white" color="0xffffff" alpha="1"/>
 		<s:SolidColor id="green" color="0x008800" alpha="0.1"/>
 		<s:SolidColor id="black" color="0x000000" alpha="1"/>
 		<s:SolidColorStroke id="stroke" color="0" alpha="0.4" weight="2"/>
 		<s:SolidColorStroke id="noStroke" color="0" alpha="0"/>
 		<s:SolidColorStroke id="gainStroke" color="0xffffff" alpha="0.5"/>
+		<s:SolidColorStroke id="lossStroke" color="0xffffff" alpha="0.5"/>
 		
 		<fx:String id="ttAge">@Resource(bundle='JBS',key='chart.tooltip.Age')</fx:String>
 		<fx:String id="ttCVRisk">@Resource(bundle='JBS',key='chart.tooltip.cvRisk')</fx:String>
@@ -40,6 +42,17 @@ Source code, including a copy of the license is available at https://github.com/
 					  paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
 				<s:Label text="Average gain"/>
 				<s:Label id="yearGain" text="0" fontSize="16"/>
+				<s:Label text="heart attack or stroke" />
+				<s:Label text="free years"/>
+			</s:VGroup>
+		</s:Group> 
+		
+		<s:Group id="lossLabel">
+			<s:Rect width="100%" height="100%" radiusX="7" fill="{lossFill}" stroke="{lossStroke}"/>
+			<s:VGroup horizontalCenter="0" horizontalAlign="center"
+					  paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
+				<s:Label text="Average loss"/>
+				<s:Label id="yearLoss" text="0" fontSize="16"/>
 				<s:Label text="heart attack or stroke" />
 				<s:Label text="free years"/>
 			</s:VGroup>
@@ -106,6 +119,7 @@ Source code, including a copy of the license is available at https://github.com/
 					
 					<ns:series>
 						<ns:AreaSeries yField="yellow" xField="age" form="curve" displayName="@Resource(bundle='JBS',key='chart.better')" areaStroke="{stroke}" areaFill="{betterFill}"/>
+						<ns:AreaSeries yField="red" xField="age" form="curve" displayName="@Resource(bundle='JBS',key='chart.worse')" areaStroke="{stroke}" areaFill="{badFill}"/>
 						<ns:AreaSeries yField="green" xField="age" form="curve" displayName="@Resource(bundle='JBS',key='chart.good')" areaStroke="{stroke}" areaFill="{goodFill}"/>
 					</ns:series>
 				</ns:AreaChart>

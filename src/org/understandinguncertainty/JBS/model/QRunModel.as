@@ -274,6 +274,9 @@ package org.understandinguncertainty.JBS.model
 				// outlook yellow
 				var yellow:Number = f+m - (m_int+f_int);
 				
+				// outlook red
+				var ored:Number = Math.min(0, yellow);
+								
 				// cope with rare occasions when m+f > 100
 				var greenUnclamped:Number = 100 - Math.max(m + f, m_int + f_int);
 				if(greenUnclamped < 0)
@@ -283,13 +286,14 @@ package org.understandinguncertainty.JBS.model
 				var green:Number = Math.min(100, Math.max(0, greenUnclamped));
 				var red:Number = f_int;
 				
+				
 				results.push({
 					age:		cachedAge+i,
 					
 					// for Outlook (+ve)
 					green:		green,
 					yellow:		green + yellow,		
-					red:		green + yellow + red,					
+					red:		green - ored,					
 					
 					// for Outlook (-ve)
 					redNeg:	    f_int,					// f_int == f until interventions are entered

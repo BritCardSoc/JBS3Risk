@@ -99,9 +99,9 @@ package org.understandinguncertainty.JBS.view
 			// Townsend quintile selection
 			profile.townsendGroup.dataProvider = new ArrayCollection([
 				"1: Affluent",
-				"2",
+				"2: Well off",
 				"3: Average",
-				"4",
+				"4: Struggling",
 				"5: Deprived",
 				]);
 			
