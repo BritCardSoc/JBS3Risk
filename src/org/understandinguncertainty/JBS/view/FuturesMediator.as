@@ -14,10 +14,10 @@ package org.understandinguncertainty.JBS.view
 	import org.understandinguncertainty.JBS.model.UserModel;
 	import org.understandinguncertainty.JBS.signals.ModelUpdatedSignal;
 	
-	public class HeartAgeMediator extends Mediator
+	public class FuturesMediator extends Mediator
 	{
 		[Inject]
-		public var heartAge:HeartAge;
+		public var futures:Futures;
 		
 		[Inject]
 		public var runModel:ICardioModel;
@@ -48,36 +48,41 @@ package org.understandinguncertainty.JBS.view
 		
 		private function updateView():void
 		{
-			if(appState.selectedScreenName != "heartAge") {
+			if(appState.selectedScreenName != "futures") {
 				
 				// flashScore_gp may not be valid
 				return;
 			}
-/*			
+
+			var yg:String;
 			if(runModel.yearGain >= 0.1) {
-				var yg:String = runModel.yearGain.toPrecision(2);
-				heartAge.gainText.visible = true;
-				heartAge.gainText.text = "gaining " + yg + " years through interventions"
+				yg = runModel.yearGain.toPrecision(2);
+				futures.gainText.visible = true;
+				futures.gainText.text = "gaining " + yg + " years through interventions"
+			}
+			else if(runModel.yearGain <= -0.1) {
+				yg = (-runModel.yearGain).toPrecision(2);
+				futures.gainText.visible = true;
+				futures.gainText.text = "losing " + yg + " years through interventions"
 			}
 			else {
-				heartAge.gainText.visible = false;
+				futures.gainText.visible = false;
 			}
 			
 			meanAge = runModel.meanAge;
-			heartAge.meanSurvival.text = "On average, expect to survive to\n" + Math.floor(meanAge) + "\nwithout a heart attack or stroke";
+			futures.meanSurvival.text = "On average, expect\nto survive to age " + Math.floor(meanAge) + "\nwithout a heart attack or stroke";
 			var yGain:Number = Math.max(0, runModel.yearGain);
-*/			
-			/*
-			heartAge.thermometer.dataProvider = new ArrayCollection([{
-				meanYears:runModel.meanAge - yGain, 
+			var yLoss:Number = Math.min(0, runModel.yearGain);
+			futures.thermometer.dataProvider = new ArrayCollection([{
+				meanYears:runModel.meanAge - yGain - yLoss,
+				yearLoss:yLoss,
 				yearGain:yGain, 
 				summary:""
 			}]);
 
-			heartAge.hAxis.minimum = userProfile.age;
-			heartAge.hAxis.maximum = 102; //5*Math.ceil((runModel.meanAge + 5)/5);
-			*/
-			heartAge.heartAgeText.text = runModel.heartAgeText;
+			futures.hAxis.minimum = userProfile.age;
+			futures.hAxis.maximum = 102; //5*Math.ceil((runModel.meanAge + 5)/5);
+			//futures.futuresText.text = runModel.heartAgeText;
 		}
 	}
 }

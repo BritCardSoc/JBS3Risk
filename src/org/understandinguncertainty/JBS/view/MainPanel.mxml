@@ -20,6 +20,7 @@ Source code, including a copy of the license is available at https://github.com/
 	<s:states>
 		<s:State name="profile"/>
 		<s:State name="heartAge"/>
+		<s:State name="futures"/>
 		<s:State name="deanfield"/>
 		<s:State name="outlook"/>
 		<s:State name="outcomes"/>
@@ -50,6 +51,8 @@ Source code, including a copy of the license is available at https://github.com/
 			
 			<view:HeartAge includeIn="heartAge" />
 			
+			<view:Futures includeIn="futures" />
+			
 			<!-- positively framed chart -->
 			<view:DeanfieldChart id="deanfieldChart" includeIn="deanfield" width="100%" height="100%"/>
 		
@@ -68,7 +71,7 @@ Source code, including a copy of the license is available at https://github.com/
 	
 		</s:Group>
 		
-		<components:SidePanels  includeIn="deanfield, outlook, outcomes, balance, compare, heartAge"/>
+		<components:SidePanels  includeIn="deanfield, outlook, outcomes, balance, compare, heartAge, futures"/>
 
 	</s:HGroup>
 	

@@ -46,6 +46,8 @@ package org.understandinguncertainty.JBS
 	import org.understandinguncertainty.JBS.view.DeanfieldChartMediator;
 	import org.understandinguncertainty.JBS.view.DifferenceBalance;
 	import org.understandinguncertainty.JBS.view.DifferenceBalanceMediator;
+	import org.understandinguncertainty.JBS.view.Futures;
+	import org.understandinguncertainty.JBS.view.FuturesMediator;
 	import org.understandinguncertainty.JBS.view.GoodBalance;
 	import org.understandinguncertainty.JBS.view.GoodBalanceMediator;
 	import org.understandinguncertainty.JBS.view.HeartAge;
@@ -58,12 +60,12 @@ package org.understandinguncertainty.JBS
 	import org.understandinguncertainty.JBS.view.MainPanelMediator;
 	import org.understandinguncertainty.JBS.view.Outcomes;
 	import org.understandinguncertainty.JBS.view.OutcomesMediator;
-	import org.understandinguncertainty.JBS.view.RiskByAge;
-	import org.understandinguncertainty.JBS.view.RiskByAgeMediator;
 	import org.understandinguncertainty.JBS.view.Profile;
 	import org.understandinguncertainty.JBS.view.ProfileMediator;
 	import org.understandinguncertainty.JBS.view.QProfile;
 	import org.understandinguncertainty.JBS.view.QProfileMediator;
+	import org.understandinguncertainty.JBS.view.RiskByAge;
+	import org.understandinguncertainty.JBS.view.RiskByAgeMediator;
 	import org.understandinguncertainty.JBS.view.ScreenSelector;
 	import org.understandinguncertainty.JBS.view.ScreenSelectorMediator;
 	
@@ -123,6 +125,7 @@ package org.understandinguncertainty.JBS
 			
 			mediatorMap.mapView(InterventionsPanel, InterventionsPanelMediator);
 			mediatorMap.mapView(HeartAge, HeartAgeMediator);
+			mediatorMap.mapView(Futures, FuturesMediator);
 			mediatorMap.mapView(AgeSettings, AgeSettingsMediator);
 			mediatorMap.mapView(DeanfieldChart, DeanfieldChartMediator);
 			mediatorMap.mapView(RiskByAge, RiskByAgeMediator);
