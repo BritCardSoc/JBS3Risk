@@ -59,6 +59,22 @@ Source code, including a copy of the license is available at https://github.com/
 				return ToolTipManager.destroyToolTip(consultTip);
 			}
 			
+			// create imperial measure string from metric 
+			private function feet(m:Number):String {
+				var inches:Number = m * 39.3700787;
+				var feet:int = Math.floor(inches/12);
+				var rem:String = (Math.round((inches - 12*feet)*2)/2).toFixed(1).replace(/\.0/,"");
+				var inch:String = (Math.round(inches*2)/2).toFixed(1);
+				return feet + "' " + rem + '" (' + inch + '")';
+			}
+			
+			// create imperial measure string from metric 
+			private function stones(kg:Number):String {
+				var pounds:Number = kg * 2.20462262;
+				var stones:int = Math.floor(pounds/14);
+				var rem:String = (Math.round((pounds - stones*14)*2)/2).toFixed(1).replace(/\.0/,"");
+				return stones + "st " + rem + " (" + (Math.round(pounds*2)/2).toFixed(1).replace(/\.0/,"") + " lb)";   
+			}
 		]]>
 	</fx:Script>
 	<s:states>
@@ -187,16 +203,24 @@ Source code, including a copy of the license is available at https://github.com/
 						<s:Label text="@Resource(bundle='JBS', key='profile.entry.height')" fontWeight="normal" />
 						<!--<s:TextInput id="height_m" editable="true" text="1.7" width="40" />-->
 						
-						<components:HeightStepper id="height_mStep" 
-												  value="1.7" width="50" minimum="1.5" maximum="2.5" stepSize="0.01"
-												  weight="{weight_kgStep.value}"
-										  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"/>
+						<s:VGroup>
+							<components:HeightStepper id="height_mStep" 
+													  value="1.7" width="55" minimum="1.5" maximum="2.5" stepSize="0.01"
+													  weight="{weight_kgStep.value}"
+											  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"/>
+							<s:Label id="inches" text='{feet(height_mStep.value)}' color="#888888" fontSize="8"/>
+						</s:VGroup>
+						
 						<s:Group width="50%"/>
 						<s:Label text="@Resource(bundle='JBS', key='profile.entry.weight')" fontWeight="normal" />
 						<!--<s:TextInput id="weight_kg" editable="true" text="65" width="40" />-->
-						<components:WeightStepper id="weight_kgStep" value="60" width="60" minimum="30" maximum="150" stepSize="0.1"
-												  height_m="{height_mStep.value}"
-										  valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"/>
+						
+						<s:VGroup>
+							<components:WeightStepper id="weight_kgStep" value="60" width="70" minimum="30" maximum="150" stepSize="0.1"
+													  height_m="{height_mStep.value}"
+													  valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"/>			
+							<s:Label id="pounds" text='{stones(weight_kgStep.value)}' color="#888888" fontSize="8"/>
+						</s:VGroup>
 						<s:Label id="bmiField" text=""/>
 					</s:HGroup>
 					
