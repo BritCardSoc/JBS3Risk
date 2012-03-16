@@ -32,10 +32,11 @@ package org.understandinguncertainty.JBS.model
 		
 		public function get age():int 
 		{
-			if(variableList.dateOfBirth.getAge() == 0 || isNaN(variableList.dateOfBirth.getAge()))
-				trace("weird age seen:", variableList.dateOfBirth.getAge());
+			var dob:int = variableList.dateOfBirth.getAge();
+			if(dob == 0 || isNaN(dob))
+				trace("weird age seen:", dob);
 			
-			return variableList.dateOfBirth.getAge();
+			return dob;
 		}
 		
 		public function get b_gender():int

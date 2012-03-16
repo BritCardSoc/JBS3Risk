@@ -1,0 +1,5 @@
+Error: age must be between 30 and 84
+	The profile validator does not reliably prevent too young when calling QRLifetime.vo.QParametersVO()
+
+Increment the month beyond 3 and the year starts to increment when cycling between screens.
+Weight and height in imperial measures

@@ -186,6 +186,7 @@ Source code, including a copy of the license is available at https://github.com/
 						<s:Group width="50%"/>
 						<s:Label text="@Resource(bundle='JBS', key='profile.entry.height')" fontWeight="normal" />
 						<!--<s:TextInput id="height_m" editable="true" text="1.7" width="40" />-->
+						
 						<components:HeightStepper id="height_mStep" 
 												  value="1.7" width="50" minimum="1.5" maximum="2.5" stepSize="0.01"
 												  weight="{weight_kgStep.value}"

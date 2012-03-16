@@ -255,6 +255,7 @@ package org.understandinguncertainty.JBS.model
 			var lifeTable:LifetimeRiskTable = flashScore.result.annualRiskTable;
 			var lifeTable_int:LifetimeRiskTable = flashScore.result.annualRiskTable_int;
 			var lifeTable_gp:LifetimeRiskTable = flashScore_gp ? flashScore_gp.result.annualRiskTable : lifeTable;
+			var cachedAge:int = userProfile.age;
 			
 			for(var i:int = 0; i < lifeTable.rows.length; i++) {
 				var row:LifetimeRiskRow = lifeTable.rows[i];
@@ -281,9 +282,9 @@ package org.understandinguncertainty.JBS.model
 				
 				var green:Number = Math.min(100, Math.max(0, greenUnclamped));
 				var red:Number = f_int;
-								
+				
 				results.push({
-					age:		userProfile.age+i,
+					age:		cachedAge+i,
 					
 					// for Outlook (+ve)
 					green:		green,

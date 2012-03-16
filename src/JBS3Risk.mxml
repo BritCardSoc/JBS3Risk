@@ -19,23 +19,6 @@ Source code, including a copy of the license is available at https://github.com/
 		@namespace mx "library://ns.adobe.com/flex/halo";
 		@namespace ns "library://ns.adobe.com/flex/mx";
 		
-/*
-		ns|LegendItem {
-			fontWeight: normal;
-			fontSize: 12;
-		}
-*/
-/*		s|CheckBox {
-			color:#003366;
-		} 
-*/		
-
-		/* components with this style show a different error halo colour
-		.errorCheck {
-			errorColor: #0044BB;	
-		}
-		*/
-		
 		.errorTip { 
 			color: #FFFFFF;
 			fontSize: 16; 

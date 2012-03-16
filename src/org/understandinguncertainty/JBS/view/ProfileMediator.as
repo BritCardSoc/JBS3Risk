@@ -169,8 +169,8 @@ package org.understandinguncertainty.JBS.view
 		private function showPersonalData(event:Event=null):void {
 			var pvars:VariableList = ps.variableList;
 			var dob:Date = pvars.dateOfBirth.value as Date;
-			
 			profile.yyyy.text = dob.fullYear.toString();
+//			trace("spd", profile.yyyy.text);
 			profile.mm.text = (dob.month + 1).toString();
 			profile.dd.text = dob.date.toString();
 			profile.gender.selectedValue = pvars.gender.toString(); 
@@ -445,7 +445,5 @@ package org.understandinguncertainty.JBS.view
 		public var pounds:Number = 0;
 		public var lbs:Number = 150;
 				
-
-
 	}
 }

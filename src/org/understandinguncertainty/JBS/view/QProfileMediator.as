@@ -67,8 +67,8 @@ package org.understandinguncertainty.JBS.view
 		[Inject]
 		public var appState:AppState;
 		
-		[Inject(name="userProfile")]
-		public var user:UserModel;
+		//[Inject(name="userProfile")]
+		//public var user:UserModel;
 		
 		[Inject(name="interventionProfile")]
 		public var inter:UserModel;
@@ -263,8 +263,9 @@ package org.understandinguncertainty.JBS.view
 		//
 		private function setPersonalDetails():void {
 			var pvars:VariableList = ps.variableList;
-			//trace("profile setting dob=", [profile.dd.text, profile.mm.text, profile.yyyy.text].join(":"));
-			pvars.dateOfBirth.fromString([profile.ddStep.value.toString(), profile.mmStep.value.toString(), profile.yyyyStep.value.toString()].join(":"));
+			var s:String = [profile.ddStep.value.toString(), profile.mmStep.value.toString(), profile.yyyyStep.value.toString()].join(":");
+			//trace("profile: setting dob=", s);
+			pvars.dateOfBirth.fromString(s);
 			pvars.gender.fromString(profile.gender.selectedValue as String);
 			
 			// extra Q parameters
@@ -295,7 +296,7 @@ package org.understandinguncertainty.JBS.view
 
 			// Set the user profile variableList BEFORE cloning it into the interventions profile
 			setPersonalDetails();			
-			inter.variableList = user.variableList.clone();			
+			inter.variableList = userProfile.variableList.clone();			
 			//clearInterventionsSignal.dispatch();
 			
 		}
