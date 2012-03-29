@@ -35,16 +35,8 @@ Source code, including a copy of the license is available at https://github.com/
 		
 		<s:Group height="40"/>
 		<s:HGroup verticalAlign="middle" width="100%" horizontalAlign="center">
-		<!--
-			<mx:Image left="30" top="30" scaleX="0.5" scaleY="0.5" source="@Embed('assets/heartAge2.png')" id="heartImage"/>
-		-->
 			<s:VGroup horizontalAlign="center" paddingTop="10">
-<!--
-				<s:Label text="Your heart age is about" fontSize="20"/>
-				<s:Label x="50" id="heartAgeText" fontSize="36"/>
-				<s:Label text="compared to an average person of" fontSize="16" color="0xAAAAAA"/>
-				<s:Label text="the same age, gender and ethnicity" fontSize="16" color="0xAAAAAA"/>
--->
+
 				<s:Group height="10"/>
 				<s:Label id="meanSurvival" fontSize="26" textAlign="center"/>
 				<s:Label id="gainText"  fontSize="20"/>

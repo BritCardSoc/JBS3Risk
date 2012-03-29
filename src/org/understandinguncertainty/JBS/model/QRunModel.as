@@ -323,7 +323,7 @@ package org.understandinguncertainty.JBS.model
 	
 		override public function get heartAge():Number
 		{
-			return heartAgeUsingHazard;
+			return heartAgeUsingHazardAllowingYounger;
 		}
 
 		/**
@@ -348,8 +348,44 @@ package org.understandinguncertainty.JBS.model
 					break;
 			}
 			
+			
 			return i + userProfile.age;
 		}
+		
+		private function get heartAgeUsingHazardAllowingYounger():Number
+		{
+			// Calculate my current hazard.
+			// For heart age purposes we ignore death by other causes since it's irrelevant!
+			var myHazard:Number = flashScore.result.annualRiskTable_int.getNoDeathHazardAt(0);
+			
+			// Hunt through the general population annual risk table till we find a similar risk level
+			var gp_annualTable:LifetimeRiskTable = flashScore_gp.result.annualRiskTable;
+			
+			var possibly_younger:Boolean = false;
+			var gplen:int = gp_annualTable.rows.length
+			for(var i:int = 0; i+1 < gplen; i++) {
+				if(gp_annualTable.getNoDeathHazardAt(i) >= myHazard) {
+					if(i == 0)
+						possibly_younger = true;
+					break;
+				}
+			}
+			
+			if(possibly_younger) {
+				
+				// extrapolate gp table backwards
+				var d_gp:Number = gp_annualTable.getNoDeathHazardAt(1) - gp_annualTable.getNoDeathHazardAt(0);
+				var gpHazard:Number = gp_annualTable.getNoDeathHazardAt(0);
+				
+				// we'll allow up to 5 years younger 
+				while((i > -5) && (gpHazard -= d_gp) > myHazard) {
+					--i;
+				}
+			}
+
+			return i + userProfile.age;
+		}
+		
 
 		override public function get heartAgeText():String
 		{
