@@ -66,6 +66,10 @@ package org.understandinguncertainty.JBS
 	import org.understandinguncertainty.JBS.view.QProfileMediator;
 	import org.understandinguncertainty.JBS.view.RiskByAge;
 	import org.understandinguncertainty.JBS.view.RiskByAgeMediator;
+	import org.understandinguncertainty.JBS.view.YearsGained;
+	import org.understandinguncertainty.JBS.view.YearsGainedMediator;
+	import org.understandinguncertainty.JBS.view.YearsGainedRatio;
+	import org.understandinguncertainty.JBS.view.YearsGainedRatioMediator;
 	import org.understandinguncertainty.JBS.view.ScreenSelector;
 	import org.understandinguncertainty.JBS.view.ScreenSelectorMediator;
 	
@@ -129,6 +133,8 @@ package org.understandinguncertainty.JBS
 			mediatorMap.mapView(AgeSettings, AgeSettingsMediator);
 			mediatorMap.mapView(DeanfieldChart, DeanfieldChartMediator);
 			mediatorMap.mapView(RiskByAge, RiskByAgeMediator);
+			mediatorMap.mapView(YearsGained, YearsGainedMediator);
+			mediatorMap.mapView(YearsGainedRatio, YearsGainedRatioMediator);
 			mediatorMap.mapView(Outcomes, OutcomesMediator);
 			
 			mediatorMap.mapView(Balance, BalanceMediator);

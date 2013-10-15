@@ -12,6 +12,7 @@ package org.understandinguncertainty.JBS.model
 
 	public interface ICardioModel
 	{
+		function get gainsByYear():ArrayCollection;
 		
 		function getResultSet():ArrayCollection;
 		function get yearGain():Number;
@@ -23,7 +24,10 @@ package org.understandinguncertainty.JBS.model
 		function get heartAgeText():String;
 		function set heartAgeText(value:String):void;
 		
+		function get endTreatmentAge():int;
+		function set endTreatmentAge(age:int):void;
 		
+
 		/**
 		 * returns the minimum acceptable value of the outlook (-ve) vertical axis slider
 		 */

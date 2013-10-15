@@ -87,7 +87,12 @@ package org.understandinguncertainty.JBS.model
 		}
 		
 		private var chanceClamp:Number = 100;
-			
+		
+		protected var _gainsByYearAC:ArrayCollection;
+		public function get gainsByYear():ArrayCollection {
+			return _gainsByYearAC;
+		}
+		
 		protected var _resultSet:ArrayCollection;
 		public function getResultSet():ArrayCollection
 		{

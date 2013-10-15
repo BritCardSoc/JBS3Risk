@@ -79,12 +79,12 @@ package org.understandinguncertainty.JBS.view
 			outlookChart.gainLabel.visible = false;
 			outlookChart.lossLabel.visible = false;
 			if(runModel.yearGain > 0.1) {
-				outlookChart.yearGain.text = runModel.yearGain.toPrecision(2);
+				outlookChart.yearGain.text = runModel.yearGain.toPrecision(3);
 				gainedLost = "gained"
 				outlookChart.gainLabel.visible = true;
 			}
 			else if(runModel.yearGain < -0.1) {
-				outlookChart.yearLoss.text = (-runModel.yearGain).toPrecision(2);
+				outlookChart.yearLoss.text = (-runModel.yearGain).toPrecision(3);
 				gainedLost = "lost"					
 				outlookChart.lossLabel.visible = true;
 			}

@@ -11,6 +11,7 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="libs"/>
+      <libraryPathEntry kind="3" linkType="1" path="/QR-lifetime-2011-flash/bin/QR-lifetime-2011-flash.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
@@ -20,4 +21,3 @@
   <modules/>
   <buildCSSFiles/>
 </actionScriptProperties>
-

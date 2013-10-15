@@ -41,7 +41,19 @@ package org.understandinguncertainty.JBS.model
 		public function get showDifferences():Boolean {
 			return _showDifferences;
 		}
-		
+
+
+		/**
+		 * Used by years gained screens only
+		 */
+		private var _endTreatmentAge:int = 75;
+		public function get endTreatmentAge():int {
+			return _endTreatmentAge;
+		}
+		public function set endTreatmentAge(age:int):void {
+			_endTreatmentAge = age;
+		}
+
 		private function getQParameters(profile:UserModel, checkRange:Boolean = true):QParametersVO
 		{
 			return new QParametersVO(
@@ -204,7 +216,81 @@ package org.understandinguncertainty.JBS.model
 			committing = true;
 			path = "Q65_derivation_cvd_time_40_"+userProfile.b_gender+ ".csv";
 			
-			if(appState.selectedScreenName == "compare" || appState.selectedScreenName == "heartAge") {
+			
+			if(appState.selectedScreenName == "yearsGained" || appState.selectedScreenName == "yearsGainedRatio") {
+
+				// Need scores for interventions starting at every 5 years till endTreatmentAge
+				flashScore_gp = null;
+				
+				// reset iterator vars
+				var _gainsByYear:Array = [];
+				params_int.age = params.age;
+				
+				flashScore = new FlashScore2011();
+
+				var scoreCalculated:Function = function(event:Event = null):void {
+					
+					var lifeTable:LifetimeRiskTable = flashScore.result.annualRiskTable;
+					var lifeTable_int:LifetimeRiskTable = flashScore.result.annualRiskTable_int;
+					var last:int = lifeTable.rows.length - 1;
+					
+					/* HERE! */
+					var sum_e:Number = 0;
+					var sum_e_int:Number = 0;
+					for(var i:int = 0; i < lifeTable.rows.length; i++) {
+						
+						var row:LifetimeRiskRow = lifeTable.rows[i] as LifetimeRiskRow;
+						var row_int:LifetimeRiskRow = lifeTable_int.rows[i] as LifetimeRiskRow;
+						
+						if( i+userProfile.age <= endTreatmentAge) {
+							sum_e += row.S_1;
+							sum_e_int += row_int.S_1;
+						}
+
+					}
+					
+					var gain:Number =  sum_e_int - sum_e;
+
+					//trace("--2-- r="+lifeTable.lifetimeRisk+" r_int="+lifeTable_int.lifetimeRisk);
+
+					_gainsByYear.push({
+						age: params_int.age,
+						gain: gain,
+						ratio: gain/(endTreatmentAge-params_int.age)
+					});
+					
+					// pass intervention age through intervention parameters as age
+					params_int.age += 5;
+					if(params_int.age <= 70) {
+						//trace("--3--"+params_int.age);
+						flashScore.djsCalculateScoreWithInterventions(path, 
+							params, params_int,
+							userProfile.totalCholesterol - userProfile.hdlCholesterol,
+							interventionProfile.totalCholesterol - interventionProfile.hdlCholesterol
+						);			
+					}
+					else {
+						// we're done...
+						// We have now calculated both with and without intervention and can stuff the results Array
+						//trace("--DONE--"+params_int.age);
+						_gainsByYearAC = new ArrayCollection(_gainsByYear);
+						flashScore.removeEventListener(Event.COMPLETE, scoreCalculated);
+						committing = false;
+						modelUpdatedSignal.dispatch();
+					}
+				}
+				
+				flashScore.addEventListener(Event.COMPLETE, scoreCalculated);
+				
+				//trace("--1--");
+				flashScore.djsCalculateScoreWithInterventions(path, 
+					params, params_int,
+					userProfile.totalCholesterol - userProfile.hdlCholesterol,
+					interventionProfile.totalCholesterol - interventionProfile.hdlCholesterol
+				)
+
+			}
+			else if(appState.selectedScreenName == "compare" || appState.selectedScreenName == "heartAge") {
 				// Need to calculate general population too. Do this first.
 				
 				// Define the general population as average person with same age, gender and ethnic group with 'good' discrete values.
@@ -232,7 +318,7 @@ package org.understandinguncertainty.JBS.model
 				doWithAndWithout();
 			}
 		}
-	
+
 		private function doWithAndWithout(event:Event = null):void
 		{
 			if(flashScore_gp)
@@ -247,6 +333,8 @@ package org.understandinguncertainty.JBS.model
 			);
 		}
 	
+
+		
 		private function completionHandler_int(event:Event):void
 		{
 			// We have now calculated both with and without intervention and can stuff the results Array
@@ -258,9 +346,9 @@ package org.understandinguncertainty.JBS.model
 			var cachedAge:int = userProfile.age;
 			
 			for(var i:int = 0; i < lifeTable.rows.length; i++) {
-				var row:LifetimeRiskRow = lifeTable.rows[i];
-				var row_int:LifetimeRiskRow = lifeTable_int.rows[i];
-				var row_gp:LifetimeRiskRow = lifeTable_gp.rows[i];
+				var row:LifetimeRiskRow = lifeTable.rows[i] as LifetimeRiskRow;
+				var row_int:LifetimeRiskRow = lifeTable_int.rows[i] as LifetimeRiskRow;
+				var row_gp:LifetimeRiskRow = lifeTable_gp.rows[i] as LifetimeRiskRow;
 				
 				sum_e += 100*row.S_1;
 				sum_e_int += 100*row_int.S_1;
@@ -286,9 +374,10 @@ package org.understandinguncertainty.JBS.model
 				var green:Number = Math.min(100, Math.max(0, greenUnclamped));
 				var red:Number = f_int;
 				
-				
 				results.push({
 					age:		cachedAge+i,
+					
+					gain: f+m - (m_int+f_int),
 					
 					// for Outlook (+ve)
 					green:		green,

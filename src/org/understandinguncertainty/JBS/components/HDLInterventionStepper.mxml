@@ -9,8 +9,8 @@ Source code, including a copy of the license is available at https://github.com/
 								xmlns:s="library://ns.adobe.com/flex/spark" 
 								xmlns:mx="library://ns.adobe.com/flex/mx" 
 								xmlns:components="org.understandinguncertainty.JBS.components.*" 
-								fixed="1"
-								stepSize="0.1"
+								fixed="2"
+								stepSize="0.01"
 								>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->

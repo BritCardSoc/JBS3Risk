@@ -51,7 +51,7 @@ Source code, including a copy of the license is available at https://github.com/
 			</s:VGroup>
 		</s:Group>
 		
-		<s:Group id="advancedThumbnails">
+		<s:HGroup id="advancedThumbnails">
 			
 			<s:VGroup id="outlook" gap="0" horizontalAlign="center" visible.basic="false">
 				<s:Label id="outlookLabel" text="@Resource(bundle='JBS',key='sideBar1.outlook')"  fontSize="36" />
@@ -84,7 +84,25 @@ Source code, including a copy of the license is available at https://github.com/
 						   cornerRadius="18"
 						   width="260" height="155" />
 			</s:VGroup>
-		</s:Group>
+
+			<s:VGroup id="yearsGained" gap="0" horizontalAlign="center" visible.basic="false">
+				<s:Label id="yearsGainedLabel" text="Years Gained"  fontSize="36" />
+				<ns:Button id="yearsGainedButton"
+						   icon="@Embed('/assets/yearsGainedThumbnail.png')"
+						   cornerRadius="18"
+						   width="260" height="155" />
+			</s:VGroup>
+
+			<s:VGroup id="yearsGainedRatio" gap="0" horizontalAlign="center" visible.basic="false">
+				<s:Label id="yearsGainedRatioLabel" text="Gain per year"  fontSize="36" />
+				<ns:Button id="yearsGainedRatioButton"
+						   icon="@Embed('/assets/gainThumbnail.png')"
+						   cornerRadius="18"
+						   width="260" height="155" />
+			</s:VGroup>
+
+			
+		</s:HGroup>
 	</fx:Declarations>
 	
 	<s:HGroup gap="10" paddingLeft="20" paddingRight="20" scaleX="0.7" scaleY="0.7" verticalAlign="middle">

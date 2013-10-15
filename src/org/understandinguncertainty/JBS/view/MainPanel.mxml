@@ -23,6 +23,8 @@ Source code, including a copy of the license is available at https://github.com/
 		<s:State name="futures"/>
 		<s:State name="deanfield"/>
 		<s:State name="outlook"/>
+		<s:State name="yearsGained"/>
+		<s:State name="yearsGainedRatio"/>
 		<s:State name="outcomes"/>
 		<s:State name="balance"/>
 		<s:State name="compare"/>
@@ -68,10 +70,12 @@ Source code, including a copy of the license is available at https://github.com/
 						   width="100%" height="100%"/>
 
 			<view:Compare id="compare" width="100%" height="100%" includeIn="compare"/>
+			<view:YearsGained id="yearsGainedChart" includeIn="yearsGained" width="100%" height="100%"/>
+			<view:YearsGainedRatio id="yearsGainedRatioChart" includeIn="yearsGainedRatio" width="100%" height="100%"/>
 	
 		</s:Group>
 		
-		<components:SidePanels  includeIn="deanfield, outlook, outcomes, balance, compare, heartAge, futures"/>
+		<components:SidePanels  includeIn="deanfield, outlook, outcomes, balance, compare, heartAge, futures, yearsGained, yearsGainedRatio"/>
 
 	</s:HGroup>
 	
