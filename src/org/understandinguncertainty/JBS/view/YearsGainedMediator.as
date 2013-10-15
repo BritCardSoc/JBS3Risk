@@ -98,8 +98,8 @@ package org.understandinguncertainty.JBS.view
 				if (v< min)
 					min = v;
 			}
-			max = max > 0 ? max + (max - min)/2 : 0;
-			min = min < 0 ? min + (min - max)/2 : 0;
+			max = max > 0 ? 25 /*max + (max - min)/2*/ : 0;
+			min = min < 0 ? -25 /* min + (min - max)/2*/ : 0;
 			yearsGainedChart.chanceAxis.maximum = max;
 			yearsGainedChart.chanceAxis.minimum = min;
 			
