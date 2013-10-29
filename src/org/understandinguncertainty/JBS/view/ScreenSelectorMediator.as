@@ -8,6 +8,8 @@ package org.understandinguncertainty.JBS.view
 {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	
 	import mx.controls.Button;
 	
@@ -15,6 +17,7 @@ package org.understandinguncertainty.JBS.view
 	import org.understandinguncertainty.JBS.model.AppState;
 	import org.understandinguncertainty.JBS.signals.NextScreenSignal;
 	import org.understandinguncertainty.JBS.signals.ProfileCommitSignal;
+	import org.understandinguncertainty.JBS.signals.ProfileCommittedSignal;
 	import org.understandinguncertainty.JBS.signals.ProfileValidSignal;
 	import org.understandinguncertainty.JBS.signals.ScreenChangedSignal;
 	import org.understandinguncertainty.JBS.signals.ScreensNamedSignal;
@@ -34,6 +37,9 @@ package org.understandinguncertainty.JBS.view
 		
 		[Inject]
 		public var profileCommitSignal:ProfileCommitSignal;
+		
+		[Inject]
+		public var profileCommittedSignal:ProfileCommittedSignal;
 		
 		[Inject]
 		public var screenSelector:ScreenSelector;
@@ -60,6 +66,7 @@ package org.understandinguncertainty.JBS.view
 			profileValidSignal.add(enableCheck);
 			screensNamedSignal.add(addThumbnails);
 			nextScreenSignal.add(nextScreen);
+			profileCommittedSignal.add(dispatchScreenChange);
 						
 			screenSelector.modeButton.addEventListener(MouseEvent.CLICK, changeMode);
 		}
@@ -69,6 +76,7 @@ package org.understandinguncertainty.JBS.view
 			profileValidSignal.remove(enableCheck);
 			screensNamedSignal.remove(addThumbnails);
 			nextScreenSignal.remove(nextScreen);
+			profileCommittedSignal.remove(dispatchScreenChange);
 			removeThumbnails();
 
 			screenSelector.modeButton.removeEventListener(MouseEvent.CLICK, changeMode);
@@ -148,15 +156,20 @@ package org.understandinguncertainty.JBS.view
 		{
 			if(name != appState.selectedScreenName) {
 				
-				appState.selectedScreenName = name;
-				
-				if(name != "profile") {
-					profileCommitSignal.dispatch();
+				if(appState.selectedScreenName == 'profile') {
+					profileCommitSignal.dispatch(name);
 				}
-				
-				screenChangedSignal.dispatch(name);
+				else 
+					dispatchScreenChange(name);
+					
 			}
 			
+		}
+		
+		
+		private function dispatchScreenChange(name:String):void {
+			appState.selectedScreenName = name;
+			screenChangedSignal.dispatch(name);			
 		}
 		
 		private function changeMode(event:MouseEvent):void

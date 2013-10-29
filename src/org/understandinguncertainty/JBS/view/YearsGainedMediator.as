@@ -59,7 +59,8 @@ package org.understandinguncertainty.JBS.view
 			yearsGainedChart.series.fillFunction = colouring;
 			yearsGainedChart.chart.dataTipFunction = dataTipFunction;
 			yearsGainedChart.endTreatmentAge.addEventListener(Event.CHANGE, changeEndTreatment);
-
+			runModel.endTreatmentAge = yearsGainedChart.endTreatmentAge.selectedValue as int;
+			appState.interventionAge = userProfile.age;
 			runModel.commitProperties();
 		}
 		

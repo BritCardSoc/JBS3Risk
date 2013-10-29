@@ -36,6 +36,8 @@ package org.understandinguncertainty.JBS.view
 		override public function onRegister() : void
 		{
 			//trace("heartAge register");		
+			appState.interventionAge = userProfile.age;
+			
 			modelUpdatedSignal.add(updateView);
 			runModel.commitProperties();
 		}
@@ -51,6 +53,8 @@ package org.understandinguncertainty.JBS.view
 			if(appState.selectedScreenName != "heartAge") {
 				
 				// flashScore_gp may not be valid
+				// trace("HEARTAGE SCREEN MISMATCH");
+				
 				return;
 			}
 /*			
@@ -77,6 +81,7 @@ package org.understandinguncertainty.JBS.view
 			heartAge.hAxis.minimum = userProfile.age;
 			heartAge.hAxis.maximum = 102; //5*Math.ceil((runModel.meanAge + 5)/5);
 			*/
+			// runModel.commitProperties();
 			heartAge.heartAgeText.text = runModel.heartAgeText;
 		}
 	}

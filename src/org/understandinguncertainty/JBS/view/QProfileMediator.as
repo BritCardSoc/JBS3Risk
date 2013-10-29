@@ -29,9 +29,12 @@ package org.understandinguncertainty.JBS.view
 	import org.understandinguncertainty.JBS.model.UserModel;
 	import org.understandinguncertainty.JBS.signals.NextScreenSignal;
 	import org.understandinguncertainty.JBS.signals.ProfileCommitSignal;
+	import org.understandinguncertainty.JBS.signals.ProfileCommittedSignal;
 	import org.understandinguncertainty.JBS.signals.ProfileLoadSignal;
 	import org.understandinguncertainty.JBS.signals.ProfileSaveSignal;
 	import org.understandinguncertainty.JBS.signals.ProfileValidSignal;
+	import org.understandinguncertainty.QRLifetime.FlashScore2011;
+	import org.understandinguncertainty.QRLifetime.vo.QParametersVO;
 	import org.understandinguncertainty.personal.PersonalisationFileStore;
 	import org.understandinguncertainty.personal.VariableList;
 	
@@ -54,6 +57,9 @@ package org.understandinguncertainty.JBS.view
 		
 		[Inject]
 		public var profileCommitSignal:ProfileCommitSignal;
+		
+		[Inject]
+		public var profileCommittedSignal:ProfileCommittedSignal;
 		
 		[Inject]
 		public var nextScreenSignal:NextScreenSignal;
@@ -130,7 +136,7 @@ package org.understandinguncertainty.JBS.view
 		}
 		
 		private function addEventListeners():void {
-			profileCommitSignal.add(commitProfile);
+			profileCommitSignal.add(selectScreen);
 			profileLoadSignal.add(loadPersonalDetails);
 			profileSaveSignal.add(savePersonalDetails);
 			
@@ -160,7 +166,7 @@ package org.understandinguncertainty.JBS.view
 		}
 		
 		private function removeEventListeners():void {
-			profileCommitSignal.remove(commitProfile);
+			profileCommitSignal.remove(selectScreen);
 			profileLoadSignal.remove(loadPersonalDetails);
 			profileSaveSignal.remove(savePersonalDetails);
 
@@ -207,6 +213,12 @@ package org.understandinguncertainty.JBS.view
 		{
 			commitProfile();
 			nextScreenSignal.dispatch("profile");
+		}
+		
+		private function selectScreen(name:String):void
+		{
+			commitProfile();
+			profileCommittedSignal.dispatch(name);
 		}
 		
 		
@@ -391,6 +403,13 @@ package org.understandinguncertainty.JBS.view
 			}
 			else {
 				isValid = true;
+				
+				// precalculate to ensure all tables are ready
+				var params:QParametersVO = runModel.getQParameters(userProfile);
+				var flashScore:FlashScore2011 = new FlashScore2011();
+				var path:String = "Q65_derivation_cvd_time_40_"+userProfile.b_gender+ ".csv";
+				flashScore.calculateScore(path, params);
+				
 				profile.nextButton.enabled = true;
 				profileValidSignal.dispatch(true);
 			}
@@ -536,7 +555,7 @@ package org.understandinguncertainty.JBS.view
 			stepper.maximum = newMax;
 //			validator.maxValue = newMax;
 
-			trace("stepper.value="+stepper.value);
+			// trace("stepper.value="+stepper.value);
 			
 			stepper.validateNow();
 

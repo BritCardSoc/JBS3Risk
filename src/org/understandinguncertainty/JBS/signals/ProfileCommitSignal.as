@@ -12,7 +12,7 @@ package org.understandinguncertainty.JBS.signals
 	{
 		public function ProfileCommitSignal()
 		{
-			super();
+			super(String);
 		}
 	}
 }

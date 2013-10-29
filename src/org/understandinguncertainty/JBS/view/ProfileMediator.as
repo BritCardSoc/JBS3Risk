@@ -218,6 +218,7 @@ package org.understandinguncertainty.JBS.view
 			setPersonalDetails();			
 			inter.variableList = user.variableList.clone();
 			
+			
 			//trace("profile = " + user.variableList);
 			//trace("profile_int = " + inter.variableList);
 			

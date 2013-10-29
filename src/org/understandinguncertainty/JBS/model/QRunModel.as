@@ -54,7 +54,7 @@ package org.understandinguncertainty.JBS.model
 			_endTreatmentAge = age;
 		}
 
-		private function getQParameters(profile:UserModel, checkRange:Boolean = true):QParametersVO
+		public function getQParameters(profile:UserModel, checkRange:Boolean = true):QParametersVO
 		{
 			return new QParametersVO(
 				profile.b_gender,
@@ -211,14 +211,14 @@ package org.understandinguncertainty.JBS.model
 					params.noOfFollowUpYears = 
 						appState.maximumAge - userProfile.age;
 			
-			flashScore = new FlashScore2011();
-
-			committing = true;
 			path = "Q65_derivation_cvd_time_40_"+userProfile.b_gender+ ".csv";
 			
 			
 			if(appState.selectedScreenName == "yearsGained" || appState.selectedScreenName == "yearsGainedRatio") {
 
+				flashScore = new FlashScore2011();
+				
+				committing = true;
 				// Need scores for interventions starting at every 5 years till endTreatmentAge
 				flashScore_gp = null;
 				
@@ -333,7 +333,7 @@ package org.understandinguncertainty.JBS.model
 			);
 		}
 	
-
+		private var myHazard:Number;
 		
 		private function completionHandler_int(event:Event):void
 		{
@@ -345,6 +345,8 @@ package org.understandinguncertainty.JBS.model
 			var lifeTable_gp:LifetimeRiskTable = flashScore_gp ? flashScore_gp.result.annualRiskTable : lifeTable;
 			var cachedAge:int = userProfile.age;
 			
+			myHazard = lifeTable_int.getNoDeathHazardAt(0);
+
 			for(var i:int = 0; i < lifeTable.rows.length; i++) {
 				var row:LifetimeRiskRow = lifeTable.rows[i] as LifetimeRiskRow;
 				var row_int:LifetimeRiskRow = lifeTable_int.rows[i] as LifetimeRiskRow;
@@ -445,14 +447,15 @@ package org.understandinguncertainty.JBS.model
 		{
 			// Calculate my current hazard.
 			// For heart age purposes we ignore death by other causes since it's irrelevant!
-			var myHazard:Number = flashScore.result.annualRiskTable_int.getNoDeathHazardAt(0);
+			myHazard = flashScore.result.annualRiskTable_int.getNoDeathHazardAt(0);
+			// trace("myHazard = " + myHazard);
 			
 			// Hunt through the general population annual risk table till we find a similar risk level
 			var gp_annualTable:LifetimeRiskTable = flashScore_gp.result.annualRiskTable;
 			
 			var possibly_younger:Boolean = false;
 			var gplen:int = gp_annualTable.rows.length
-			for(var i:int = 0; i+1 < gplen; i++) {
+			for(var i:Number = 0; i+1 < gplen; i++) {
 				if(gp_annualTable.getNoDeathHazardAt(i) >= myHazard) {
 					if(i == 0)
 						possibly_younger = true;
@@ -471,6 +474,12 @@ package org.understandinguncertainty.JBS.model
 					--i;
 				}
 			}
+			else {
+				// interpolate for better accuracy
+				var h_i:Number = gp_annualTable.getNoDeathHazardAt(i);
+				var h_i_1:Number = gp_annualTable.getNoDeathHazardAt(i-1);
+				i -= (h_i - myHazard)/(h_i - h_i_1);
+			}
 
 			return i + userProfile.age;
 		}
@@ -478,7 +487,7 @@ package org.understandinguncertainty.JBS.model
 
 		override public function get heartAgeText():String
 		{
-			return heartAge.toString();
+			return heartAge.toFixed(0);
 		}		
 		
 		

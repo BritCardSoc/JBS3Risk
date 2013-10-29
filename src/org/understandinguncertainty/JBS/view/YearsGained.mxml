@@ -74,7 +74,7 @@ Source code, including a copy of the license is available at https://github.com/
 				
 				<s:HGroup width="100%">
 					<s:Group width="50%"/>
-					<s:Label text="End Treatment at Age:"/>
+					<s:Label text="Age intervention ends:"/>
 					<s:VGroup gap="0">
 						<s:Label text="75"/><s:RadioButton groupName="endTreatmentAge" value="75" selected="false"/>
 					</s:VGroup>

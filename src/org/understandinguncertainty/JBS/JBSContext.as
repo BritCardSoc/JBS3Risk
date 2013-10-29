@@ -24,6 +24,7 @@ package org.understandinguncertainty.JBS
 	import org.understandinguncertainty.JBS.signals.NextScreenSignal;
 	import org.understandinguncertainty.JBS.signals.NumbersAvailableSignal;
 	import org.understandinguncertainty.JBS.signals.ProfileCommitSignal;
+	import org.understandinguncertainty.JBS.signals.ProfileCommittedSignal;
 	import org.understandinguncertainty.JBS.signals.ProfileLoadSignal;
 	import org.understandinguncertainty.JBS.signals.ProfileSaveSignal;
 	import org.understandinguncertainty.JBS.signals.ProfileValidSignal;
@@ -66,12 +67,12 @@ package org.understandinguncertainty.JBS
 	import org.understandinguncertainty.JBS.view.QProfileMediator;
 	import org.understandinguncertainty.JBS.view.RiskByAge;
 	import org.understandinguncertainty.JBS.view.RiskByAgeMediator;
+	import org.understandinguncertainty.JBS.view.ScreenSelector;
+	import org.understandinguncertainty.JBS.view.ScreenSelectorMediator;
 	import org.understandinguncertainty.JBS.view.YearsGained;
 	import org.understandinguncertainty.JBS.view.YearsGainedMediator;
 	import org.understandinguncertainty.JBS.view.YearsGainedRatio;
 	import org.understandinguncertainty.JBS.view.YearsGainedRatioMediator;
-	import org.understandinguncertainty.JBS.view.ScreenSelector;
-	import org.understandinguncertainty.JBS.view.ScreenSelectorMediator;
 	
 	public class JBSContext extends SignalContext
 	{
@@ -106,6 +107,7 @@ package org.understandinguncertainty.JBS
 			injector.mapSingleton(ProfileLoadSignal);
 			injector.mapSingleton(ProfileSaveSignal);
 			injector.mapSingleton(ProfileCommitSignal);
+			injector.mapSingleton(ProfileCommittedSignal);
 			injector.mapSingleton(ReleaseScreenSignal);
 			injector.mapSingleton(ScreenChangedSignal);
 			injector.mapSingleton(ScreensNamedSignal);

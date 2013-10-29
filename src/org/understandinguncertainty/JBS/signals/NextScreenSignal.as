@@ -12,7 +12,7 @@ package org.understandinguncertainty.JBS.signals
 	{
 		public function NextScreenSignal()
 		{
-			super(String); // current ScreenName or State name
+			super(); // current ScreenName or State name
 		}
 	}
 }

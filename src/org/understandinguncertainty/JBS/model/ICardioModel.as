@@ -9,6 +9,7 @@ package org.understandinguncertainty.JBS.model
 	import mx.collections.ArrayCollection;
 	
 	import org.understandinguncertainty.JBS.model.vo.ColourNumbersVO;
+	import org.understandinguncertainty.QRLifetime.vo.QParametersVO;
 
 	public interface ICardioModel
 	{
@@ -27,6 +28,8 @@ package org.understandinguncertainty.JBS.model
 		function get endTreatmentAge():int;
 		function set endTreatmentAge(age:int):void;
 		
+		function getQParameters(profile:UserModel, checkRange:Boolean = true):QParametersVO;
+
 
 		/**
 		 * returns the minimum acceptable value of the outlook (-ve) vertical axis slider
