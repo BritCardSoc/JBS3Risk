@@ -78,7 +78,7 @@ Source code, including a copy of the license is available at https://github.com/
 	
 	<s:VGroup horizontalAlign="center" paddingTop="10">
 		<s:Label fontSize="18" text="@Resource(bundle='JBS',key='chart.title')"/> 
-		<s:Group id="chartGroup" width="520" height="330">
+		<s:Group id="chartGroup" width="520" height="300">
 			<s:VGroup width="100%" height="100%" gap="1">
 				<!--	
 				<s:HGroup width="100%" top="5" right="5" horizontalAlign="right">

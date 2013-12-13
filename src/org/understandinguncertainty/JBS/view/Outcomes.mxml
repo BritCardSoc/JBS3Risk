@@ -21,7 +21,7 @@ Source code, including a copy of the license is available at https://github.com/
 		<s:Label fontSize="18" text="@Resource(bundle='JBS',key='chart.title')"/> 
 		<s:Group id="chartGroup" width="500" height="350">
 -->	
-	<s:HGroup id="smileyPanel" gap="0" width="520" height="360" verticalAlign="middle">
+	<s:HGroup id="smileyPanel" gap="0" width="533" height="360" verticalAlign="middle">
 		
 		<s:VGroup  gap="20" width="100%" horizontalAlign="center">
 			<s:HGroup gap="5">

@@ -59,11 +59,13 @@ package org.understandinguncertainty.JBS.view
 				yg = runModel.yearGain.toPrecision(2);
 				futures.gainText.visible = true;
 				futures.gainText.text = "gaining " + yg + " years through interventions"
+				futures.gainText.setStyle("color", 0xdd8800);
 			}
 			else if(runModel.yearGain <= -0.1) {
 				yg = (-runModel.yearGain).toPrecision(2);
 				futures.gainText.visible = true;
 				futures.gainText.text = "losing " + yg + " years through interventions"
+				futures.gainText.setStyle("color", 0xAA0000);
 			}
 			else {
 				futures.gainText.visible = false;
@@ -83,6 +85,8 @@ package org.understandinguncertainty.JBS.view
 			futures.hAxis.minimum = userProfile.age;
 			futures.hAxis.maximum = 102; //5*Math.ceil((runModel.meanAge + 5)/5);
 			//futures.futuresText.text = runModel.heartAgeText;
+			
+			futures.tenYearNoDeath.text = runModel.tenYearNoDeath + '%';
 		}
 	}
 }

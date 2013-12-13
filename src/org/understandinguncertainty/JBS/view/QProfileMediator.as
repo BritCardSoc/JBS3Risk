@@ -510,14 +510,14 @@ package org.understandinguncertainty.JBS.view
 				f = cholConversionFactor;
 			}
 			
-			updateCholesterolStepper(profile.totalCholesterolStep, profile.totalCholValidator, f);
-			updateCholesterolStepper(profile.hdlCholesterolStep, profile.hdlCholValidator, f);
+			updateCholesterolStepper(profile.totalCholesterolStep, profile.totalCholValidator, f, "total");
+			updateCholesterolStepper(profile.hdlCholesterolStep, profile.hdlCholValidator, f, "hdl");
 		
 			
 			validate();
 		}
 		
-		private function updateCholesterolStepper(stepper:NumericStepper, validator:Validator, f:Number):void {
+		private function updateCholesterolStepper(stepper:NumericStepper, validator:Validator, f:Number, label:String):void {
 
 			var newMin:Number = 0.000001;	
 			var newMax:Number = stepper.maximum * f;
@@ -530,7 +530,7 @@ package org.understandinguncertainty.JBS.view
 			}
 			stepper.valueFormatFunction = function(val:Number):String 
 			{
-				return val.toFixed(1);
+				return val.toPrecision(2);
 			};
 			
 			//stepper.validateNow();
@@ -546,7 +546,7 @@ package org.understandinguncertainty.JBS.view
 				}
 				stepper.valueFormatFunction = function(val:Number):String 
 				{
-					return val.toFixed(0);
+					return val.toPrecision(2);
 				};
 			}
 			//stepper.validateNow();

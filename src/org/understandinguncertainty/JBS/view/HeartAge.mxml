@@ -30,20 +30,17 @@ Source code, including a copy of the license is available at https://github.com/
 	</fx:Script>
 		
 	<s:VGroup paddingLeft="20" horizontalCenter="0" verticalCenter="0" horizontalAlign="left" 
-			  width="520" height="300" >
-		<s:Group height="80"/>
+			  width="520" height="330" >
+		<s:Group height="60"/>
 		<s:HGroup verticalAlign="middle" horizontalAlign="center">
 			<mx:Image left="30" top="30" scaleX="0.5" scaleY="0.5" source="@Embed('assets/heartAge2.png')" id="heartImage"/>
 			<s:VGroup horizontalAlign="center" paddingTop="10">
 				<s:Label text="Your heart age is about" fontSize="20"/>
 				<s:Label x="50" id="heartAgeText" fontSize="36"/>
-				<s:Label text="compared to an average person of" fontSize="16" color="0xAAAAAA"/>
-				<s:Label text="the same age, gender and ethnicity" fontSize="16" color="0xAAAAAA"/>
+				<s:Label text="compared to a person of the same age, gender" fontSize="16" color="0xAAAAAA"/>
+				<s:Label text="and ethnicity with optimal risk factors" fontSize="16" color="0xAAAAAA"/>
 				<s:Group height="10"/>
-				<!--
-				<s:Label id="meanSurvival" fontSize="20" textAlign="center"/>
-				<s:Label id="gainText"  fontSize="20"/>
-				-->
+
 			</s:VGroup>		
 		</s:HGroup>
 

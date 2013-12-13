@@ -127,7 +127,8 @@ package org.understandinguncertainty.JBS.model
 				rati: 4.439734935760498,
 				
 				//a += (p.sbp - 133.265686035156250) * 0.0051706475575211365000000;
-				sbp: 133.265686035156250,
+				//sbp: 133.265686035156250,
+				sbp: 120,
 				
 				//a += (p.town + 0.164980158209801) * 0.0118372789415412600000000;
 				town: -0.164980158209801
@@ -142,13 +143,47 @@ package org.understandinguncertainty.JBS.model
 				rati: 3.705839872360230,
 				
 				//a += (p.sbp - 129.823593139648440) * -0.0008337937584279265700000;
-				sbp: 129.823593139648440,
+				//sbp: 129.823593139648440,
+				sbp: 120,
 				
 				//a += (p.town + 0.301369071006775) * 0.0366304184773099120000000;
 				town: -0.301369071006775	
 					
 			}
 		};
+					
+
+		/*		private var centerings:Object = {
+			male: {
+				//a += (Math.log(p.bmi/10) - 0.967572152614594) * 0.4325953310683352500000000;
+				bmi: 10*Math.exp(0.967572152614594),
+				
+				//a += (p.rati - 4.439734935760498) * 0.1616093175199347100000000;
+				rati: 4.439734935760498,
+				
+				//a += (p.sbp - 133.265686035156250) * 0.0051706475575211365000000;
+				sbp: 120.265686035156250,
+				
+				//a += (p.town + 0.164980158209801) * 0.0118372789415412600000000;
+				town: -0.164980158209801
+				
+			},
+			female: {
+				//a += (Math.sqrt(p.bmi/10) - 1.605074524879456) * 0.2813726290228962300000000;
+				//a += (Math.sqrt(p.bmi/10) - 1.605074524879456) * -0.1081416642130314200000000;
+				bmi: 10*1.605074524879456*1.605074524879456,
+					
+				//a += (p.rati - 3.705839872360230) * 0.0273178320909109660000000;
+				rati: 3.705839872360230,
+				
+				//a += (p.sbp - 129.823593139648440) * -0.0008337937584279265700000;
+				sbp: 120,
+				
+				//a += (p.town + 0.301369071006775) * 0.0366304184773099120000000;
+				town: -0.301369071006775	
+					
+			}
+		};*/
 					
 		
 		private var townsendQuintiles:Object = {
@@ -415,6 +450,19 @@ package org.understandinguncertainty.JBS.model
 		override public function get heartAge():Number
 		{
 			return heartAgeUsingHazardAllowingYounger;
+		}
+		
+		public function get tenYearNoDeath():String
+		{
+			if(flashScore == null)
+				return "";
+			
+			var tenYearRiskNoDeath:Number = 100 * flashScore.result.annualRiskTable_int.getRiskNoDeathAt(10);
+
+			if(tenYearRiskNoDeath > 0)
+				return tenYearRiskNoDeath.toPrecision(2);
+			else
+				return "unknown"; // never happens because of QRisk upper age limit
 		}
 
 		/**

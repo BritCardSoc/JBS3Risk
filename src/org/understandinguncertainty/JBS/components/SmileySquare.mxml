@@ -137,7 +137,7 @@ Source code, including a copy of the license is available at https://github.com/
 				var len:int = 0;
 				var count:int = 0;
 
-				trace("f = " + f + " f_int = " + f_int + " m = " + m + " m_int = " + m_int);
+				//trace("f = " + f + " f_int = " + f_int + " m = " + m + " m_int = " + m_int);
 				yellow = Math.round(f - f_int);
 				red = 0;				
 				blue = 0;
@@ -157,7 +157,7 @@ Source code, including a copy of the license is available at https://github.com/
 						red = Math.round(f_int);
 						green = _N2 - (blue + moreBlue + yellow + red);
 						greenCrossed = 0;						
-						trace("1 blue:",blue," moreBlue:",moreBlue," red",red," gc:",greenCrossed, " GREEN:",green, " N2:", _N2);
+						//trace("1 blue:",blue," moreBlue:",moreBlue," red",red," gc:",greenCrossed, " GREEN:",green, " N2:", _N2);
 					}
 					else {
 						// this can now happen since we now allow people to take up smoking as an intervention
@@ -169,7 +169,7 @@ Source code, including a copy of the license is available at https://github.com/
 							++red;
 							--greenCrossed;
 						}
-						trace("2 blue:",blue," moreBlue:",moreBlue," red",red," gc:",greenCrossed, " GREEN:",green);
+						//trace("2 blue:",blue," moreBlue:",moreBlue," red",red," gc:",greenCrossed, " GREEN:",green);
 						green = _N2 - (blue + moreBlue + red + greenCrossed);
 					}
 				}
@@ -199,7 +199,7 @@ Source code, including a copy of the license is available at https://github.com/
 						green = _N2 - (blue + yellow + red);
 					}
 				}
-				trace("3 blue:",blue," moreBlue:",moreBlue," red",red," gc:",greenCrossed, " GREEN:",green);
+				//trace("3 blue:",blue," moreBlue:",moreBlue," red",red," gc:",greenCrossed, " GREEN:",green);
 			
 				bluePlural = blue + moreBlue > 1 ? "s" : "";
 				redPlural = red > 1 ? "s" : "";

@@ -31,15 +31,14 @@ Source code, including a copy of the license is available at https://github.com/
 	</fx:Script>
 		
 	<s:VGroup paddingLeft="20" horizontalCenter="0" verticalCenter="0" horizontalAlign="left" 
-			  width="520" height="300" >
+			  width="520" height="330" gap="0">
 		
-		<s:Group height="40"/>
+		<s:Group height="0"/>
 		<s:HGroup verticalAlign="middle" width="100%" horizontalAlign="center">
 			<s:VGroup horizontalAlign="center" paddingTop="10">
-
 				<s:Group height="10"/>
-				<s:Label id="meanSurvival" fontSize="26" textAlign="center"/>
-				<s:Label id="gainText"  fontSize="20"/>
+				<s:Label id="meanSurvival" fontSize="22" textAlign="center"/>
+				<s:Label id="gainText"  fontSize="18" />
 			</s:VGroup>		
 		</s:HGroup>
 		
@@ -70,10 +69,17 @@ Source code, including a copy of the license is available at https://github.com/
 				</mx:series>
 			</mx:BarChart>
 			<s:Ellipse x="1" y="3" width="28" height="28" fill="{green}" filters="{drop, bevel}"/>
-				
-			<s:Label x="80" y="60" text="expected life without a heart attack or stroke" fontSize="16"/>
+		
+			<s:Label x="80" y="60" text="expected life without a heart attack or stroke" fontSize="16"  color="0xAAAAAA"/>
 		</s:Group>
 		
+		
+		<s:VGroup width="100%" horizontalAlign="center" paddingTop="60">
+			<s:Label fontSize="22" textAlign="center" text="Your risk of a heart attack or stroke"/>
+			<s:Label fontSize="22" textAlign="center" text="in the next 10 years is"/>
+			<s:Label x="50" id="tenYearNoDeath" fontSize="36" text="10%" />
+			<s:Label fontSize="16" textAlign="center" text="assuming you don’t die of anything else" color="0xAAAAAA"/>
+		</s:VGroup>
 	</s:VGroup>
 	
 </s:Group>

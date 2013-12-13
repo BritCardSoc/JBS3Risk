@@ -107,14 +107,14 @@ Source code, including a copy of the license is available at https://github.com/
 						  monthSource="{mmStep}" monthProperty="value" 
 						  daySource="{ddStep}" dayProperty="value" required="true" />
 		<ns:NumberValidator id="heightValidator" 
-							minValue="20" maxValue="40"
+							minValue="20" maxValue="50"
 							exceedsMaxError = "{bmiTooBig}"
 							lowerThanMinError = "{bmiTooSmall}"
 							required="true" 
 							source="{height_mStep}" 
 							property="bmi" />
 		<ns:NumberValidator id="weightValidator" 
-							minValue="20" maxValue="40" 
+							minValue="20" maxValue="50" 
 							exceedsMaxError = "{bmiTooBig}"
 							lowerThanMinError = "{bmiTooSmall}"
 							required="true" 
@@ -281,7 +281,7 @@ Source code, including a copy of the license is available at https://github.com/
 								<components:TotalCholStepper id="totalCholesterolStep" width="70"
 													hdlChol="{hdlCholesterolStep.value}"
 													value="4" minimum="0.000001" maximum="20" stepSize="0.1"
-													valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"
+													valueFormatFunction="{function(val:Number):String {return val.toPrecision(2);}}"
 													/>
 							</s:HGroup>
 							
@@ -292,7 +292,7 @@ Source code, including a copy of the license is available at https://github.com/
 								<components:HDLCholStepper id = "hdlCholesterolStep" width="70"
 												  totalChol="{totalCholesterolStep.value}"
 												  value="1" minimum="0.000001" maximum="12" stepSize="0.1"
-												  valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"
+												  valueFormatFunction="{function(val:Number):String {return val.toPrecision(2);}}"
 												  />
 							</s:HGroup>
 						</s:VGroup>

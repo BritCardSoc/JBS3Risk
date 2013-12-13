@@ -25,6 +25,8 @@ package org.understandinguncertainty.JBS.model
 		function get heartAgeText():String;
 		function set heartAgeText(value:String):void;
 		
+		function get tenYearNoDeath():String;
+
 		function get endTreatmentAge():int;
 		function set endTreatmentAge(age:int):void;
 		

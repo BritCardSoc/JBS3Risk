@@ -83,6 +83,7 @@ package org.understandinguncertainty.JBS.view
 			*/
 			// runModel.commitProperties();
 			heartAge.heartAgeText.text = runModel.heartAgeText;
+
 		}
 	}
 }
