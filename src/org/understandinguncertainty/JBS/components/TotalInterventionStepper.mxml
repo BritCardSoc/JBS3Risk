@@ -10,6 +10,7 @@ Source code, including a copy of the license is available at https://github.com/
 							 xmlns:mx="library://ns.adobe.com/flex/mx" 
 							 xmlns:components="org.understandinguncertainty.JBS.components.*"
 							 fixed="1"
+							 minimum="0"
 							 stepSize="0.1">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -21,9 +22,12 @@ Source code, including a copy of the license is available at https://github.com/
 			[Bindable]
 			public var hdlChol:Number = 1;
 			
-			public function get cholRatio():Number {
-				return (value/hdlChol);
-			};
+/* 			public function get cholRatio():Number {
+				if(hdlChol > 0)
+					return Math.min(100, value/hdlChol);
+				else
+					return 100;
+			}; */
 		]]>
 	</fx:Script>
 	

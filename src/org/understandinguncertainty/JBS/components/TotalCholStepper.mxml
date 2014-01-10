@@ -19,7 +19,10 @@ Source code, including a copy of the license is available at https://github.com/
 			public var hdlChol:Number = 1;
 			
 			public function get cholRatio():Number {
-				return (value/hdlChol);
+				if(hdlChol > 0)
+					return Math.min(100, value/hdlChol);
+				else
+					return 100;
 			};
 		]]>
 	</fx:Script>

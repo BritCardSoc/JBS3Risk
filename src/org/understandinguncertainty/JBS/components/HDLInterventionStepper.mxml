@@ -11,6 +11,7 @@ Source code, including a copy of the license is available at https://github.com/
 								xmlns:components="org.understandinguncertainty.JBS.components.*" 
 								fixed="2"
 								stepSize="0.01"
+								minimum="0"
 								>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -22,9 +23,12 @@ Source code, including a copy of the license is available at https://github.com/
 			[Bindable]
 			public var totalChol:Number = 4;
 			
-			public function get cholRatio():Number {
-				return (totalChol/value);
-			};
+/* 			public function get cholRatio():Number {
+				if(value > 0)
+					return Math.min(totalChol/value, 100);
+				else
+					return 100;
+			}; */
 			
 		]]>
 	</fx:Script>

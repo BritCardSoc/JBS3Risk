@@ -11,9 +11,11 @@ package org.understandinguncertainty.JBS.view
 	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
 	import flash.events.SecurityErrorEvent;
+	import flash.events.TimerEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
+	import flash.utils.Timer;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -84,6 +86,8 @@ package org.understandinguncertainty.JBS.view
 		
 		private var ps:PersonalisationFileStore;
 		
+		private var timer:Timer = new Timer(100,1);
+		
 		override public function onRegister():void
 		{
 			//trace("Profile Register");
@@ -153,15 +157,22 @@ package org.understandinguncertainty.JBS.view
 			
 			profile.townsendGroup.addEventListener(Event.CHANGE, showTownsendImage);
 			
-			profile.totalCholesterolStep.addEventListener(Event.CHANGE, validate);
-			profile.hdlCholesterolStep.addEventListener(Event.CHANGE, validate);
+			profile.totalCholesterolStep.addEventListener(Event.CHANGE, molChanged);
+			profile.hdlCholesterolStep.addEventListener(Event.CHANGE, molChanged);
+			
+			profile.totalCholesterolStep_mgdl.addEventListener(Event.CHANGE, mgChanged);
+			profile.hdlCholesterolStep_mgdl.addEventListener(Event.CHANGE, mgChanged);
+			
+			
 			profile.systolicBloodPressureInputStep.addEventListener(Event.CHANGE, validate);
 			
 			profile.cholUnits.addEventListener(Event.CHANGE, changedUnits);
 			
 			profile.saveButton.addEventListener(MouseEvent.CLICK, save);
 			profile.loadButton.addEventListener(MouseEvent.CLICK, load);
-			profile.nextButton.addEventListener(MouseEvent.CLICK, nextScreen);	
+			profile.nextButton.addEventListener(MouseEvent.CLICK, nextScreen);
+
+			timer.addEventListener(TimerEvent.TIMER_COMPLETE, finishUnitChange);
 			
 		}
 		
@@ -185,6 +196,10 @@ package org.understandinguncertainty.JBS.view
 
 			profile.totalCholesterolStep.removeEventListener(Event.CHANGE, validate);
 			profile.hdlCholesterolStep.removeEventListener(Event.CHANGE, validate);
+
+			profile.totalCholesterolStep_mgdl.removeEventListener(Event.CHANGE, validate);
+			profile.hdlCholesterolStep_mgdl.removeEventListener(Event.CHANGE, validate);
+			
 			profile.systolicBloodPressureInputStep.removeEventListener(Event.CHANGE, validate);
 			
 			profile.cholUnits.removeEventListener(Event.CHANGE, changedUnits);
@@ -192,6 +207,9 @@ package org.understandinguncertainty.JBS.view
 			profile.saveButton.removeEventListener(MouseEvent.CLICK, save);
 			profile.loadButton.removeEventListener(MouseEvent.CLICK, load);
 			profile.nextButton.removeEventListener(MouseEvent.CLICK, nextScreen);	
+
+			timer.removeEventListener(TimerEvent.TIMER_COMPLETE, finishUnitChange);
+			
 		}
 		
 		private function visitTerms(event:MouseEvent):void
@@ -232,6 +250,20 @@ package org.understandinguncertainty.JBS.view
 			ps.save();
 		}
 		
+		private var _cholesterolValidationOn:Boolean = true;
+		private function set cholesterolValidationOn(b:Boolean):void {
+			_cholesterolValidationOn = b;
+
+			profile.totalCholValidator.enabled = b;
+			profile.totalCholValidator_mgdl.enabled = b;
+			profile.hdlCholValidator.enabled = b;
+			profile.hdlCholValidator_mgdl.enabled = b;
+		
+		}
+		private function get cholesterolValidationOn():Boolean {
+			return _cholesterolValidationOn;
+		}
+		
 		//
 		// populate the form with variable list data
 		//
@@ -257,11 +289,31 @@ package org.understandinguncertainty.JBS.view
 			
 			profile.diabetic.selected = pvars.diabetic.value;
 			
-			hdlCholesterol_mmol_L = Number(pvars.hdlCholesterol_mmol_L);
-			totalCholesterol_mmol_L = Number(pvars.totalCholesterol_mmol_L);
+			var hdl:Number = Number(pvars.hdlCholesterol_mmol_L);
+			var total:Number = Number(pvars.totalCholesterol_mmol_L);
 			
-			var nonHDL:Number = totalCholesterol - hdlCholesterol;
-			profile.nonHDLField.text = "NonHDL Cholesterol: " + nonHDL.toPrecision(3);
+			// We validate the cholesterol ratio - which means both hdl and total cholesterol must be
+			// set before validation happens. So we disable the validators, then set both, then reenable.
+			
+			cholesterolValidationOn = false;
+			profile.hdlCholesterolStep.value = hdl;
+			profile.totalCholesterolStep.value = total;
+			profile.hdlCholesterolStep_mgdl.value = mol2mg(hdl);
+			profile.totalCholesterolStep_mgdl.value = mol2mg(total);
+			
+			profile.hdlCholesterolStep.validateNow();
+			profile.totalCholesterolStep.validateNow();
+			profile.hdlCholesterolStep_mgdl.validateNow();
+			profile.totalCholesterolStep_mgdl.validateNow();
+			
+			cholesterolValidationOn = true;
+			
+			// calculate nonHDL from values in the Steppers - so the displayed difference is correct whatever the rounding
+			var nonHDL:Number = profile.totalCholesterolStep.value - profile.hdlCholesterolStep.value;
+			var nonHDL_mgdl:Number = profile.totalCholesterolStep_mgdl.value - profile.hdlCholesterolStep_mgdl.value;
+			
+			profile.nonHDLField.text = "NonHDL Cholesterol: " + nonHDL.toFixed(1);
+			profile.nonHDLField_mgdl.text = "NonHDL Cholesterol: " + nonHDL_mgdl.toFixed(0);
 			
 			profile.systolicBloodPressure = Number(pvars.systolicBloodPressure);
 			profile.SBPTreated.selected = pvars.SBPTreated.value;
@@ -292,8 +344,17 @@ package org.understandinguncertainty.JBS.view
 			pvars.smokerGroup.value = profile.smokerGroup.selectedIndex;
 			
 			pvars.diabetic.value = profile.diabetic.selected
-			pvars.hdlCholesterol_mmol_L.value = hdlCholesterol_mmol_L;
-			pvars.totalCholesterol_mmol_L.value = totalCholesterol_mmol_L;
+			
+			if(appState.mmol) {
+				pvars.hdlCholesterol_mmol_L.value = profile.hdlCholesterolStep.value;
+				pvars.totalCholesterol_mmol_L.value = profile.totalCholesterolStep.value;
+			}
+			else {
+				pvars.hdlCholesterol_mmol_L.value = mg2mol(profile.hdlCholesterolStep_mgdl.value);
+				pvars.totalCholesterol_mmol_L.value = mg2mol(profile.totalCholesterolStep_mgdl.value);				
+			}
+			
+			
 			pvars.systolicBloodPressure.value = profile.systolicBloodPressure;
 			pvars.SBPTreated.value = profile.SBPTreated.selected;
 			
@@ -374,20 +435,54 @@ package org.understandinguncertainty.JBS.view
 			Alert.show(event.toString(),"Network error");
 		}
 		
-		public function validate(event:Event = null):void {
-			// we don't want lazy validation here!
+		
+		private function molChanged(event:Event = null):void {
 			
-			profile.bmiField.text = "BMI: " + bmi_uncommitted.toPrecision(3);
+			var total:Number = profile.totalCholesterolStep.value;
+			var hdl:Number = profile.hdlCholesterolStep.value;
 			
-			var nonHDL:Number = totalCholesterol - hdlCholesterol;		
-			profile.nonHDLField.text = "NonHDL Cholesterol: " + nonHDL.toPrecision(3);			
-
+			cholesterolValidationOn = false;
+			profile.totalCholesterolStep_mgdl.value = mol2mg(total);
+			profile.hdlCholesterolStep_mgdl.value = mol2mg(hdl);
+			cholesterolValidationOn = true;
 			
+			var nonHDL:Number = total - hdl;
+			
+			profile.nonHDLField.text = "NonHDL Cholesterol: " + nonHDL.toFixed(0);			
+			profile.nonHDLField_mgdl.text = "NonHDL Cholesterol: " + mol2mg(nonHDL).toFixed(0);			
+				
 			var e1:Boolean = (profile.hdlCholValidator.validate().results != null);
 			var e2:Boolean = (profile.totalCholValidator.validate().results != null);
 			
-//			e1 = (profile.totalCholesterolStep.cholRatio < 1);
-//			e2 = (profile.totalCholesterolStep.cholRatio > 12);
+			validate();
+		}
+		
+		private function mgChanged(event:Event = null):void {
+			
+			var total:Number = profile.totalCholesterolStep_mgdl.value;
+			var hdl:Number = profile.hdlCholesterolStep_mgdl.value;
+			
+			cholesterolValidationOn = false;
+			profile.totalCholesterolStep.value = mg2mol(total);
+			profile.hdlCholesterolStep.value = mg2mol(hdl);
+			cholesterolValidationOn = true;
+
+			var nonHDL:Number = total - hdl;
+			
+			profile.nonHDLField.text = "NonHDL Cholesterol: " + mg2mol(nonHDL).toFixed(0);			
+			profile.nonHDLField_mgdl.text = "NonHDL Cholesterol: " + nonHDL.toFixed(0);			
+				
+			var e1:Boolean = (profile.hdlCholValidator_mgdl.validate().results != null);
+			var e2:Boolean = (profile.totalCholValidator_mgdl.validate().results != null);
+			
+			validate();
+		}
+		
+		
+		private function validate(event:Event = null):void {
+			
+			profile.bmiField.text = "BMI: " + bmi_uncommitted.toPrecision(3);
+			
 			
 			var e3:Boolean = (profile.dateValidator.validate().results != null)
 			var e4:Boolean = (profile.sbpValidator.validate().results != null);
@@ -396,7 +491,7 @@ package org.understandinguncertainty.JBS.view
 			var e7:Boolean = (profile.hadCVDValidator.validate().results != null);
 			var e8:Boolean = (profile.termsValidator.validate().results != null);
 
-			if(e1 || e2 || e3 || e4 || e5 || e6 || e7 || e8) {
+			if(e3 || e4 || e5 || e6 || e7 || e8) {
 				isValid = false;
 				profile.nextButton.enabled = false;
 				profileValidSignal.dispatch(false);
@@ -416,25 +511,6 @@ package org.understandinguncertainty.JBS.view
 		}
 		
 		private var isValid:Boolean = false;
-		
-		public function get totalCholesterol():Number
-		{
-			return profile.totalCholesterolStep.value;
-		}
-		public function set totalCholesterol(value:Number):void
-		{
-			profile.totalCholesterolStep.value = value;
-		}
-		
-		public function get hdlCholesterol():Number
-		{
-			return profile.hdlCholesterolStep.value;
-		}
-		public function set hdlCholesterol(value:Number):void
-		{
-			profile.hdlCholesterolStep.value = value;
-		}
-		
 
 		private function currentYear():int 
 		{
@@ -442,8 +518,11 @@ package org.understandinguncertainty.JBS.view
 			return d.fullYear;
 		}
 		
+		/*
+		 * Cholesterol Conversions
+		 */
+		public static var cholConversionFactor:Number = 38.7;
 		
-		private const cholConversionFactor:Number = 38.7;
 		private var mmol_L:String = "mmol/L";
 		private var mg_dL:String = "mg/dL";
 		
@@ -455,6 +534,38 @@ package org.understandinguncertainty.JBS.view
 			return profile.cholUnits.selectedItem.unit;
 		}
 	
+		public static function mg2mol(mg:Number):Number {
+			return mg / cholConversionFactor;
+		}
+		
+		public static function mol2mg(mol:Number):Number {
+			return mol * cholConversionFactor;
+		}
+		
+		/* OLD CODE IN COMMENTS */
+		
+		/*
+		public function get totalCholesterol():Number
+		{
+		return profile.totalCholesterolStep.value;
+		}
+		public function set totalCholesterol(value:Number):void
+		{
+		profile.totalCholesterolStep.value = value;
+		}
+		
+		public function get hdlCholesterol():Number
+		{
+		return profile.hdlCholesterolStep.value;
+		}
+		public function set hdlCholesterol(value:Number):void
+		{
+		profile.hdlCholesterolStep.value = value;
+		}
+		*/
+
+		
+		/*
 		public function get totalCholesterol_mmol_L():Number
 		{
 			if(cholesterolUnit == mmol_L)
@@ -487,18 +598,45 @@ package org.understandinguncertainty.JBS.view
 		}
 		
 		
+		*/
 		private var cholUnitFactors:ArrayCollection = new ArrayCollection([
 			{unit:"mmol/L", factor: 1},
 			{unit:"mg/dL", factor: 1 / cholConversionFactor},
 		]);
 		
-		// TODO: Worry about minimum and maximum ranges and value conversions
+		// Prevents a yukky screen flash by delaying the change on scrren
+		public function finishUnitChange(event: TimerEvent):void {
+			profile.mmol.visible = appState.mmol;
+			profile.mgdl.visible = !appState.mmol;
+		}
 		
 		
 		private function changedUnits(event:Event):void
 		{
 			appState.mmol = (cholesterolUnit == mmol_L);
 
+			if (appState.mmol) {
+				profile.mmol.percentWidth = 100;
+				profile.mgdl.width = 0;
+				profile.mgdl.visible = false;
+			}
+			else {
+				profile.mgdl.percentWidth = 100;
+				profile.mmol.width = 0;
+				profile.mmol.visible = false;
+			}
+			timer.reset();
+			timer.start();
+		}
+		
+		/* OLD CODE IN COMMENTS */
+		
+
+/*
+			profile.totalCholesterolStep.visible = profile.hdlCholesterolStep.visible = appState.mmol;
+			
+			profile.totalCholesterolStep_mgdl.visible = profile.hdlCholesterolStep_mgdl.visible = !appState.mmol;
+		
 			// be careful to ensure stepper minimum < value < maximum at all times
 			var f:Number;
 			if(appState.mmol) {
@@ -512,7 +650,6 @@ package org.understandinguncertainty.JBS.view
 			
 			updateCholesterolStepper(profile.totalCholesterolStep, profile.totalCholValidator, f, "total");
 			updateCholesterolStepper(profile.hdlCholesterolStep, profile.hdlCholValidator, f, "hdl");
-		
 			
 			validate();
 		}
@@ -560,6 +697,7 @@ package org.understandinguncertainty.JBS.view
 			stepper.validateNow();
 
 		}
+*/		
 		
 		private var _metres:Number = 1.75;
 		public function get metres():Number

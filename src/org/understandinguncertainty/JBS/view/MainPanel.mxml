@@ -22,12 +22,12 @@ Source code, including a copy of the license is available at https://github.com/
 		<s:State name="heartAge"/>
 		<s:State name="futures"/>
 		<s:State name="deanfield"/>
-		<s:State name="outlook"/>
-		<s:State name="yearsGained"/>
-		<s:State name="yearsGainedRatio"/>
 		<s:State name="outcomes"/>
 		<s:State name="balance"/>
+		<s:State name="yearsGained"/>
+		<s:State name="yearsGainedRatio"/>
 		<s:State name="compare"/>
+		<s:State name="outlook"/>
 	</s:states>
 	
 	<fx:Script>

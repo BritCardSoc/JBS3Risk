@@ -123,7 +123,13 @@ Source code, including a copy of the license is available at https://github.com/
 		<validators:CholRatioValidator id="totalCholValidator" source="{totalCholesterolStep}" property="cholRatio"
 							required="true" 
 							/>
+		<validators:CholRatioValidator id="totalCholValidator_mgdl" source="{totalCholesterolStep_mgdl}" property="cholRatio"
+							required="true" 
+							/>
 		<validators:CholRatioValidator id="hdlCholValidator" source="{hdlCholesterolStep}" property="cholRatio"
+							required="true" 
+							/>
+		<validators:CholRatioValidator id="hdlCholValidator_mgdl" source="{hdlCholesterolStep_mgdl}" property="cholRatio"
 							required="true" 
 							/>
 		<ns:NumberValidator id="sbpValidator" domain="real" minValue="70" maxValue="210" required="true" source="{systolicBloodPressureInputStep}" property="value"/>	
@@ -271,17 +277,17 @@ Source code, including a copy of the license is available at https://github.com/
 						<ns:ComboBox id="smokerGroup" width="160" selectedIndex="0" rowCount="5"/>
 					</s:HGroup>
 					
-					<s:HGroup width="100%" verticalAlign="middle">
+					<s:HGroup width="100%" verticalAlign="top" gap="0">
 						
-						<s:VGroup width = "100%" >
+						<s:VGroup id="mmol" width = "100%" visible="true">
 							<s:HGroup width="100%" verticalAlign="bottom"  toolTip="{tipPlaceHolder}">
 								<s:Group width="100%"/>   
 								<s:Label text="@Resource(bundle='JBS', key='profile.entry.totalChol')" fontWeight="normal"/>
 								<!--<s:TextInput id="totalCholesterolInput" editable="true" text="" width="40" />-->
 								<components:TotalCholStepper id="totalCholesterolStep" width="70"
 													hdlChol="{hdlCholesterolStep.value}"
-													value="4" minimum="0.000001" maximum="20" stepSize="0.1"
-													valueFormatFunction="{function(val:Number):String {return val.toPrecision(2);}}"
+													value="4" minimum="0" maximum="20" stepSize="0.1"
+													valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"
 													/>
 							</s:HGroup>
 							
@@ -291,15 +297,48 @@ Source code, including a copy of the license is available at https://github.com/
 								<!--<s:TextInput id="hdlCholesterolInput" editable="true" text="" width="40"  />-->
 								<components:HDLCholStepper id = "hdlCholesterolStep" width="70"
 												  totalChol="{totalCholesterolStep.value}"
-												  value="1" minimum="0.000001" maximum="12" stepSize="0.1"
-												  valueFormatFunction="{function(val:Number):String {return val.toPrecision(2);}}"
+												  value="1" minimum="0" maximum="12" stepSize="0.1"
+												  valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"
 												  />
 							</s:HGroup>
+							
+							<s:Label id="nonHDLField" paddingLeft="30"/>
+
 						</s:VGroup>
-						<ns:ComboBox id="cholUnits" width="70" selectedIndex="0" labelField="unit" />
+						
+						<s:VGroup id="mgdl" width = "0" visible="false" >
+							<s:HGroup width="100%" verticalAlign="bottom"  toolTip="{tipPlaceHolder}">
+								<s:Group width="100%"/>   
+								<s:Label text="@Resource(bundle='JBS', key='profile.entry.totalChol')" fontWeight="normal"/>
+								<!--<s:TextInput id="totalCholesterolInput" editable="true" text="" width="40" />-->
+								<components:TotalCholStepper id="totalCholesterolStep_mgdl" width="70"
+													hdlChol="{hdlCholesterolStep_mgdl.value}"
+													value="4" minimum="0" maximum="774" stepSize="5"
+													valueFormatFunction="{function(val:Number):String {return val.toFixed(0);}}"
+													/>
+							</s:HGroup>
+							
+							<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+								<s:Group width="100%"/>
+								<s:Label text="@Resource(bundle='JBS', key='profile.entry.HDLChol')" fontWeight="normal"/>
+								<!--<s:TextInput id="hdlCholesterolInput" editable="true" text="" width="40"  />-->
+								<components:HDLCholStepper id = "hdlCholesterolStep_mgdl" width="70"
+												  totalChol="{totalCholesterolStep_mgdl.value}"
+												  value="1" minimum="0" maximum="464" stepSize="1"
+												  valueFormatFunction="{function(val:Number):String {return val.toFixed(0);}}"
+												  />
+							</s:HGroup>
+							<s:Label id="nonHDLField_mgdl" paddingLeft="30"/>
+						</s:VGroup>
+						
+						<s:Group width="20"/>
+						
+						<s:VGroup>
+							<s:Group height="10"/>
+							<ns:ComboBox id="cholUnits" width="70" selectedIndex="0" labelField="unit" />
+						</s:VGroup>
 					</s:HGroup>
 					
-					<s:Label id="nonHDLField" paddingLeft="30"/>
 					
 					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
 						<s:Group width="100%"/>

@@ -19,7 +19,10 @@ Source code, including a copy of the license is available at https://github.com/
 			public var totalChol:Number = 4;
 			
 			public function get cholRatio():Number {
-				return (totalChol/value);
+				if(value > 0)
+					return Math.min(totalChol/value, 100);
+				else
+					return 100;
 			};
 			
 		]]>

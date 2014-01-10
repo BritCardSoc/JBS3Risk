@@ -56,19 +56,19 @@ package org.understandinguncertainty.JBS.view
 			interventionsPanel.sbp.minimum = QParametersVO.lowerLimits().sbp;
 			interventionsPanel.sbp.maximum = QParametersVO.upperLimits().sbp;
 
-			interventionsPanel.totalCholesterol.minimum = 0.0000001;
+			interventionsPanel.totalCholesterol.minimum = 0;
 			interventionsPanel.totalCholesterol.maximum = 20;
 
-			interventionsPanel.hdlCholesterol.minimum = 0.0000001;
+			interventionsPanel.hdlCholesterol.minimum = 0;
 			interventionsPanel.hdlCholesterol.maximum = 12;
 			
 			interventionsPanel.sbp.addEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.sbp.addEventListener(MouseEvent.CLICK, resetSBP);
 			
-			interventionsPanel.totalCholesterol.addEventListener(Event.CHANGE, stepper2Changed);
+			interventionsPanel.totalCholesterol.addEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.totalCholesterol.addEventListener(MouseEvent.CLICK, resetTotalCholesterol);
 			
-			interventionsPanel.hdlCholesterol.addEventListener(Event.CHANGE, stepper3Changed);
+			interventionsPanel.hdlCholesterol.addEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.hdlCholesterol.addEventListener(MouseEvent.CLICK, resetHDLCholesterol);
 			
 			interventionsPanel.resetButton.addEventListener(MouseEvent.CLICK, resetAll);
@@ -82,7 +82,6 @@ package org.understandinguncertainty.JBS.view
 			]);
 			interventionsPanel.futureSmokingCategory.addEventListener(Event.CHANGE, futureSmokingChanged);
 
-			
 			interventionsPanel.conversionFactor = appState.mmol ? 1 : appState.mmolConvert;
 			
 			setInterventions(interventionProfile.variableList);
@@ -93,25 +92,45 @@ package org.understandinguncertainty.JBS.view
 			interventionsPanel.sbp.removeEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.sbp.removeEventListener(MouseEvent.CLICK, resetSBP);
 
-			interventionsPanel.totalCholesterol.removeEventListener(Event.CHANGE, stepper2Changed);
+			interventionsPanel.totalCholesterol.removeEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.totalCholesterol.removeEventListener(MouseEvent.CLICK, resetTotalCholesterol);
 			
-			interventionsPanel.hdlCholesterol.removeEventListener(Event.CHANGE, stepper3Changed);
+			interventionsPanel.hdlCholesterol.removeEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.hdlCholesterol.removeEventListener(MouseEvent.CLICK, resetHDLCholesterol);
 			
 			interventionsPanel.resetButton.removeEventListener(MouseEvent.CLICK, resetAll);
 		}
 		
+		
 		private function setInterventions(user:VariableList):void
 		{	
 			interventionsPanel.sbp.original = interventionsPanel.sbp.value = user.systolicBloodPressure.value as Number;
 			
-			interventionsPanel.totalCholesterol.original = interventionsPanel.totalCholesterol.value = user.totalCholesterol_mmol_L.value;
-			interventionsPanel.hdlCholesterol.original = interventionsPanel.hdlCholesterol.value = user.hdlCholesterol_mmol_L.value;
+			if(appState.mmol) {
+				interventionsPanel.totalCholesterol.original = interventionsPanel.totalCholesterol.value = user.totalCholesterol_mmol_L.value;
+				interventionsPanel.totalCholesterol.maximum = 20;
+				interventionsPanel.totalCholesterol.stepSize = 0.1;
+				interventionsPanel.totalCholesterol.fixed = 1;
+				interventionsPanel.hdlCholesterol.original = interventionsPanel.hdlCholesterol.value = user.hdlCholesterol_mmol_L.value;
+				interventionsPanel.hdlCholesterol.maximum = 12;
+				interventionsPanel.hdlCholesterol.stepSize = 0.1;
+				interventionsPanel.hdlCholesterol.fixed = 1;
+				interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (user.totalCholesterol_mmol_L.value - user.hdlCholesterol_mmol_L.value).toFixed(1);
+			}
+			else {
+				interventionsPanel.totalCholesterol.maximum = QProfileMediator.mol2mg(20);
+				interventionsPanel.totalCholesterol.stepSize = 5;
+				interventionsPanel.totalCholesterol.fixed = 0;
+				interventionsPanel.hdlCholesterol.maximum = QProfileMediator.mol2mg(12);
+				interventionsPanel.hdlCholesterol.stepSize = 1;
+				interventionsPanel.hdlCholesterol.fixed = 0;
+				interventionsPanel.totalCholesterol.original = interventionsPanel.totalCholesterol.value = QProfileMediator.mol2mg(user.totalCholesterol_mmol_L.value);
+				interventionsPanel.hdlCholesterol.original = interventionsPanel.hdlCholesterol.value = QProfileMediator.mol2mg(user.hdlCholesterol_mmol_L.value);
+				interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + QProfileMediator.mol2mg(user.totalCholesterol_mmol_L.value - user.hdlCholesterol_mmol_L.value).toFixed(0);
+			}
 			
 			interventionsPanel.futureSmokingCategory.selectedIndex = user.smokerGroup.value as Number;
 			
-			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (user.totalCholesterol_mmol_L.value - user.hdlCholesterol_mmol_L.value).toPrecision(2);
 			
 			interventionsPanel.bmiField.text = "BMI: " + user.bmi.toPrecision(3);
 				
@@ -121,19 +140,26 @@ package org.understandinguncertainty.JBS.view
 
 		private function stepperChanged(event:Event):void
 		{
-			var conversion:Number = appState.mmol ? 1 : 1/appState.mmolConvert;
 			var inter:VariableList = interventionProfile.variableList;
 			
 			inter.systolicBloodPressure.value = interventionsPanel.sbp.value;
-			inter.totalCholesterol_mmol_L.value = interventionsPanel.totalCholesterol.value;
-			inter.hdlCholesterol_mmol_L.value = interventionsPanel.hdlCholesterol.value;
+			
+			if(appState.mmol) {
+				inter.totalCholesterol_mmol_L.value = interventionsPanel.totalCholesterol.value;
+				inter.hdlCholesterol_mmol_L.value = interventionsPanel.hdlCholesterol.value;
+				interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (interventionsPanel.totalCholesterol.value - interventionsPanel.hdlCholesterol.value).toFixed(1);
+			}
+			else {
+				inter.totalCholesterol_mmol_L.value = QProfileMediator.mg2mol(interventionsPanel.totalCholesterol.value);
+				inter.hdlCholesterol_mmol_L.value = QProfileMediator.mg2mol(interventionsPanel.hdlCholesterol.value);
+				interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (interventionsPanel.totalCholesterol.value - interventionsPanel.hdlCholesterol.value).toFixed(0);;				
+			}
 			inter.smokerGroup.value = interventionsPanel.futureSmokingCategory.selectedIndex;
 			
-			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (inter.totalCholesterol_mmol_L.value - inter.hdlCholesterol_mmol_L.value).toPrecision(2);
 			
 			runModel.commitProperties();
 		}
-		
+		/*
 		private function stepper2Changed(event:Event):void
 		{
 			var conversion:Number = appState.mmol ? 1 : 1/appState.mmolConvert;
@@ -163,7 +189,7 @@ package org.understandinguncertainty.JBS.view
 			
 			runModel.commitProperties();
 		}
-		
+		*/
 		private function futureSmokingChanged(event:Event):void 
 		{
 			var inter:VariableList = interventionProfile.variableList;
