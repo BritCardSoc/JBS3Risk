@@ -448,12 +448,9 @@ package org.understandinguncertainty.JBS.view
 			
 			var nonHDL:Number = total - hdl;
 			
-			profile.nonHDLField.text = "NonHDL Cholesterol: " + nonHDL.toFixed(0);			
-			profile.nonHDLField_mgdl.text = "NonHDL Cholesterol: " + mol2mg(nonHDL).toFixed(0);			
+			profile.nonHDLField.text = "NonHDL Cholesterol: " + nonHDL.toFixed(1);			
+			profile.nonHDLField_mgdl.text = "NonHDL Cholesterol: " + mol2mg(nonHDL).toFixed(1);			
 				
-			var e1:Boolean = (profile.hdlCholValidator.validate().results != null);
-			var e2:Boolean = (profile.totalCholValidator.validate().results != null);
-			
 			validate();
 		}
 		
@@ -472,9 +469,6 @@ package org.understandinguncertainty.JBS.view
 			profile.nonHDLField.text = "NonHDL Cholesterol: " + mg2mol(nonHDL).toFixed(0);			
 			profile.nonHDLField_mgdl.text = "NonHDL Cholesterol: " + nonHDL.toFixed(0);			
 				
-			var e1:Boolean = (profile.hdlCholValidator_mgdl.validate().results != null);
-			var e2:Boolean = (profile.totalCholValidator_mgdl.validate().results != null);
-			
 			validate();
 		}
 		
@@ -483,7 +477,8 @@ package org.understandinguncertainty.JBS.view
 			
 			profile.bmiField.text = "BMI: " + bmi_uncommitted.toPrecision(3);
 			
-			
+			var e1:Boolean = (profile.hdlCholValidator.validate().results != null);
+			var e2:Boolean = (profile.totalCholValidator.validate().results != null);
 			var e3:Boolean = (profile.dateValidator.validate().results != null)
 			var e4:Boolean = (profile.sbpValidator.validate().results != null);
 			var e5:Boolean = (profile.heightValidator.validate().results != null);
@@ -491,7 +486,7 @@ package org.understandinguncertainty.JBS.view
 			var e7:Boolean = (profile.hadCVDValidator.validate().results != null);
 			var e8:Boolean = (profile.termsValidator.validate().results != null);
 
-			if(e3 || e4 || e5 || e6 || e7 || e8) {
+			if(e1 || e3 || e4 || e5 || e6 || e7 || e8) {
 				isValid = false;
 				profile.nextButton.enabled = false;
 				profileValidSignal.dispatch(false);

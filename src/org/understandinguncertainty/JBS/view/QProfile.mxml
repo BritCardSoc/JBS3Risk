@@ -108,24 +108,42 @@ Source code, including a copy of the license is available at https://github.com/
 						  daySource="{ddStep}" dayProperty="value" required="true" />
 		<ns:NumberValidator id="heightValidator" 
 							minValue="20" maxValue="50"
-							exceedsMaxError = "{bmiTooBig}"
-							lowerThanMinError = "{bmiTooSmall}"
+							exceedsMaxError = "Maximum BMI = 50 permitted"
+							lowerThanMinError = "Minimum BMI = 20 permitted"
 							required="true" 
 							source="{height_mStep}" 
 							property="bmi" />
 		<ns:NumberValidator id="weightValidator" 
 							minValue="20" maxValue="50" 
-							exceedsMaxError = "{bmiTooBig}"
-							lowerThanMinError = "{bmiTooSmall}"
+							exceedsMaxError = "Maximum BMI = 50 permitted"
+							lowerThanMinError = "Minimum BMI = 20 permitted"
 							required="true" 
 							source="{weight_kgStep}" 
 							property="bmi" />
-		<validators:CholRatioValidator id="totalCholValidator" source="{totalCholesterolStep}" property="cholRatio"
+		
+		<ns:NumberValidator id="totalCholValidator" 
+							minValue = "0" maxValue = "7.5" 
+							exceedsMaxError = "Consider familial hypercholesterolaemia (FH). See NICE guidance CG71"
+							lowerThanMinError = "Total cholesterol too low"
+							source="{totalCholesterolStep}" 
+							property="value"
 							required="true" 
 							/>
-		<validators:CholRatioValidator id="totalCholValidator_mgdl" source="{totalCholesterolStep_mgdl}" property="cholRatio"
+		
+		<ns:NumberValidator id="totalCholValidator_mgdl" 
+							minValue = "0" maxValue = "290" 
+							exceedsMaxError = "Consider familial hypercholesterolaemia (FH). See NICE guidance CG71"
+							lowerThanMinError = "Total cholesterol too low"
+							source="{totalCholesterolStep_mgdl}" 
+							property="value"
 							required="true" 
 							/>
+		
+<!--		<ns:NumberValidator id="totalCholValidator_mgdl" source="{totalCholesterolStep_mgdl}" property="value" minValue:"0" maxValue:"290" 
+									   exceedsMaxError = "Consider familial hypercholesterolaemia (FH). See NICE guidance CG71"
+									   required="true" 
+							/>
+-->
 		<validators:CholRatioValidator id="hdlCholValidator" source="{hdlCholesterolStep}" property="cholRatio"
 							required="true" 
 							/>
