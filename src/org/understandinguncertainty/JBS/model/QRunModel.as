@@ -108,7 +108,13 @@ package org.understandinguncertainty.JBS.model
 		private var results:Array;
 		private var flashScore:FlashScore2011;
 		private var flashScore_int:FlashScore2011;
-		private var flashScore_gp:FlashScore2011;
+		private var _flashScore_gp:FlashScore2011;
+		public function get flashScore_gp() : FlashScore2011 {
+			return _flashScore_gp;
+		}
+		public function set flashScore_gp( fs: FlashScore2011 ):void {
+			_flashScore_gp = fs;
+		}
 		private var path:String;
 		private var params:QParametersVO;
 		private var params_int:QParametersVO;
@@ -377,7 +383,7 @@ package org.understandinguncertainty.JBS.model
 			
 			var lifeTable:LifetimeRiskTable = flashScore.result.annualRiskTable;
 			var lifeTable_int:LifetimeRiskTable = flashScore.result.annualRiskTable_int;
-			var lifeTable_gp:LifetimeRiskTable = flashScore_gp ? flashScore_gp.result.annualRiskTable : lifeTable;
+			var lifeTable_gp:LifetimeRiskTable = (flashScore_gp && flashScore_gp.result) ? flashScore_gp.result.annualRiskTable : lifeTable;
 			var cachedAge:int = userProfile.age;
 			
 			myHazard = lifeTable_int.getNoDeathHazardAt(0);

@@ -51,36 +51,17 @@ package org.understandinguncertainty.JBS.view
 		private function updateView():void
 		{
 			if(appState.selectedScreenName != "heartAge") {
-				
+					
 				// flashScore_gp may not be valid
 				// trace("HEARTAGE SCREEN MISMATCH");
 				
 				return;
 			}
-/*			
-			if(runModel.yearGain >= 0.1) {
-				var yg:String = runModel.yearGain.toPrecision(2);
-				heartAge.gainText.visible = true;
-				heartAge.gainText.text = "gaining " + yg + " years through interventions"
+			if(!runModel.flashScore_gp || !runModel.flashScore_gp.result) {
+				trace("FLASHSCORE_GP not valid");
+				return;
 			}
-			else {
-				heartAge.gainText.visible = false;
-			}
-			
-			meanAge = runModel.meanAge;
-			heartAge.meanSurvival.text = "On average, expect to survive to\n" + Math.floor(meanAge) + "\nwithout a heart attack or stroke";
-			var yGain:Number = Math.max(0, runModel.yearGain);
-*/			
-			/*
-			heartAge.thermometer.dataProvider = new ArrayCollection([{
-				meanYears:runModel.meanAge - yGain, 
-				yearGain:yGain, 
-				summary:""
-			}]);
 
-			heartAge.hAxis.minimum = userProfile.age;
-			heartAge.hAxis.maximum = 102; //5*Math.ceil((runModel.meanAge + 5)/5);
-			*/
 			// runModel.commitProperties();
 			heartAge.heartAgeText.text = runModel.heartAgeText;
 

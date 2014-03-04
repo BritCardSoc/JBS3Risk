@@ -9,6 +9,7 @@ package org.understandinguncertainty.JBS.model
 	import mx.collections.ArrayCollection;
 	
 	import org.understandinguncertainty.JBS.model.vo.ColourNumbersVO;
+	import org.understandinguncertainty.QRLifetime.FlashScore2011;
 	import org.understandinguncertainty.QRLifetime.vo.QParametersVO;
 
 	public interface ICardioModel
@@ -32,6 +33,7 @@ package org.understandinguncertainty.JBS.model
 		
 		function getQParameters(profile:UserModel, checkRange:Boolean = true):QParametersVO;
 
+		function get flashScore_gp():FlashScore2011;
 
 		/**
 		 * returns the minimum acceptable value of the outlook (-ve) vertical axis slider
