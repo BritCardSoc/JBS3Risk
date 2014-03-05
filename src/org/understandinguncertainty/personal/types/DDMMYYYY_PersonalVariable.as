@@ -48,8 +48,8 @@ package org.understandinguncertainty.personal.types
 				if(isNaN(day) || isNaN(month) || isNaN(year))
 					throw new Error("invalid date of birth: " + s);
 								
-				value = new Date(year, month-1, day);
-//				trace("DDMMYYYY date set to: "+value + " " + this.toString());
+				value = new Date(year, month-1, day, 12, 0, 0, 0);
+				//trace("DDMMYYYY date set to: "+value + " " + this.toString());
 			}
 		}
 		

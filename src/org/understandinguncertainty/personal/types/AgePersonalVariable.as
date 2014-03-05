@@ -29,13 +29,15 @@ package org.understandinguncertainty.personal.types
 			return _value;
 		}
 		override public function set value(v:*):void {
-			if(yearOfBirth != null) {
-				var date:Date = new Date();
-				yearOfBirth.value = date.fullYear - v;
-				_value = yearOfBirth.getAge();
-			}
-			else
-				_value = v;
+//			if(yearOfBirth != null) {
+//				trace("setting yearOfBirth");
+//				var date:Date = new Date();
+//				yearOfBirth.value = date.fullYear - v;
+//				_value = yearOfBirth.getAge();
+//			}
+//			else
+//			trace("NOT setting yearOfBirth");
+			_value = v;
 		}
 		
 	}

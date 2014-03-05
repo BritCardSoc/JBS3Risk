@@ -36,7 +36,6 @@ package org.understandinguncertainty.personal
 		
 		public var dateOfBirth:DateOfBirth; // = new DateOfBirth("dateOfBirth", new Date((new Date()).time - 40*365.25*24*60*60000));
 
-		public var yearOfBirth:YearOfBirth = new YearOfBirth("yearOfBirth", new Date().fullYear);
 		public var totalCholesterol_mmol_L:NumberPersonalVariable = new NumberPersonalVariable("totalCholesterol_mmol_L", 5.5);
 		public var hdlCholesterol_mmol_L:NumberPersonalVariable = new NumberPersonalVariable("hdlCholesterol_mmol_L", 1.16);
 		public var systolicBloodPressure:NumberPersonalVariable = new NumberPersonalVariable("systolicBloodPressure", 130);
@@ -67,9 +66,9 @@ package org.understandinguncertainty.personal
 			dateOfBirth = new DateOfBirth("dateOfBirth", fortyYearsAgo);
 			
 			// inject dependencies that may exist between different variables
-			yearOfBirth.dateOfBirth = dateOfBirth;
-			dateOfBirth.yearOfBirth = yearOfBirth;
-			age.yearOfBirth = yearOfBirth;
+//			yearOfBirth.dateOfBirth = dateOfBirth;
+//			dateOfBirth.yearOfBirth = yearOfBirth;
+//			age.yearOfBirth = yearOfBirth;
 			age.dateOfBirth = dateOfBirth;
 		}
 

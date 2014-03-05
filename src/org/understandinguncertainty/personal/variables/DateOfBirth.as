@@ -22,15 +22,13 @@ package org.understandinguncertainty.personal.variables
 			if(_value == null) {
 				_value = new Date();
 			}
-//			if(_value.fullYear == 1961)
-//				trace("DateOfBirth: get gotcha");
+
 			return _value;
 		}
 		override public function set value(v:*):void {
 			super.value = v;
-			yearOfBirth.value = v.fullYear;
-//			if(v.fullYear == 1961)
-//				trace("DateOfBirth: set gotcha");
+//			yearOfBirth.value = v.fullYear;
+
 		}
 		
 		public function getAge():int {
