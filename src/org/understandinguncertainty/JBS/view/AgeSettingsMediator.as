@@ -32,6 +32,7 @@ package org.understandinguncertainty.JBS.view
 			ageSettings.targetInterval.addEventListener(Event.CHANGE, updateTargetInterval)
 			ageSettings.interventionAgeStepper.addEventListener(Event.CHANGE, updateInterventionAge);
 			modelUpdatedSignal.add(updateView);
+			runModel.commitProperties();
 			updateView();
 		}
 		

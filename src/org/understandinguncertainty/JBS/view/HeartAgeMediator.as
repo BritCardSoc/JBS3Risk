@@ -38,7 +38,8 @@ package org.understandinguncertainty.JBS.view
 			//trace("heartAge register");		
 			appState.interventionAge = userProfile.age;
 			
-			modelUpdatedSignal.add(updateView);
+			modelUpdatedSignal.add(updateView);			
+			heartAge.heartAgeText.text = ""
 			runModel.commitProperties();
 		}
 		
@@ -53,7 +54,7 @@ package org.understandinguncertainty.JBS.view
 			if(appState.selectedScreenName != "heartAge") {
 					
 				// flashScore_gp may not be valid
-				// trace("HEARTAGE SCREEN MISMATCH");
+				trace("HEARTAGE SCREEN MISMATCH");
 				
 				return;
 			}
@@ -62,7 +63,6 @@ package org.understandinguncertainty.JBS.view
 				return;
 			}
 
-			// runModel.commitProperties();
 			heartAge.heartAgeText.text = runModel.heartAgeText;
 
 		}

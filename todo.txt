@@ -1,3 +1,9 @@
+Remove unused refs to
+  userProfile.isValid
+
+Notes:
+  flashScore_gp invalid going from Profile to HeartAge at startup ONLY when female!!
+
 Error: age must be between 30 and 84
 	The profile validator does not reliably prevent too young when calling QRLifetime.vo.QParametersVO()
 

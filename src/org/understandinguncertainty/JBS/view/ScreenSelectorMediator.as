@@ -157,6 +157,7 @@ package org.understandinguncertainty.JBS.view
 			if(name != appState.selectedScreenName) {
 				
 				if(appState.selectedScreenName == 'profile') {
+					trace("dispatch profileCommit "+name);
 					profileCommitSignal.dispatch(name);
 				}
 				else 
@@ -168,6 +169,7 @@ package org.understandinguncertainty.JBS.view
 		
 		
 		private function dispatchScreenChange(name:String):void {
+			trace("dispatchScreenChange "+name);
 			appState.selectedScreenName = name;
 			screenChangedSignal.dispatch(name);			
 		}

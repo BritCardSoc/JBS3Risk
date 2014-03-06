@@ -65,6 +65,7 @@ package org.understandinguncertainty.JBS.view
 		public function set selectedScreen(s:String):void
 		{
 			mainPanel.currentState = s;
+			trace("switching mainPanel state to "+s);
 			
 			if(s == "profile") {
 				releaseScreenSignal.dispatch();

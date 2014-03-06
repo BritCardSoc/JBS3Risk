@@ -203,11 +203,16 @@ package org.understandinguncertainty.JBS.model
 		public function commitProperties():void {
 
 			if(committing) {
+				trace("already committing");
 				return;
 			}
 			
+			
 			if(userProfile.age == 0)
 				return;
+			
+			trace("COMMITTING runModel.commitProperties()");
+			committing = true;
 			
 			appState.minimumAge = userProfile.age;
 
@@ -259,7 +264,7 @@ package org.understandinguncertainty.JBS.model
 
 				flashScore = new FlashScore2011();
 				
-				committing = true;
+				//committing = true;
 				// Need scores for interventions starting at every 5 years till endTreatmentAge
 				flashScore_gp = null;
 				
@@ -267,15 +272,13 @@ package org.understandinguncertainty.JBS.model
 				var _gainsByYear:Array = [];
 				params_int.age = params.age;
 				
-				flashScore = new FlashScore2011();
-
 				var scoreCalculated:Function = function(event:Event = null):void {
+					
+					trace("djs scoreCalculated 1");
 					
 					var lifeTable:LifetimeRiskTable = flashScore.result.annualRiskTable;
 					var lifeTable_int:LifetimeRiskTable = flashScore.result.annualRiskTable_int;
-					var last:int = lifeTable.rows.length - 1;
-					
-					/* HERE! */
+					var last:int = lifeTable.rows.length - 1;					
 					var sum_e:Number = 0;
 					var sum_e_int:Number = 0;
 					for(var i:int = 0; i < lifeTable.rows.length; i++) {
@@ -303,7 +306,7 @@ package org.understandinguncertainty.JBS.model
 					// pass intervention age through intervention parameters as age
 					params_int.age += 5;
 					if(params_int.age <= 70) {
-						//trace("--3--"+params_int.age);
+						trace("djsCalculateScoreWithInterventions -3-");
 						flashScore.djsCalculateScoreWithInterventions(path, 
 							params, params_int,
 							userProfile.totalCholesterol - userProfile.hdlCholesterol,
@@ -317,13 +320,14 @@ package org.understandinguncertainty.JBS.model
 						_gainsByYearAC = new ArrayCollection(_gainsByYear);
 						flashScore.removeEventListener(Event.COMPLETE, scoreCalculated);
 						committing = false;
+						trace("NOT COMMITTING 2")
 						modelUpdatedSignal.dispatch();
 					}
 				}
 				
 				flashScore.addEventListener(Event.COMPLETE, scoreCalculated);
 				
-				//trace("--1--");
+				trace("djsCalculateScore - 1 -");
 				flashScore.djsCalculateScoreWithInterventions(path, 
 					params, params_int,
 					userProfile.totalCholesterol - userProfile.hdlCholesterol,
@@ -352,6 +356,8 @@ package org.understandinguncertainty.JBS.model
 					
 				flashScore_gp = new FlashScore2011();
 				flashScore_gp.addEventListener(Event.COMPLETE, doWithAndWithout);
+				
+				trace("flashScore_gp calculateScore -1-");
 				flashScore_gp.calculateScore(path, params_gp);				
 			}
 			else {
@@ -362,11 +368,14 @@ package org.understandinguncertainty.JBS.model
 
 		private function doWithAndWithout(event:Event = null):void
 		{
+			trace("calculated flashScore_gp  -1-");
 			if(flashScore_gp)
 				flashScore_gp.removeEventListener(Event.COMPLETE, doWithAndWithout);
 			
 			flashScore = new FlashScore2011();
 			flashScore.addEventListener(Event.COMPLETE, completionHandler_int);
+			
+			trace("flashScore djs with interventions -2-");
 			flashScore.djsCalculateScoreWithInterventions(path, 
 				params, params_int,
 				userProfile.totalCholesterol - userProfile.hdlCholesterol,
@@ -378,6 +387,7 @@ package org.understandinguncertainty.JBS.model
 		
 		private function completionHandler_int(event:Event):void
 		{
+			trace("djs with interventions done -2-");
 			// We have now calculated both with and without intervention and can stuff the results Array
 			flashScore.removeEventListener(Event.COMPLETE, completionHandler_int);
 			
@@ -450,6 +460,7 @@ package org.understandinguncertainty.JBS.model
 			_resultSet = new ArrayCollection(results);
 			
 			committing = false;
+			trace("NOT COMMITTING");
 			modelUpdatedSignal.dispatch();
 		}
 	
