@@ -51,6 +51,7 @@ package org.understandinguncertainty.JBS.view
 			if(appState.selectedScreenName != "futures") {
 				
 				// flashScore_gp may not be valid
+				trace("invalid flashScore_gp");
 				return;
 			}
 
