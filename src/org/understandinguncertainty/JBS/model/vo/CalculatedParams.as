@@ -18,7 +18,7 @@ package org.understandinguncertainty.JBS.model.vo
 			this.a_int = a_int;
 			this.h = h;
 			this.genPop_a = genPop_a;
-			trace("a=", a," a_int=", a_int," h=", h, " genPop_a=", genPop_a);
+			//# trace("a=", a," a_int=", a_int," h=", h, " genPop_a=", genPop_a);
 		}
 	}
 }

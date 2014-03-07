@@ -235,7 +235,7 @@ package org.understandinguncertainty.JBS.view
 		
 		private function selectScreen(name:String):void
 		{
-			trace("selectScreen "+name);
+			//# trace("selectScreen "+name);
 			commitProfile();
 			profileCommittedSignal.dispatch(name);
 		}
@@ -366,7 +366,7 @@ package org.understandinguncertainty.JBS.view
 		//---- View click events ----
 		// 		
 		private function commitProfile():void {
-			trace("commitProfile");
+			//# trace("commitProfile");
 
 			// Set the user profile variableList BEFORE cloning it into the interventions profile
 			setPersonalDetails();			
@@ -501,13 +501,13 @@ package org.understandinguncertainty.JBS.view
 				var path:String = "Q65_derivation_cvd_time_40_"+userProfile.b_gender+ ".csv";
 				flashScore.addEventListener(Event.COMPLETE, prefetchDone);
 
-				trace("flashScore prefetch");
+				//# trace("flashScore prefetch");
 				flashScore.calculateScore(path, params);
 			}
 		}
 		
 		private function prefetchDone(event: Event):void {
-			trace("prefetch done");
+			//# trace("prefetch done");
 			
 			profile.nextButton.enabled = true;
 			profileValidSignal.dispatch(true);

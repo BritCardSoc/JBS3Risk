@@ -43,7 +43,7 @@ package org.understandinguncertainty.JBS.view
 		
 		override public function onRegister() : void
 		{
-			trace("Balance register");
+			//# trace("Balance register");
 			modelUpdatedSignal.add(updateView);
 			runModel.commitProperties();
 			balance.differenceCheckBox.addEventListener(Event.CHANGE, updateView);
@@ -51,14 +51,14 @@ package org.understandinguncertainty.JBS.view
 		
 		override public function onRemove():void
 		{
-			trace("Balance remove");
+			//# trace("Balance remove");
 			modelUpdatedSignal.remove(updateView);
 			balance.differenceCheckBox.removeEventListener(Event.CHANGE, updateView);
 		}
 				
 		private function updateView(event:Event = null) : void
 		{
-			trace("Balance updateView");
+			//# trace("Balance updateView");
 			var colours:ColourNumbersVO = runModel.colourNumbers;
 			appState.showDifferences = balance.differenceCheckBox.selected;
 			
