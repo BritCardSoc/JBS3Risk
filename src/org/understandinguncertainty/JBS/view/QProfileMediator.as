@@ -214,7 +214,7 @@ package org.understandinguncertainty.JBS.view
 		
 		private function visitTerms(event:MouseEvent):void
 		{
-			navigateToURL(new URLRequest("http://www.bcs.com"), "_blank");
+			navigateToURL(new URLRequest("http://www.jbs3risk.co.uk/pages/terms.asp"), "_blank");
 		}
 		
 		private function save(event:MouseEvent):void
