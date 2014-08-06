@@ -504,7 +504,6 @@ package org.understandinguncertainty.JBS.model
 					break;
 			}
 			
-			
 			return i + userProfile.age;
 		}
 		
@@ -542,10 +541,22 @@ package org.understandinguncertainty.JBS.model
 			else {
 				// interpolate for better accuracy
 				var h_i:Number = gp_annualTable.getNoDeathHazardAt(i);
-				var h_i_1:Number = gp_annualTable.getNoDeathHazardAt(i-1);
-				i -= (h_i - myHazard)/(h_i - h_i_1);
+				if(h_i != -1) {
+					// we've not run out of hazard table so can interpolate
+
+					var h_i_1:Number = gp_annualTable.getNoDeathHazardAt(i-1);
+					trace("h_i = "+h_i);
+					trace("h_i-1 = "+h_i_1);
+					if(Math.abs(h_i - h_i_1) > 1e-6) {
+						var adjustment:Number = (h_i - myHazard)/(h_i - h_i_1);
+						if (Math.abs(adjustment) < 1)
+							i -= adjustment;
+					}
+//					i -= (h_i - myHazard)/(h_i - h_i_1);
+				}
 			}
 
+			
 			return i + userProfile.age;
 		}
 		
